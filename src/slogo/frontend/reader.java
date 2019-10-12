@@ -1,5 +1,7 @@
 package slogo.frontend;
 
+import java.util.List;
+
 /**
  * Simple parser based on regular expressions that matches program strings to
  * kinds of language features.
@@ -23,6 +25,11 @@ public class reader {
      * Returns language's type associated with the given text if one exists
      */
     public String getSymbol (String text) {
+        return null;
+    }
+
+
+    public List parser (String commands) {
         return null;
     }
 
