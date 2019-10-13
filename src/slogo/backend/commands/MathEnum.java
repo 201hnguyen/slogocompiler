@@ -6,50 +6,50 @@ import java.util.Random;
 public enum MathEnum {
     SUM("SUM", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) + parameters.get(1);
         }
     },
 
     DIFFERENCE("DIFFERENCE", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) - parameters.get(1);
         }
     },
 
     PRODUCT("PRODUCT", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) * parameters.get(1);
         }
     },
 
     QUOTIENT("QUOTIENT", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) / parameters.get(1);
         }
     },
 
     REMAINDER("REMAINDER", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) % parameters.get(1);
         }
     },
 
     MINUS("MINUS", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) * -1;
         }
     },
 
     RANDOM("RANDOM", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
-            return new MathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
+            return new MathAndBooleanCommandsInterface() {
                 @Override
                 public double getValue(List<Double> parameters) {
                     Random random = new Random();
@@ -61,49 +61,49 @@ public enum MathEnum {
 
     SIN("SIN", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.sin(Math.toRadians(parameters.get(0)));
         }
     },
 
     COS("COS", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.cos(Math.toRadians(parameters.get(0)));
         }
     },
 
     TAN("TAN", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.tan(Math.toRadians(parameters.get(0)));
         }
     },
 
     ATAN("ATAN", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.atan(Math.toRadians(parameters.get(0)));
         }
     },
 
     LOG("LOG", 1) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.log(parameters.get(0));
         }
     },
 
     POW("POW", 2) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.pow(parameters.get(0), parameters.get(1));
         }
     },
 
     PI("PI", 0) {
         @Override
-        public MathCommandsInterface getMathCommandsInterface() {
+        public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.PI;
         }
     };
@@ -124,5 +124,5 @@ public enum MathEnum {
         return numParameters;
     }
 
-    public abstract MathCommandsInterface getMathCommandsInterface();
+    public abstract MathAndBooleanCommandsInterface getCommandsInterface();
 }
