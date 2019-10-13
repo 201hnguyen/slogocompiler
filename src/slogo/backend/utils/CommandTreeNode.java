@@ -1,4 +1,4 @@
-package slogo.backend;
+package slogo.backend.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +26,9 @@ public class CommandTreeNode {
 
     public void setRightNode(CommandTreeNode rightNode) {
         this.rightNode = rightNode;
+    }
+
+    public void addToTreeNode(String str) {
+        commands.add(str);
     }
 }
