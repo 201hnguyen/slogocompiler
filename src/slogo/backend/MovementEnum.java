@@ -18,7 +18,7 @@ public enum MovementEnum {
                     double angle = turtleSetting.getCurOrientation();
                     Point2D endingPos = turtleSetting.getCurCoordinate().add(
                             new Point2D(parameters.get(0) * Math.cos(angle), parameters.get(0) * Math.sin(angle)));
-                    return new Movement(turtleSetting.getCurCoordinate(), endingPos, angle, turtleSetting.isVisible(), turtleSetting.isPenDown());
+                    return new Movement(turtleSetting.getCurCoordinate(), endingPos, angle, turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
                 }
             };
         }
@@ -35,7 +35,7 @@ public enum MovementEnum {
                     double angle = (turtleSetting.getCurOrientation() + 180) % 360;
                     Point2D endingPos = turtleSetting.getCurCoordinate().add(
                             new Point2D(parameters.get(0) * Math.cos(angle), parameters.get(0) * Math.sin(angle)));
-                    return new Movement(turtleSetting.getCurCoordinate(), endingPos, angle, turtleSetting.isVisible(), turtleSetting.isPenDown());
+                    return new Movement(turtleSetting.getCurCoordinate(), endingPos, angle, turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
                 }
             };
         }
@@ -51,7 +51,7 @@ public enum MovementEnum {
                 public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
                     double angle = ((turtleSetting.getCurOrientation() - parameters.get(0)) + 360) % 360;
                     return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(), angle,
-                            turtleSetting.isVisible(), turtleSetting.isPenDown());
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
                 }
             };
         }
@@ -61,15 +61,13 @@ public enum MovementEnum {
         public MovementCommandsInterface getCommandsInterface() {
             return new MovementCommandsInterface() {
                 @Override
-                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) {
-                    return parameters.get(0);
-                }
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return parameters.get(0); }
 
                 @Override
                 public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
                     double angle = ((turtleSetting.getCurOrientation() + parameters.get(0))) % 360;
                     return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(), angle,
-                            turtleSetting.isVisible(), turtleSetting.isPenDown());
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
                 }
             };
         }
@@ -87,7 +85,7 @@ public enum MovementEnum {
                 @Override
                 public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
                     return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(), parameters.get(0),
-                            turtleSetting.isVisible(), turtleSetting.isPenDown());
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
                 }
             };
         }
@@ -110,11 +108,123 @@ public enum MovementEnum {
                 public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
                     double newOrientation = getSlope(turtleSetting.getCurCoordinate(), new Point2D(parameters.get(0), parameters.get(1)));
                     return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(), newOrientation,
-                            turtleSetting.isVisible(), turtleSetting.isPenDown());
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
+                }
+            };
+        }
+    },
+    SETPOSITION("SETPOSITION", 2) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return turtleSetting.getCurCoordinate().distance(parameters.get(0), parameters.get(1));
+                }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), new Point2D(parameters.get(0), parameters.get(1)),
+                            turtleSetting.getCurOrientation(), turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
+                }
+            };
+        }
+    },
+    PENDOWN("PENDOWN", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 1; }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(),
+                            turtleSetting.getCurOrientation(), turtleSetting.isVisible(), true, false);
+                }
+            };
+        }
+    },
+    PENUP("PENUP", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 0; }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(),
+                            turtleSetting.getCurOrientation(), turtleSetting.isVisible(), false, false);
+                }
+            };
+        }
+    },
+    SHOWTURTLE("SHOWTURTLE", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 1; }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(),
+                            turtleSetting.getCurOrientation(), true, turtleSetting.isPenDown(), false);
+                }
+            };
+        }
+    },
+    HIDETURTLE("HIDETURTLE", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 0; }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(),
+                            turtleSetting.getCurOrientation(), false, turtleSetting.isPenDown(), false);
+                }
+            };
+        }
+    },
+    HOME("HOME", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return turtleSetting.getCurCoordinate().distance(0, 0);
+                }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), new Point2D(0, 0), 90,
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), false);
+                }
+            };
+        }
+    },
+    CLEARSCREEN("CLEARSCREEN", 0) {
+        @Override
+        public MovementCommandsInterface getCommandsInterface() {
+            return new MovementCommandsInterface() {
+                @Override
+                public double getValue(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return turtleSetting.getCurCoordinate().distance(0, 0);
+                }
+
+                @Override
+                public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
+                    return new Movement(turtleSetting.getCurCoordinate(), new Point2D(0, 0), 90,
+                            turtleSetting.isVisible(), turtleSetting.isPenDown(), true);
                 }
             };
         }
     };
+
 
 
     private String name;

@@ -9,13 +9,15 @@ public class Movement {
     private double orientation;
     private boolean visible;
     private boolean penDown;
+    private boolean eraseScreen;
 
-    public Movement(Point2D startPosition, Point2D endPosition, double orientation, boolean isVisible, boolean isPenDown) {
+    public Movement(Point2D startPosition, Point2D endPosition, double orientation, boolean isVisible, boolean isPenDown, boolean eraseScreen) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.orientation = orientation;
         this.visible = isVisible;
         this.penDown = isPenDown;
+        this.eraseScreen = eraseScreen;
     }
 
     public Point2D getStartPosition() {
@@ -35,4 +37,7 @@ public class Movement {
         return penDown;
     }
 
+    public boolean isEraseScreen() {
+        return eraseScreen;
+    }
 }
