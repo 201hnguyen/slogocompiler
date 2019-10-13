@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum QueryEnum {
 
-    XCOR("XCOR") {
+    XCOORDINATE("XCOORDINATE") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
             return new QueryCommandsInterface() {
@@ -18,7 +18,7 @@ public enum QueryEnum {
         }
     },
 
-    YCOR("YCOR") {
+    YCOORDINATE("YCOORDINATE") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
             return new QueryCommandsInterface() {
@@ -42,7 +42,7 @@ public enum QueryEnum {
         }
     },
 
-    PENDOWN("PENDOWN") {
+    ISPENDOWN("ISPENDOWN") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
             return new QueryCommandsInterface() {
@@ -54,7 +54,7 @@ public enum QueryEnum {
         }
     },
 
-    SHOWING("SHOWING") {
+    ISSHOWING("ISSHOWING") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
             return new QueryCommandsInterface() {

@@ -59,42 +59,42 @@ public enum MathEnum {
         }
     },
 
-    SIN("SIN", 1) {
+    SINE("SINE", 1) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.sin(Math.toRadians(parameters.get(0)));
         }
     },
 
-    COS("COS", 1) {
+    COSINE("COSINE", 1) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.cos(Math.toRadians(parameters.get(0)));
         }
     },
 
-    TAN("TAN", 1) {
+    TANGENT("TANGENT", 1) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.tan(Math.toRadians(parameters.get(0)));
         }
     },
 
-    ATAN("ATAN", 1) {
+    ARCTANGENT("ARCTANGENT", 1) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.atan(Math.toRadians(parameters.get(0)));
         }
     },
 
-    LOG("LOG", 1) {
+    NATURALLOG("NATURALLOG", 1) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.log(parameters.get(0));
         }
     },
 
-    POW("POW", 2) {
+    POWER("POWER", 2) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> Math.pow(parameters.get(0), parameters.get(1));

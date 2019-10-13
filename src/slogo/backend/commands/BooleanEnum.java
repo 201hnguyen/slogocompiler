@@ -1,14 +1,14 @@
 package slogo.backend.commands;
 
 public enum BooleanEnum {
-    LESS("LESS", 2) {
+    LESSTHAN("LESSTHAN", 2) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) < parameters.get(1) ? 1d : 0d;
         }
     },
 
-    GREATER("GREATER", 2) {
+    GREATERTHAN("GREATERTHAN", 2) {
         @Override
         public MathAndBooleanCommandsInterface getCommandsInterface() {
             return parameters -> parameters.get(0) > parameters.get(1) ? 1d : 0d;
