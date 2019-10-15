@@ -1,4 +1,4 @@
-package slogo.backend.commands;
+package slogo.backend.commands.basic;
 
 import slogo.backend.utils.Movement;
 import slogo.backend.utils.TurtleSetting;

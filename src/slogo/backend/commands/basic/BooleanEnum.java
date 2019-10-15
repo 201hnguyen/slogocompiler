@@ -1,4 +1,4 @@
-package slogo.backend.commands;
+package slogo.backend.commands.basic;
 
 public enum BooleanEnum {
     LESSTHAN("LESSTHAN", 2) {

@@ -1,4 +1,4 @@
-package slogo.backend.commands;
+package slogo.backend.commands.basic;
 
 import java.util.List;
 

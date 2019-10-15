@@ -1,4 +1,6 @@
-package slogo.backend.commands;
+package slogo.backend.commands.basic;
+
+import slogo.backend.commands.basic.MathAndBooleanCommandsInterface;
 
 import java.util.List;
 import java.util.Random;

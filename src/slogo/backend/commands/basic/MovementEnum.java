@@ -1,6 +1,7 @@
-package slogo.backend.commands;
+package slogo.backend.commands.basic;
 
 import javafx.geometry.Point2D;
+import slogo.backend.commands.basic.MovementCommandsInterface;
 import slogo.backend.utils.Movement;
 import slogo.backend.utils.TurtleSetting;
 
