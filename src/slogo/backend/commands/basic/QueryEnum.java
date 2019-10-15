@@ -8,60 +8,35 @@ public enum QueryEnum {
     XCOORDINATE("XCOORDINATE") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
-            return new QueryCommandsInterface() {
-                @Override
-                public double getValue(TurtleSetting turtleSetting) {
-                    return turtleSetting.getCurCoordinate().getX();
-                }
-            };
+            return turtleSetting -> turtleSetting.getCurCoordinate().getX();
         }
     },
 
     YCOORDINATE("YCOORDINATE") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
-            return new QueryCommandsInterface() {
-                @Override
-                public double getValue(TurtleSetting turtleSetting) {
-                    return turtleSetting.getCurCoordinate().getY();
-                }
-            };
+            return turtleSetting -> turtleSetting.getCurCoordinate().getY();
         }
     },
 
     HEADING("HEADING") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
-            return new QueryCommandsInterface() {
-                @Override
-                public double getValue(TurtleSetting turtleSetting) {
-                    return turtleSetting.getCurOrientation();
-                }
-            };
+            return turtleSetting -> turtleSetting.getCurOrientation();
         }
     },
 
     ISPENDOWN("ISPENDOWN") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
-            return new QueryCommandsInterface() {
-                @Override
-                public double getValue(TurtleSetting turtleSetting) {
-                    return turtleSetting.isPenDown() ? 1d : 0d;
-                }
-            };
+            return turtleSetting -> turtleSetting.isPenDown() ? 1d : 0d;
         }
     },
 
     ISSHOWING("ISSHOWING") {
         @Override
         public QueryCommandsInterface getCommandsInterface() {
-            return new QueryCommandsInterface() {
-                @Override
-                public double getValue(TurtleSetting turtleSetting) {
-                    return turtleSetting.isVisible() ? 1d : 0d;
-                }
-            };
+            return turtleSetting -> turtleSetting.isVisible() ? 1d : 0d;
         }
     };
 
