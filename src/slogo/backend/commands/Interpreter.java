@@ -1,6 +1,5 @@
 package slogo.backend.commands;
 
-import slogo.backend.utils.CommandTreeNode;
 import slogo.backend.utils.Movement;
 
 import java.util.*;
