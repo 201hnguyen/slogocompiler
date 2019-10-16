@@ -7,10 +7,10 @@ import java.util.*;
 public class Interpreter {
     private CommandStructurer myCommandStructurer;
     private Queue<Movement> movementQueue;
-    Map<String, Double> userVariables;
-    Map<String, CommandStructurer> userDefinedFunctions;
-    Stack<String> commandStack;
-    Stack<Double> numberStack;
+    private Map<String, Double> userVariables;
+    private Map<String, CommandStructurer> userDefinedFunctions;
+    private Stack<String> commandStack;
+    private Stack<Double> numberStack;
 
     public Interpreter() {
         commandStack = new Stack<>();
