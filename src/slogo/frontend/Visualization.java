@@ -1,14 +1,10 @@
 package slogo.frontend;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Visualization {
@@ -20,6 +16,8 @@ public class Visualization {
     private static final double SCENE_HEIGHT = 600;
     private static final double INPUT_HEIGHT = 99;
     private static final double INPUT_WIDTH = 600;
+    private static final double INSET_PADDING = 10;
+    private static final double CIRCLE_RADIUS = 50;
 
 
     private String[] languageList;
@@ -29,6 +27,7 @@ public class Visualization {
     private Button startButton;
     private Button clearButton;
     private HBox buttonBox;
+    private HBox checkBoxes;
     private ComboBox languageDropDown;
     private ComboBox imageDropDown;
     private ColorPicker colorPicker;
@@ -42,7 +41,7 @@ public class Visualization {
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"});
 
         root = new AnchorPane();
-        root.getChildren().addAll(buttons(), commandBox(),colorPalette());
+        root.getChildren().addAll(buttons(), commandBox(),colorPalette(), checkBoxes());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
     }
@@ -70,7 +69,7 @@ public class Visualization {
 
     private HBox buttons() {
         GridPane buttons = new GridPane();
-        buttons.setPadding(new Insets(10, 10, 10, 10));
+        buttons.setPadding(new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING));
         buttonBox = new HBox();
         buttonBox.getChildren().addAll(startButton,languageDropDown, clearButton, imageDropDown);
         buttonBox.setSpacing(25);
@@ -79,15 +78,29 @@ public class Visualization {
         return buttonBox;
     }
 
+    private HBox checkBoxes() {
+        checkBoxes = new HBox();
+        String[] choices = { "Background", "Pen"};
+        for (String choice : choices) {
+            CheckBox box = new CheckBox(choice);
+            checkBoxes.getChildren().add(box);
+            box.setPadding(new Insets(INSET_PADDING));;
+            box.setIndeterminate(true);
+        }
+        checkBoxes.setLayoutY(565);
+        checkBoxes.setLayoutX(600);
+        return checkBoxes;
+    }
+
     private VBox colorPalette() {
         VBox palette = new VBox();
         colorPicker = new ColorPicker();
         colorPicker.setMaxSize(DROP_WIDTH,DROP_HEIGHT);
-        colorCircle = new Circle(50);
+        colorCircle = new Circle(CIRCLE_RADIUS);
         colorPicker.setOnAction(event -> colorCircle.setFill(colorPicker.getValue()));
-        palette.setPadding(new Insets(10));
+        palette.setPadding(new Insets(INSET_PADDING));
         palette.getChildren().addAll(colorCircle, colorPicker);
-        palette.setLayoutY(450);
+        palette.setLayoutY(420);
         palette.setSpacing(10);
         palette.setLayoutX(630);
         return palette;
