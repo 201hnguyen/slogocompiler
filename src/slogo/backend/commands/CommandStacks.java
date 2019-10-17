@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class CommandStacks {
 
-    private static final String decimalPattern = "-?[0-9]+\\.?[0-9]*";
+    private final String decimalPattern = "-?[0-9]+\\.?[0-9]*";
 
     private Stack<String> commandStack = new Stack<>();
     private Stack<Double> numberStack = new Stack<>();
@@ -17,11 +17,11 @@ public class CommandStacks {
 
     }
 
-    public void addCommand(String command) {
+    public void addToStack(String command) {
         if(isThisStringDouble(command)) {
-            numberStack.push(Double.parseDouble(command));
+            numberStack.add(Double.parseDouble(command));
         } else {
-            commandStack.push(command);
+            commandStack.add(command);
         }
     }
 
