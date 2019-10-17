@@ -1,4 +1,4 @@
-package slogo.backend.commands.basic.MovementCommands;
+package slogo.backend.commands.basic.movementcommands;
 
 import javafx.geometry.Point2D;
 import slogo.backend.utils.Movement;

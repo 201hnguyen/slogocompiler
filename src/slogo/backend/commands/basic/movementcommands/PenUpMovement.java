@@ -1,17 +1,17 @@
-package slogo.backend.commands.basic.MovementCommands;
+package slogo.backend.commands.basic.movementcommands;
 
 import slogo.backend.utils.Movement;
 import slogo.backend.utils.TurtleSetting;
 
 import java.util.List;
 
-public class ShowTurtleMovement implements MovementCommandsInterface {
+public class PenUpMovement implements MovementCommandsInterface {
     @Override
-    public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 1; }
+    public double getValue(TurtleSetting turtleSetting, List<Double> parameters) { return 0; }
 
     @Override
     public Movement getMovement(TurtleSetting turtleSetting, List<Double> parameters) {
         return new Movement(turtleSetting.getCurCoordinate(), turtleSetting.getCurCoordinate(),
-                turtleSetting.getCurOrientation(), true, turtleSetting.isPenDown(), false);
+                turtleSetting.getCurOrientation(), turtleSetting.isVisible(), false, false);
     }
 }
