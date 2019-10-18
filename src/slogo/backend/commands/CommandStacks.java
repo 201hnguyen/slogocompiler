@@ -5,13 +5,15 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+//TODO: Let's talk about this; I think now that we aren't doing the movement queue anymore, this is not completely needed;
+// I think it's just better to have our two stacks directly in the CommandBlockManager because this seems like just
+// unnecessary abstraction that doesn't really serve a purpose
 public class CommandStacks {
 
     private final String decimalPattern = "-?[0-9]+\\.?[0-9]*";
 
     private Stack<String> commandStack = new Stack<>();
     private Stack<Double> numberStack = new Stack<>();
-    Queue<Double> movementQueue = new LinkedList<>();
 
     public CommandStacks() {
 
