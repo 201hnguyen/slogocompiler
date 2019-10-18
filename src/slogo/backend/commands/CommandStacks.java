@@ -11,10 +11,8 @@ public class CommandStacks {
 
     private Stack<String> commandStack = new Stack<>();
     private Stack<Double> numberStack = new Stack<>();
-    Queue<Double> movementQueue = new LinkedList<>();
 
     public CommandStacks() {
-
     }
 
     public void addToStack(String command) {
@@ -23,11 +21,14 @@ public class CommandStacks {
         } else {
             commandStack.add(command);
         }
+        handleStacks();
     }
 
     private boolean isThisStringDouble(String command) {
         return Pattern.matches(decimalPattern, command);
     }
 
+    private void handleStacks() {
 
+    }
 }
