@@ -23,7 +23,7 @@ public class TurtleManager {
         return myTurtles.get(0); // for testing.
     }
 
-    public void updateTurtle(String turtleID, Movement movement) {
+    public void updateTurtle(String turtleID, Movement movement, DrawStatus drawStatus) {
         Turtle turtle = getTurtle(turtleID);
         /** TODO: draw a line and add to the turtlePane
          */
@@ -43,6 +43,10 @@ public class TurtleManager {
         /**
          * TODO: add new turtle to myTurtlePane and myTurtles
          */
+    }
+
+    public void initialize() {
+
     }
 
 }

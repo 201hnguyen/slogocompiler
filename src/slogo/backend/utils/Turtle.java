@@ -26,11 +26,11 @@ public class Turtle extends ImageView {
         return penDown;
     }
 
-    public double getxPos() {
+    public double getXPos() {
         return xPos;
     }
 
-    public double getyPos() {
+    public double getYPos() {
         return yPos;
     }
 
@@ -46,7 +46,7 @@ public class Turtle extends ImageView {
         return myID;
     }
 
-    protected void update(Movement movement) {
+    protected void update(Movement movement, DrawStatus drawStatus) {
         /**TODO: Update the turtle according to the movement object
          */
     }
