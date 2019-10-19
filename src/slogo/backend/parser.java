@@ -1,5 +1,6 @@
 package slogo.backend;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -63,14 +64,13 @@ public class parser {
                 return e.getKey();
             }
         }
-        return "Commands do not match selected language"; //TODO: move to cmdException.java
+        return "Commands not found for selected language"; //TODO: move to cmdException.java
     }
-        //}
-//        catch (){
-//
-//            //return ERROR;
-//            throw new cmdException();
-//        }
+//        //}
+//       catch (IOException e) {
+//        return ERROR;
+//          throw new cmdException(e);
+//       }
 
 
 

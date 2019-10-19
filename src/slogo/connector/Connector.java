@@ -1,10 +1,10 @@
 package slogo.connector;
 
 import javafx.animation.Animation;
-import slogo.backend.external_api.BackendManager;
+//import slogo.backend.external_api.BackendManager;
 
 public class Connector {
-    private BackendManager backendManager;
+    //private BackendManager backendManager;
     private Animation myAnimation;
 
     public String myLanguage;

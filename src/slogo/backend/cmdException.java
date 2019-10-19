@@ -14,6 +14,12 @@ public class cmdException {
 
     }
 
+
+
+    public String cmdException() {
+        return "";
+    }
+
     //additional exceptions
 
 
