@@ -6,9 +6,7 @@ import slogo.backend.utils.TurtleManager;
 import java.util.*;
 import java.util.regex.Pattern;
 
-//TODO: Let's talk about this; I think now that we aren't doing the movement queue anymore, this is not completely needed;
-// I think it's just better to have our two stacks directly in the CommandBlockManager because this seems like just
-// unnecessary abstraction that doesn't really serve a purpose
+
 public class CommandStacks {
 
     private final String decimalPattern = "-?[0-9]+\\.?[0-9]*";
