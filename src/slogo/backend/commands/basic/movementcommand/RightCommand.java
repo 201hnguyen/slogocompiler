@@ -9,21 +9,21 @@ import java.util.List;
 public class RightCommand implements CommandInterface {
     private static final double FULL_CYCLE = 360;
 
-    private double myAngle;
+    private TurtleManager turtleManager;
 
-    public RightCommand(double myAngle) {
-        this.myAngle = myAngle;
+    public RightCommand(TurtleManager turtleManager) {
+        this.turtleManager = turtleManager;
     }
 
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
-        double angle = ((turtle.getOrientation() - myAngle) + FULL_CYCLE) % FULL_CYCLE;
+        double angle = ((turtle.getOrientation() - parameters.get(0)) + FULL_CYCLE) % FULL_CYCLE;
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos, angle);
 
         turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
-        return myAngle;
+        return parameters.get(0);
     }
 }

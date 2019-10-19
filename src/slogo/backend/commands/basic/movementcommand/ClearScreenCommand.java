@@ -10,8 +10,14 @@ public class ClearScreenCommand implements CommandInterface {
 
     private static final double INITIAL_ORIENTATION = 90;
 
+    private TurtleManager turtleManager;
+
+    public ClearScreenCommand(TurtleManager turtleManager) {
+        this.turtleManager = turtleManager;
+    }
+
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         double returnValue = curPos.distance(0, 0);
@@ -23,5 +29,4 @@ public class ClearScreenCommand implements CommandInterface {
 
         return returnValue;
     }
-
 }

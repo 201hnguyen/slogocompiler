@@ -7,8 +7,14 @@ import slogo.backend.utils.TurtleManager;
 import java.util.List;
 
 public class IsPenDownCommand implements CommandInterface {
+    private TurtleManager turtleManager;
+
+    public IsPenDownCommand(TurtleManager turtleMangager) {
+        this.turtleManager = turtleMangager;
+    }
+
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         return turtle.isPenDown()? 1d : 0d;
     }
