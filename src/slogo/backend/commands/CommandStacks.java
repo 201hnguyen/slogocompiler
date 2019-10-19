@@ -12,9 +12,6 @@ public class CommandStacks {
     private Stack<String> commandStack = new Stack<>();
     private Stack<Double> numberStack = new Stack<>();
 
-    public CommandStacks() {
-    }
-
     public void addToStack(String command) {
         if(isThisStringDouble(command)) {
             numberStack.add(Double.parseDouble(command));
