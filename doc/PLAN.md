@@ -92,9 +92,9 @@ public interface FrontEndExternalInterface {
 ```java
 public interface Visualization {
     public Visualization();
-    //Returns a list of string which represents the command for the backend
+    Command
     public List<String> getCommands();
-    //This will be true if user put a command that without syntax error, and the reader object returned a list of string.
+    Command
     public boolean isCommandEmpty();
 }
 ```
@@ -124,7 +124,7 @@ The Conncector class, which is the connection between the two subgroups, will ha
 
 ```java
 public interface BackEndExternalInterface {
-    //Sets the command that the backend should interpret
+    Command
     public void setCommands(List<String> commands);
     //Returns the next movement by getting it from Interpreter
     public Movement getNextMovement();
