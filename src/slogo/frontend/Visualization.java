@@ -1,11 +1,18 @@
 package slogo.frontend;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
+import java.util.ArrayList;
 
 public class Visualization {
     private static final double BUTTON_WIDTH = 350;
@@ -32,24 +39,24 @@ public class Visualization {
     private ComboBox imageDropDown;
     private ColorPicker colorPicker;
     private Circle colorCircle;
+    private CheckBox penBox;
+    private CheckBox backgroundBox;
+    private TextArea inputField;
+    private TextFlow historyField;
+
+
+
+    private DisplayScreen displayScreen = new DisplayScreen();
 
     public Visualization() {
-        startButton= buttonCreator("Start");
-        clearButton = buttonCreator("Clear");
-
+        startButton = startButton();
+        clearButton = clearButton();
         languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"});
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"});
-
         root = new AnchorPane();
-        root.getChildren().addAll(buttons(), commandBox(),colorPalette(), checkBoxes());
+        root.getChildren().addAll(displayScreen, historyTracker(), buttons(), commandBox(), colorPalette(), checkBoxes());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
-    }
-
-    private Button buttonCreator(String text) {
-        Button button = new Button(text);
-        button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        return button;
     }
 
     private ComboBox dropDown (String[] list){
@@ -59,12 +66,19 @@ public class Visualization {
     }
 
     private TilePane commandBox() {
-        TextArea inputField = new TextArea("Enter your command here!");
+        inputField = new TextArea("Enter your command here!");
         inputField.setPrefSize(INPUT_WIDTH,INPUT_HEIGHT);
         TilePane inputBox = new TilePane();
         inputBox.getChildren().addAll(inputField);
         inputBox.setLayoutY(500);
         return inputBox;
+    }
+
+    private TextFlow historyTracker() {
+        historyField = new TextFlow();
+        historyField.setLayoutX(620);
+        historyField.setLayoutY(10);
+        return historyField;
     }
 
     private HBox buttons() {
@@ -78,17 +92,34 @@ public class Visualization {
         return buttonBox;
     }
 
+    private Button startButton() {
+        Button button = new Button("Start");
+        button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        button.setOnAction(event -> {
+            historyField.getChildren().add(new Text(inputField.getText() + "\n"));
+           // historyField.getChildren().add(new Text(inputField.getText()));
+
+        });
+        return button;
+    }
+
+    private Button clearButton() {
+        Button button = new Button("Clear");
+        button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        button.setOnAction(event -> {
+            inputField.clear();
+        });
+        return button;
+    }
+
     private HBox checkBoxes() {
         checkBoxes = new HBox();
-        String[] choices = { "Background", "Pen"};
-        for (String choice : choices) {
-            CheckBox box = new CheckBox(choice);
-            checkBoxes.getChildren().add(box);
-            box.setPadding(new Insets(INSET_PADDING));;
-            box.setIndeterminate(true);
-        }
-        checkBoxes.setLayoutY(565);
-        checkBoxes.setLayoutX(600);
+        penBox = new CheckBox("Pen");
+        backgroundBox = new CheckBox ("Background");
+        checkBoxes.getChildren().addAll(penBox,backgroundBox);
+        checkBoxes.setLayoutY(570);
+        checkBoxes.setLayoutX(620);
+        checkBoxes.setSpacing(10);
         return checkBoxes;
     }
 
@@ -97,7 +128,14 @@ public class Visualization {
         colorPicker = new ColorPicker();
         colorPicker.setMaxSize(DROP_WIDTH,DROP_HEIGHT);
         colorCircle = new Circle(CIRCLE_RADIUS);
-        colorPicker.setOnAction(event -> colorCircle.setFill(colorPicker.getValue()));
+        colorCircle.setFill(colorPicker.getValue());
+        displayScreen.setBackground(colorPicker.getValue());
+
+        colorPicker.setOnAction(event -> {
+            colorCircle.setFill(colorPicker.getValue());
+            if (backgroundBox.isSelected()) {
+                displayScreen.setBackground(colorPicker.getValue());
+            }});
         palette.setPadding(new Insets(INSET_PADDING));
         palette.getChildren().addAll(colorCircle, colorPicker);
         palette.setLayoutY(420);
@@ -110,3 +148,5 @@ public class Visualization {
             return scene;
         }
     }
+
+
