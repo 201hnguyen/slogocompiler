@@ -7,17 +7,17 @@ public class Movement {
     private Point2D startPosition;
     private Point2D endPosition;
     private double orientation;
-    private boolean visible;
-    private boolean penDown;
-    private boolean eraseScreen;
 
-    public Movement(Point2D startPosition, Point2D endPosition, double orientation, boolean isVisible, boolean isPenDown, boolean eraseScreen) {
+    public Movement(Point2D startPosition, Point2D endPosition, double orientation) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.orientation = orientation;
-        this.visible = isVisible;
-        this.penDown = isPenDown;
-        this.eraseScreen = eraseScreen;
+    }
+
+    public Movement(Point2D startPosition, double orientation, double length) {
+        this.startPosition = startPosition;
+        this.orientation = orientation;
+        this.endPosition = new Point2D(length * Math.cos(orientation), length * Math.sin(orientation));
     }
 
     public Point2D getStartPosition() {
@@ -28,16 +28,5 @@ public class Movement {
     }
     public double getOrientation() {
         return orientation;
-    }
-    public boolean isTurtleVisible() {
-        return visible;
-    }
-
-    public boolean isPenDown() {
-        return penDown;
-    }
-
-    public boolean isEraseScreen() {
-        return eraseScreen;
     }
 }
