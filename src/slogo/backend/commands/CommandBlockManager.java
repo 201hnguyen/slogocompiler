@@ -20,7 +20,7 @@ public class CommandBlockManager {
     private Map<String, String> myUserDefinedFunctions;
     private Stack<String> myCommandStack;
     private Stack<Double> myParametersStack;
-    private CommandFactory myCommandFactory;
+//    private CommandFactory myCommandFactory;
 
     public CommandBlockManager(String commandBlock) {
         myCommandBlockAsString = commandBlock;
@@ -29,11 +29,11 @@ public class CommandBlockManager {
         myUserDefinedVariables = new HashMap<>();
         myCommandStack = new Stack<>();
         myParametersStack = new Stack<>();
-        myCommandFactory = new CommandFactory();
+//        myCommandFactory = new CommandFactory();
     }
 
     public void executeInstructionBlock() {
-        myCommandFactory.makeCommand(myCommandStack.pop());
+//        myCommandFactory.makeCommand(myCommandStack.pop());
 
         System.out.println("Here is where these instructions (e.g. " + myCommandBlockAsString + ") should execute.");
         executedInstructions = true;
