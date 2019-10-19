@@ -10,12 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Feel free to completely change this code or delete it entirely. 
- */
-    /**
-     * Start of the program.
-     */
+
 
 
     public class Main {
@@ -61,7 +56,7 @@ import java.nio.file.Paths;
 
         //TODO:  something like this will come from visualization.java which will go to connector.java
         /**
-         *utility function that reads given file and returns its entire contents as a single string
+         * utility function that reads given file and returns its entire contents as a single string
          * @param input
          * @return
          */
@@ -78,7 +73,7 @@ import java.nio.file.Paths;
 
         //TODO:  move this to parser.java
         /**
-         *given some text, prints results of parsing it using the given language
+         * given some text, prints results of parsing it using the given language
          */
         private void parseText (parser lang, String[] text) {
             for (String s : text) {
@@ -90,7 +85,7 @@ import java.nio.file.Paths;
         }
 
 
-        public static void Main (String[] args) throws URISyntaxException {
+        public static void main (String[] args) throws URISyntaxException {
 
             //TODO: decide what I want in main.java and parser.java
             //from spike_slogo code @author Duvall
@@ -110,8 +105,9 @@ import java.nio.file.Paths;
             String fileInput = m.readFileToString(Main.class.getClassLoader().getResource("square.logo").toURI());
             m.parseText(lang, fileInput.split(WHITESPACE));
 
+            System.out.println("test");
             //from master
-            RepeatableCommandBlock commandStructure = new RepeatableCommandBlock("repeat 180 [ fd 5 rt 2 ]");
+           // RepeatableCommandBlock commandStructure = new RepeatableCommandBlock("repeat 180 [ fd 5 rt 2 ]");
         }
 
 }
