@@ -7,19 +7,20 @@ import slogo.backend.utils.*;
 import java.util.List;
 
 public class ForwardCommand implements CommandInterface {
-    private double length;
 
-    public ForwardCommand(double length) {
-        this.length = length;
+    private TurtleManager turtleManager;
+
+    public ForwardCommand(TurtleManager turtleManager) {
+        this.turtleManager = turtleManager;
     }
 
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
-        Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), turtle.getOrientation(), length);
+        Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), turtle.getOrientation(), parameters.get(0));
 
         turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
-        return length;
+        return parameters.get(1);
     }
 }

@@ -14,20 +14,20 @@ public class BackwardCommand implements CommandInterface {
     private static final double FULL_CYCLE = 360;
     private static final double HALF_CYCLE = 180;
 
-    private double length;
+    private TurtleManager turtleManager;
 
-    public BackwardCommand(double length) {
-        this.length = length;
+    public BackwardCommand(TurtleManager turtleManager) {
+        this.turtleManager = turtleManager;
     }
 
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         double angle = (turtle.getOrientation() + HALF_CYCLE) % FULL_CYCLE;
-        Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), angle, length);
+        Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), angle, parameters.get(0));
 
         turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
-        return length;
+        return parameters.get(0);
     }
 }

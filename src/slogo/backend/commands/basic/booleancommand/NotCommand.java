@@ -3,16 +3,14 @@ package slogo.backend.commands.basic.booleancommand;
 import slogo.backend.commands.basic.CommandInterface;
 import slogo.backend.utils.TurtleManager;
 
+import java.util.List;
+
 public class NotCommand implements CommandInterface {
-    private double value;
 
-    public NotCommand(double value) {
-        this.value = value;
-    }
-
+    public NotCommand() {}
 
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
-        return value == 0 ? 0d : 1d;
+    public double getReturnValue(List<Double> parameters, String turtleID) {
+        return parameters.get(0) == 0  ? 0d : 1d;
     }
 }

@@ -7,8 +7,15 @@ import slogo.backend.utils.*;
 import java.util.List;
 
 public class PenUpCommand implements CommandInterface {
+
+    private TurtleManager turtleManager;
+
+    public PenUpCommand(TurtleManager turtleManager) {
+        this.turtleManager = turtleManager;
+    }
+
     @Override
-    public double getReturnValue(TurtleManager turtleManager, String turtleID) {
+    public double getReturnValue(List<Double> parameters, String turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos, turtle.getOrientation());
