@@ -4,7 +4,6 @@ import slogo.backend.utils.TurtleManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,11 +35,11 @@ public class CommandFactory {
                 Constructor constructor;
                 try {
                     constructor = clazz.getDeclaredConstructor(TurtleManager.class);
-                    return ((CommandInterface) constructor.newInstance(myTurtleManager)).getReturnValue(parameters, turtleID);
+                    return ((BasicCommandInterface) constructor.newInstance(myTurtleManager)).getReturnValue(parameters, turtleID);
                 } catch (NoSuchMethodException e) {
                     try {
                         constructor = clazz.getConstructor();
-                        return ((CommandInterface) constructor.newInstance()).getReturnValue(parameters, turtleID);
+                        return ((BasicCommandInterface) constructor.newInstance()).getReturnValue(parameters, turtleID);
                     } catch (NoSuchMethodException ex) {
                         System.out.println("Something wrong");
                     } catch (Exception ex) {
