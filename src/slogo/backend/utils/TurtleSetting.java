@@ -1,3 +1,4 @@
+/*
 package slogo.backend.utils;
 
 import javafx.geometry.Point2D;
@@ -42,3 +43,4 @@ public class TurtleSetting {
         this.isPenDown = movement.isPenDown();
     }
 }
+*/

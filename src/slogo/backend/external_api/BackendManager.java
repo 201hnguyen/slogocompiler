@@ -1,3 +1,4 @@
+/*
 package slogo.backend.external_api;
 
 import slogo.backend.utils.Movement;
@@ -29,3 +30,4 @@ public class BackendManager {
         return myInterpreter.getUserVariables();
     }
 }
+*/

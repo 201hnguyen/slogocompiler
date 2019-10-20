@@ -1,22 +1,26 @@
 package slogo;
 
-import slogo.backend.commands.control.Repeat;
+import javafx.application.Application;
+import javafx.application.HostServices;
+import javafx.scene.paint.Color;
+import javafx.stage.*;
+import slogo.frontend.Visualization;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Main extends Application{
 
-/**
- * Feel free to completely change this code or delete it entirely. 
- */
-public class Main {
-    /**
-     * Start of the program.
-     */
-    public static void main (String[] args) {
-        Repeat repeat = new Repeat();
-        List<Object> parameters = new ArrayList<>();
-        parameters.add(3);
-        parameters.add("fd 50 fd 10"); // FIXME: currently split by comma just for sake of demo
-        repeat.execute(parameters);
+    @Override
+    public void start(Stage stage) throws Exception {
+        Visualization visualization = new Visualization();
+        visualization.helpHost = getHostServices();
+        stage.setResizable(false);
+        stage.setTitle("SLOGO");
+        stage.setScene(visualization.getScene());
+        stage.show();
+
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }

@@ -7,5 +7,5 @@ module slogo_team05 {
     requires javafx.media;
     requires javafx.web;
 
-    exports slogo.frontend;
+    exports slogo;
 }
