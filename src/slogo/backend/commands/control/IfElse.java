@@ -21,10 +21,16 @@ public class IfElse implements ControlInterface {
                 String command = conditionScanner.next();
                 System.out.println("IfElse condition, current passing to command tree: " + command);
                 commandTree.addToCommandTree(command);
-                System.out.println(commandTree.getLastDouble()); //TODO: I'm not getting a double here;
-            } catch (NeedValueOfParameterException | UnmatchedNumArgumentsException e) {
+            } catch (NeedValueOfParameterException e) {
                 // commandTree.putValueInsteadOfParameter();
             }
+        }
+
+        try {
+            conditionValue = commandTree.getLastDouble();
+            System.out.println("condition value: " + conditionValue);
+        } catch (UnmatchedNumArgumentsException e) {
+            e.printStackTrace();
         }
 
         if (conditionValue != 0) {
