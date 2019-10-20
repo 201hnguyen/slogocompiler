@@ -10,17 +10,19 @@ public class TurtleManager {
     private Pane myTurtlePane;
 
     public TurtleManager(Pane myPane) {
+
         myTurtlePane = myPane;
     }
 
-    public Turtle getTurtle(String turtleID) {
+    public Turtle getTurtle(String turtleID) throws NullPointerException{
         for(Turtle turtle : myTurtles) {
             if(turtle.getMyID().equals(turtleID)) {
                 return turtle;
             }
         }
+        myTurtles.add(new Turtle())
         //return null; there will be an exception later.
-        return myTurtles.get(0); // for testing.
+        //return myTurtles.get(0); // for testing.
     }
 
     public void updateTurtle(String turtleID, Movement movement, DrawStatus drawStatus) {

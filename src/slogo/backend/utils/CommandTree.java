@@ -106,6 +106,7 @@ public class CommandTree {
         if(rightMostNode.getLeftNode() != null) {
             list.add(Double.parseDouble(rightMostNode.getLeftNode().getCommandWord()));
         }
+
         if(rightMostNode.getRightNode() != null) {
             list.add(Double.parseDouble(rightMostNode.getRightNode().getCommandWord()));
         }
