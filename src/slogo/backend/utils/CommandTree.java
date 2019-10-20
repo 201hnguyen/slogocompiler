@@ -23,14 +23,20 @@ public class CommandTree {
     }
 
     public void addToCommandTree(String command) throws NeedValueOfParameterException {
-        System.out.println(command);
-        if (commandTreeNode.getCommandWord().equals("") && isThisStringDouble(command)) {
-            //error
+
+        if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
+            if(isThisStringDouble(command)) {
+                // error
+            } else {
+                commandTreeNode.setCommandWord(command);
+            }
         }
-        if (isThisStringDouble(command)) {
-            addNumberToTree(command);
-        } else {
-            addCommandToTree(command);
+        else {
+            if (isThisStringDouble(command)) {
+                addNumberToTree(command);
+            } else {
+                addCommandToTree(command);
+            }
         }
         interpretTreeFromRight();
     }
@@ -65,7 +71,9 @@ public class CommandTree {
             }
         }
         catch (ClassNotFoundException e) {
-            throw new NeedValueOfParameterException(command);
+            if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
+                throw new NeedValueOfParameterException(command);
+            }
         }
     }
 
@@ -90,7 +98,6 @@ public class CommandTree {
     private void replaceRightMostCommandWithNumber(double num) {
         rightMostNode.setCommandWord("" + num);
         rightMostNode.deleteChildren();
-
         if(rightMostNode.getParentNode() != null) {
             moveRightNodeUp();
         }
