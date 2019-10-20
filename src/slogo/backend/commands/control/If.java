@@ -13,17 +13,24 @@ public class If implements ControlInterface {
     public double execute(TurtleManager turtleManager, List<String> parameters) {
         CommandTree commandTree = new CommandTree(turtleManager);
 
-        double conditionValue = 1;
+        double conditionValue = 5;
         Scanner conditionScanner = new Scanner(parameters.get(0));
         while (conditionScanner.hasNext()) {
             try {
                 String command = conditionScanner.next();
                 System.out.println("If condition, current passing to command tree: " + command);
                 commandTree.addToCommandTree(command);
-                System.out.println("last double: " + commandTree.getLastDouble()); //TODO: I'm not getting a double here;
-            } catch (NeedValueOfParameterException | UnmatchedNumArgumentsException e) {
+//                System.out.println("last double: " + commandTree.getLastDouble()); //TODO: I'm not getting a double here;
+            } catch (NeedValueOfParameterException e) {
 
             }
+        }
+
+        try {
+            conditionValue = commandTree.getLastDouble();
+            System.out.println("condition value: " + conditionValue);
+        } catch (UnmatchedNumArgumentsException e) {
+            e.printStackTrace();
         }
 
         if (conditionValue != 0) {

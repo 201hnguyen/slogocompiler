@@ -19,17 +19,16 @@ import java.util.regex.Pattern;
 public class CommandBlockManager {
     private static final String COMMANDS_RESOURCE_PATH = "resources/DefinedCommands";
     private static final String CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
+    private static final String MAKE_USER_DEFINED_RESOURCE_PATH = "resources/DefinedUserRelatedCommands";
 
     private ResourceBundle myCommandsResourceBundle = ResourceBundle.getBundle(COMMANDS_RESOURCE_PATH);
     private ResourceBundle myControlsResourceBundle = ResourceBundle.getBundle(CONTROLS_RESOURCE_PATH);
+    private ResourceBundle myUserDefinedResourceBundle = ResourceBundle.getBundle(MAKE_USER_DEFINED_RESOURCE_PATH);
     private String myCommandBlockString;
     private ControlFactory myControlFactory;
     private CommandTree myCommandTree;
     private TurtleManager myTurtleManager;
     private PeekableScanner myScanner;
-
-    private double myLatestExecutedInstructionReturnValue;
-    private boolean executedInstructions;
     private Map<String, Double> myUserDefinedVariables;
     private Map<String, String> myUserDefinedFunctions;
 
@@ -60,6 +59,8 @@ public class CommandBlockManager {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
+            } else if (myUserDefinedResourceBundle.containsKey(command)) {
+                System.out.println("Command: " + command);
             } else {
 
             }
