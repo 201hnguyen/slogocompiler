@@ -1,6 +1,7 @@
 package slogo.backend.utils;
 
 import slogo.backend.NeedValueOfParameterException;
+import slogo.backend.UnmatchedNumArgumentsException;
 import slogo.backend.commands.basic.CommandFactory;
 
 import java.util.ArrayList;
@@ -31,6 +32,23 @@ public class CommandTree {
             addCommandToTree(command);
         }
         interpretTreeFromRight();
+    }
+
+    public void putValueInsteadOfParameter(double value) {
+        rightMostNode.setCommandWord(""+value);
+        if(rightMostNode.getParentNode() != null) {
+            moveRightNodeUp();
+        }
+    }
+
+    public double getLastDouble() throws UnmatchedNumArgumentsException {
+        if(commandTreeNode.getCommandWord().equals("")) {
+            return 0d;
+        }
+        if(commandTreeNode.getChildrenNumber() != 0 || (!isThisStringDouble(commandTreeNode.getCommandWord()))) {
+            throw new UnmatchedNumArgumentsException("Ummatched Num");
+        }
+        return Double.parseDouble(commandTreeNode.getCommandWord());
     }
 
     private void interpretTreeFromRight() throws NeedValueOfParameterException{
@@ -70,15 +88,16 @@ public class CommandTree {
         rightMostNode.deleteChildren();
 
         if(rightMostNode.getParentNode() != null) {
-            rightMostNode = rightMostNode.getParentNode();
-            if(rightMostNode.getLeftNode() == null) {
-                CommandTreeNode treeNode = rightMostNode.getRightNode();
-                rightMostNode.deleteChildren();
-                rightMostNode.setLeftNode(treeNode);
-            }
-        } else {
-            // may throw exception for this later
-            rightMostNode.setCommandWord("");
+            moveRightNodeUp();
+        }
+    }
+
+    private void moveRightNodeUp() {
+        rightMostNode = rightMostNode.getParentNode();
+        if(rightMostNode.getLeftNode() == null) {
+            CommandTreeNode treeNode = rightMostNode.getRightNode();
+            rightMostNode.deleteChildren();
+            rightMostNode.setLeftNode(treeNode);
         }
     }
 
