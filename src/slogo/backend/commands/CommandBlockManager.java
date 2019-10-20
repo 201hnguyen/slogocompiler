@@ -1,6 +1,8 @@
 package slogo.backend.commands;
 
+import slogo.backend.NeedValueOfParameterException;
 import slogo.backend.commands.control.ControlFactory;
+import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleManager;
 
 import java.util.*;
@@ -22,32 +24,35 @@ public class CommandBlockManager {
     private ResourceBundle myControlsResourceBundle = ResourceBundle.getBundle(CONTROLS_RESOURCE_PATH);
     private String myCommandBlockString;
     private ControlFactory myControlFactory;
-    private CommandStacks myCommandStacks;
+    private CommandTree myCommandTree;
     private TurtleManager myTurtleManager;
-    private Scanner myScanner;
+    private PeekableScanner myScanner;
 
     private double myLatestExecutedInstructionReturnValue;
     private boolean executedInstructions;
     private Map<String, Double> myUserDefinedVariables;
     private Map<String, String> myUserDefinedFunctions;
-//    private CommandFactory myCommandFactory;
 
     public CommandBlockManager(String commandBlock, TurtleManager turtleManager) {
         myCommandBlockString = commandBlock;
         myTurtleManager = turtleManager;
-        myCommandStacks = new CommandStacks(myTurtleManager);
+        myCommandTree = new CommandTree(myTurtleManager);
         myControlFactory = new ControlFactory();
-        myScanner = new Scanner(myCommandBlockString);
-        System.out.println("full command string: " + myCommandBlockString);
-        executeInstructionBlock();
+        myScanner = new PeekableScanner(myCommandBlockString);
+        System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
-    private double executeInstructionBlock() {
+    public double executeInstructionBlock() {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
             if (myCommandsResourceBundle.containsKey(command) || Pattern.matches("-?[0-9]+\\.?[0-9]*", command)) {
-                myCommandStacks.addToStack(command);
+                try {
+                    System.out.println("BlockManager, currently passing to command tree: " + command);
+                    myCommandTree.addToCommandTree(command);
+                } catch (NeedValueOfParameterException e) {
+                    //TODO: put parameter
+                }
             } else if (myControlsResourceBundle.containsKey(command)) {
                 List<String> commandArguments = prepareBlockCommand();
                 try {
@@ -78,12 +83,9 @@ public class CommandBlockManager {
         }
         String argument = builder.toString();
         arguments.add(argument);
-        if (endSignaler.equals("]") && myScanner.next().equals("[")) {
+        if (endSignaler.equals("]") && myScanner.peek().equals("[")) {
+            myScanner.next();
             buildIndividualControlArgument(endSignaler, arguments);
         }
     }
-    public boolean instructionsWereExecuted() {
-        return executedInstructions;
-    }
-
 }

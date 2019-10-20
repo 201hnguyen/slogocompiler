@@ -23,6 +23,10 @@ public class Main {
 //        repeat.execute(parameters);
         Pane pane = new Pane();
         TurtleManager turtleManager = new TurtleManager(pane);
-        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 IfElse 5 < 50 [ Forward 10 ] [ Forward 20 ] Forward 30", turtleManager);
+//        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 IfElse LessThan 5 < 50 [ Forward 10 ] [ Forward 20 ] Forward 30", turtleManager);
+//        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 Repeat 3 [ Forward 10 ] Forward 30", turtleManager);
+        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 If LessThan 5 < 50 [ Forward 10 ] Forward 30", turtleManager);
+
+        commandBlockManager.executeInstructionBlock();
     }
 }
