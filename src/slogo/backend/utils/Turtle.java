@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 
 public class Turtle extends ImageView {
 
-    private static final double INITIAL_ORIENTATION = 90;
-    private static final double INITIAL_DISPLACEMENT = 0;
+    private static final double INITIAL_ORIENTATION = 90d;
+    private static final double INITIAL_DISPLACEMENT = 0d;
 
     private boolean showing;
     private boolean penDown;

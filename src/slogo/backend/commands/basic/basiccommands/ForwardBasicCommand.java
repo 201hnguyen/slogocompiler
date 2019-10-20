@@ -21,6 +21,6 @@ public class ForwardBasicCommand implements BasicCommandInterface {
 
         turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
-        return parameters.get(1);
+        return parameters.get(0);
     }
 }
