@@ -1,8 +1,5 @@
 package slogo.backend.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CommandTreeNode {
     private CommandTreeNode parentNode;
     private CommandTreeNode leftNode;
