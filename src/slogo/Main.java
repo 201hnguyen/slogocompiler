@@ -10,13 +10,8 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        Visualization visualization = new Visualization();
+        Visualization visualization = new Visualization(stage);
         visualization.helpHost = getHostServices();
-        stage.setResizable(false);
-        stage.setTitle("SLOGO");
-        stage.setScene(visualization.getScene());
-        stage.show();
-
     }
 
     public static void main(String[] args) {
