@@ -1,8 +1,10 @@
 package slogo.backend.commands;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import slogo.backend.commands.control.ControlFactory;
+import slogo.backend.utils.TurtleManager;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * This class executes sequential blocks of instructions (overhead class for entire block of instruction that user enters;
@@ -13,46 +15,75 @@ import java.util.Stack;
  */
 
 public class CommandBlockManager {
-    private String myCommandBlockAsString;
+    private static final String COMMANDS_RESOURCE_PATH = "resources/DefinedCommands";
+    private static final String CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
+
+    private ResourceBundle myCommandsResourceBundle = ResourceBundle.getBundle(COMMANDS_RESOURCE_PATH);
+    private ResourceBundle myControlsResourceBundle = ResourceBundle.getBundle(CONTROLS_RESOURCE_PATH);
+    private String myCommandBlockString;
+    private ControlFactory myControlFactory;
+    private CommandStacks myCommandStacks;
+    private TurtleManager myTurtleManager;
+    private Scanner myScanner;
+
     private double myLatestExecutedInstructionReturnValue;
     private boolean executedInstructions;
     private Map<String, Double> myUserDefinedVariables;
     private Map<String, String> myUserDefinedFunctions;
-    private Stack<String> myCommandStack;
-    private Stack<Double> myParametersStack;
 //    private CommandFactory myCommandFactory;
 
-    public CommandBlockManager(String commandBlock) {
-        myCommandBlockAsString = commandBlock;
-        executedInstructions = false;
-        myUserDefinedFunctions = new HashMap<>();
-        myUserDefinedVariables = new HashMap<>();
-        myCommandStack = new Stack<>();
-        myParametersStack = new Stack<>();
-//        myCommandFactory = new CommandFactory();
+    public CommandBlockManager(String commandBlock, TurtleManager turtleManager) {
+        myCommandBlockString = commandBlock;
+        myTurtleManager = turtleManager;
+        myCommandStacks = new CommandStacks(myTurtleManager);
+        myControlFactory = new ControlFactory();
+        myScanner = new Scanner(myCommandBlockString);
+        System.out.println("full command string: " + myCommandBlockString);
+        executeInstructionBlock();
     }
 
-    public void executeInstructionBlock() {
-//        myCommandFactory.makeCommand(myCommandStack.pop());
+    private double executeInstructionBlock() {
+        double returnValue = 0;
+        while (myScanner.hasNext()) {
+            String command = myScanner.next();
+            if (myCommandsResourceBundle.containsKey(command) || Pattern.matches("-?[0-9]+\\.?[0-9]*", command)) {
+                myCommandStacks.addToStack(command);
+            } else if (myControlsResourceBundle.containsKey(command)) {
+                List<String> commandArguments = prepareBlockCommand();
+                try {
+                    returnValue = myControlFactory.execute(command, commandArguments, myTurtleManager);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace(); //FIXME
+                }
+            } else {
 
-        System.out.println("Here is where these instructions (e.g. " + myCommandBlockAsString + ") should execute.");
-        executedInstructions = true;
+            }
+        }
+        return returnValue;
     }
 
+    private List<String> prepareBlockCommand() {
+        List<String> controlCommandArguments = new ArrayList<>();
+        buildIndividualControlArgument("[", controlCommandArguments);
+        buildIndividualControlArgument("]", controlCommandArguments);
+        return controlCommandArguments;
+    }
+
+    private void buildIndividualControlArgument(String endSignaler, List<String> arguments) {
+        StringBuilder builder = new StringBuilder();
+        String nextWord = myScanner.next();
+        while (!nextWord.equals(endSignaler)) {
+            builder.append(nextWord + " ");
+            nextWord = myScanner.next();
+        }
+        String argument = builder.toString();
+        arguments.add(argument);
+        if (endSignaler.equals("]") && myScanner.next().equals("[")) {
+            buildIndividualControlArgument(endSignaler, arguments);
+        }
+    }
     public boolean instructionsWereExecuted() {
         return executedInstructions;
-    }
-
-    public double getLatestExecutedInstructionReturnValue() {
-        return myLatestExecutedInstructionReturnValue;
-    }
-
-    public Map<String, Double> getUserVariables() {
-        return Map.copyOf(myUserDefinedVariables);
-    }
-
-    public Map<String, String> getUserDefinedFunctions() {
-        return Map.copyOf(myUserDefinedFunctions);
     }
 
 }
