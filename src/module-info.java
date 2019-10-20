@@ -8,4 +8,6 @@ module slogo_team05 {
     requires javafx.web;
 
     exports slogo.frontend;
+    exports slogo.backend;
+    exports slogo;
 }

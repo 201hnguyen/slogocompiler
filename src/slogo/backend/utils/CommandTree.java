@@ -23,6 +23,7 @@ public class CommandTree {
     }
 
     public void addToCommandTree(String command) throws NeedValueOfParameterException {
+        System.out.println(command);
         if (commandTreeNode.getCommandWord().equals("") && isThisStringDouble(command)) {
             //error
         }
@@ -55,9 +56,12 @@ public class CommandTree {
         String command = rightMostNode.getCommandWord();
         try {
             int parameter = myCommandFactory.getNumParameter(command);
-            while(!(parameter < rightMostNode.getChildrenNumber()) && rightMostNode.getCommandWord() != "") {
+            while(!(parameter > rightMostNode.getChildrenNumber()) && command != "") {
+                printFullCommand();
                 double value = myCommandFactory.execute(command, turtleID, getParameters());
                 replaceRightMostCommandWithNumber(value);
+                command = rightMostNode.getCommandWord();
+                parameter = myCommandFactory.getNumParameter(command);
             }
         }
         catch (ClassNotFoundException e) {
@@ -111,5 +115,13 @@ public class CommandTree {
             list.add(Double.parseDouble(rightMostNode.getRightNode().getCommandWord()));
         }
         return list;
+    }
+
+    private void printFullCommand() {
+        System.out.print(rightMostNode.getCommandWord() + " ");
+        for(double a : getParameters()) {
+            System.out.print(a + " ");
+        }
+        System.out.println();
     }
 }
