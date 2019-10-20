@@ -1,32 +1,44 @@
 package slogo.backend.commands.control;
 
+import slogo.backend.NeedValueOfParameterException;
+import slogo.backend.UnmatchedNumArgumentsException;
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.utils.CommandTree;
+import slogo.backend.utils.TurtleManager;
 
 import java.util.List;
+import java.util.Scanner;
 
-public class IfElse {
-    // parameter 0 is a boolean on whether or not the condition is true
-    // parameter 1 is String of all of the true branch's instructions (basically treat it like a block that the user
-    // just entered in)
-    // parameter 2 is String of all the false branch's instructions
+public class IfElse implements ControlInterface {
 
-    public double execute(List<Object> parameters) {
-        boolean conditionIsTrue = (boolean) parameters.get(0);
-        String trueBranchInstructions = parameters.get(1).toString();
-        String falseBranchInstructions = parameters.get(2).toString();
+    public double execute(TurtleManager turtleManager, List<String> parameters) {
+        CommandTree commandTree = new CommandTree(turtleManager);
 
-        CommandBlockManager commandBlockManager;
-
-        if (conditionIsTrue) {
-            commandBlockManager = new CommandBlockManager(trueBranchInstructions);
-        } else {
-            commandBlockManager = new CommandBlockManager(falseBranchInstructions);
+        double conditionValue = 0;
+        Scanner conditionScanner = new Scanner(parameters.get(0));
+        while (conditionScanner.hasNext()) {
+            try {
+                String command = conditionScanner.next();
+                System.out.println("IfElse condition, current passing to command tree: " + command);
+                commandTree.addToCommandTree(command);
+            } catch (NeedValueOfParameterException e) {
+                // commandTree.putValueInsteadOfParameter();
+            }
         }
 
-        if (commandBlockManager.instructionsWereExecuted()) {
-            return commandBlockManager.getLatestExecutedInstructionReturnValue();
+        try {
+            conditionValue = commandTree.getLastDouble();
+            System.out.println("condition value: " + conditionValue);
+        } catch (UnmatchedNumArgumentsException e) {
+            e.printStackTrace();
+        }
+
+        if (conditionValue != 0) {
+            CommandBlockManager trueBlockManager = new CommandBlockManager(parameters.get(1), turtleManager);
+            return trueBlockManager.executeInstructionBlock();
         } else {
-            return 0;
+            CommandBlockManager falseBlockManager = new CommandBlockManager(parameters.get(2), turtleManager);
+            return falseBlockManager.executeInstructionBlock();
         }
     }
 }
