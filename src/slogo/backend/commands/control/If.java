@@ -20,18 +20,23 @@ public class If implements ControlInterface {
                 String command = conditionScanner.next();
                 System.out.println("If condition, current passing to command tree: " + command);
                 commandTree.addToCommandTree(command);
-//                System.out.println("last double: " + commandTree.getLastDouble()); //TODO: I'm not getting a double here;
             } catch (NeedValueOfParameterException e) {
-
+                //FIXME
             }
         }
 
         try {
-            conditionValue = commandTree.getLastDouble();
-            System.out.println("condition value: " + conditionValue);
+            System.out.println("last double: " + commandTree.getLastDouble());
         } catch (UnmatchedNumArgumentsException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //fixme
         }
+
+//        try {
+//            conditionValue = commandTree.getLastDouble();
+//            System.out.println("condition value: " + conditionValue);
+//        } catch (UnmatchedNumArgumentsException e) {
+//            e.printStackTrace();
+//        }
 
         if (conditionValue != 0) {
             CommandBlockManager trueBlockManager = new CommandBlockManager(parameters.get(1), turtleManager);
