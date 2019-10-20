@@ -1,5 +1,6 @@
 package slogo.frontend;
 
+import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,18 +8,18 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
-import java.util.ArrayList;
+import javafx.stage.Stage;
 
 public class Visualization {
-    private static final double BUTTON_WIDTH = 350;
+    private static final double BUTTON_WIDTH = 400;
     private static final double BUTTON_HEIGHT = 50;
-    private static final double DROP_WIDTH = 100;
+    private static final double DROP_WIDTH = 165;
     private static final double DROP_HEIGHT = 40;
+    private static final double PICKER_WIDTH = 100;
+    private static final double PICKER_HEIGHT = 40;
     private static final double SCENE_WIDTH = 800;
     private static final double SCENE_HEIGHT = 600;
     private static final double INPUT_HEIGHT = 99;
@@ -33,6 +34,7 @@ public class Visualization {
     private AnchorPane root;
     private Button startButton;
     private Button clearButton;
+    private Button helpButton;
     private HBox buttonBox;
     private HBox checkBoxes;
     private ComboBox languageDropDown;
@@ -43,75 +45,90 @@ public class Visualization {
     private CheckBox backgroundBox;
     private TextArea inputField;
     private TextFlow historyField;
-
-
-
+    private TextFlow variableField;
+    private VBox historyTracker;
+    private ScrollPane historyPane;
+    private ScrollPane variablePane;
+    public HostServices helpHost;
+    private Stage stage;
     private DisplayScreen displayScreen = new DisplayScreen();
 
-    public Visualization() {
-        startButton = startButton();
-        clearButton = clearButton();
-        languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"});
-        imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"});
+    public Visualization(Stage stage) {
+        this.stage = stage;
+        startButton = buttonCreator("Start", event -> {
+            historyField.getChildren().add(new Text(inputField.getText() + "\n"));
+            if (inputField.getText().contains(":")) {
+                String variable = inputField.getText().substring(inputField.getText().lastIndexOf(":"));
+                variableField.getChildren().addAll(new Text(variable + "\n")); }
+        });
+        clearButton = buttonCreator("Clear", event -> inputField.clear());
+        helpButton = buttonCreator("Help", event ->  helpHost.showDocument("https://www2.cs.duke.edu/courses/compsci308/current/assign/03_parser/commands.php"));
+        languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"}, "Language");
+        imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"}, "Image");
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, historyTracker(), buttons(), commandBox(), colorPalette(), checkBoxes());
+        root.getChildren().addAll(displayScreen, trackHistory(), buttons(), commandBox(), colorPalette(), checkBoxes());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-
+        startStage();
     }
-
-    private ComboBox dropDown (String[] list){
+    private ComboBox dropDown (String[] list, String tag){
         ComboBox comboBox = new ComboBox(FXCollections.observableArrayList(list));
         comboBox.setPrefSize(DROP_WIDTH, DROP_HEIGHT);
+        comboBox.setPromptText("Choose" + " " + tag);
         return comboBox;
     }
-
     private TilePane commandBox() {
-        inputField = new TextArea("Enter your command here!");
+        inputField = new TextArea("Enter command here!");
         inputField.setPrefSize(INPUT_WIDTH,INPUT_HEIGHT);
         TilePane inputBox = new TilePane();
         inputBox.getChildren().addAll(inputField);
         inputBox.setLayoutY(500);
         return inputBox;
     }
-
-    private TextFlow historyTracker() {
-        historyField = new TextFlow();
-        historyField.setLayoutX(620);
-        historyField.setLayoutY(10);
-        return historyField;
+    private VBox trackHistory() {
+        historyTracker = new VBox();
+        historyTracker.setLayoutX(600);
+        historyTracker.setLayoutY(200);
+        historyTracker.getChildren().addAll(tabPane());
+        return historyTracker;
     }
-
+    private TabPane tabPane() {
+        TabPane tabs = new TabPane();
+        historyField = new TextFlow();
+        variableField = new TextFlow();
+        historyPane = scrollMaker();
+        variablePane = scrollMaker();
+        historyPane.setContent(historyField);
+        variablePane.setContent(variableField);
+        Tab historyTab = new Tab("History");
+        Tab variableTab = new Tab("Variables");
+        historyTab.setContent(historyPane);
+        variableTab.setContent(variablePane);
+        tabs.getTabs().addAll(historyTab, variableTab);
+        tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        return tabs;
+    }
+    private ScrollPane scrollMaker() {
+        ScrollPane pane = new ScrollPane();
+        pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        pane.setPrefSize(200,100);
+        return pane;
+    }
     private HBox buttons() {
         GridPane buttons = new GridPane();
         buttons.setPadding(new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING));
         buttonBox = new HBox();
-        buttonBox.getChildren().addAll(startButton,languageDropDown, clearButton, imageDropDown);
+        buttonBox.getChildren().addAll(startButton,languageDropDown, clearButton, imageDropDown, helpButton);
         buttonBox.setSpacing(25);
         buttonBox.setLayoutY(430);
-        buttonBox.setLayoutX(70);
+        buttonBox.setLayoutX(20);
         return buttonBox;
     }
-
-    private Button startButton() {
-        Button button = new Button("Start");
+    private Button buttonCreator(String name, EventHandler<ActionEvent> handler) {
+        Button button = new Button(name);
         button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.setOnAction(event -> {
-            historyField.getChildren().add(new Text(inputField.getText() + "\n"));
-           // historyField.getChildren().add(new Text(inputField.getText()));
-
-        });
+        button.setOnAction(handler);
         return button;
     }
-
-    private Button clearButton() {
-        Button button = new Button("Clear");
-        button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.setOnAction(event -> {
-            inputField.clear();
-        });
-        return button;
-    }
-
     private HBox checkBoxes() {
         checkBoxes = new HBox();
         penBox = new CheckBox("Pen");
@@ -122,15 +139,13 @@ public class Visualization {
         checkBoxes.setSpacing(10);
         return checkBoxes;
     }
-
     private VBox colorPalette() {
         VBox palette = new VBox();
         colorPicker = new ColorPicker();
-        colorPicker.setMaxSize(DROP_WIDTH,DROP_HEIGHT);
+        colorPicker.setMaxSize(PICKER_WIDTH,PICKER_HEIGHT);
         colorCircle = new Circle(CIRCLE_RADIUS);
         colorCircle.setFill(colorPicker.getValue());
         displayScreen.setBackground(colorPicker.getValue());
-
         colorPicker.setOnAction(event -> {
             colorCircle.setFill(colorPicker.getValue());
             if (backgroundBox.isSelected()) {
@@ -143,10 +158,10 @@ public class Visualization {
         palette.setLayoutX(630);
         return palette;
     }
-
-    public Scene getScene() {
-            return scene;
-        }
+    private void startStage() {
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        stage.setTitle("SLOGO IDLE");
     }
-
-
+}

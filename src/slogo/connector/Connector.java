@@ -1,3 +1,4 @@
+/*
 package slogo.connector;
 
 import javafx.animation.Animation;
@@ -30,3 +31,4 @@ public class Connector {
         return "fd 50"; //for testing
     }
 }
+*/
