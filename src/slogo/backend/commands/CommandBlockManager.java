@@ -80,13 +80,22 @@ public class CommandBlockManager {
         String nextWord = myScanner.next();
         while (!nextWord.equals(endSignaler)) {
             builder.append(nextWord + " ");
-            nextWord = myScanner.next();
+            try {
+                nextWord = myScanner.next();
+            } catch (NullPointerException e) {
+
+            }
         }
         String argument = builder.toString();
         arguments.add(argument);
-        if (endSignaler.equals("]") && myScanner.peek().equals("[")) {
-            myScanner.next();
-            buildIndividualControlArgument(endSignaler, arguments);
+        try {
+            if (endSignaler.equals("]") && myScanner.peek().equals("[")) {
+                myScanner.next();
+                buildIndividualControlArgument(endSignaler, arguments);
+            }
+        } catch (NullPointerException e) {
+
         }
+
     }
 }

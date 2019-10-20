@@ -25,8 +25,8 @@ public class Main {
         TurtleManager turtleManager = new TurtleManager(pane);
 //        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 IfElse LessThan 5 50 [ Forward 10 ] [ Forward 20 ] Forward 30", turtleManager);
 //        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 Repeat 3 [ Forward 10 ] Forward 30", turtleManager);
-//        CommandBlockManager commandBlockManager = new CommandBlockManager("Sum 10 50 If LessThan 5 50 [ Sum 10 10 ] Sum 10 30", turtleManager);
-        CommandBlockManager commandBlockManager = new CommandBlockManager("MakeVariable :a Sum 10 10 ", turtleManager);
+        CommandBlockManager commandBlockManager = new CommandBlockManager("Sum 10 50 If Sum 5 50 [ Sum 10 10 ] ", turtleManager);
+//        CommandBlockManager commandBlockManager = new CommandBlockManager("MakeVariable :a Sum 10 10 ", turtleManager);
 
         commandBlockManager.executeInstructionBlock();
     }
