@@ -17,8 +17,8 @@ public class Turtle extends ImageView {
 
     public Turtle(Image image, String myID) {
         super(image);
-        setX(200);
-        setY(200);
+        setX(0);
+        setY(0);
         setFitHeight(30);
         setFitWidth(30);
         this.myID = myID;
