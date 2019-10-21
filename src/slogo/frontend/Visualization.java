@@ -7,11 +7,16 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import slogo.backend.utils.TurtleManager;
+
+import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class Visualization {
     private static final double BUTTON_WIDTH = 400;
@@ -51,12 +56,14 @@ public class Visualization {
     private ScrollPane variablePane;
     public HostServices helpHost;
     private Stage stage;
+
     private DisplayScreen displayScreen = new DisplayScreen();
 
-    public Visualization(Stage stage) {
+    public Visualization(Stage stage) throws FileNotFoundException {
         this.stage = stage;
         startButton = buttonCreator("Start", event -> {
             historyField.getChildren().add(new Text(inputField.getText() + "\n"));
+
             if (inputField.getText().contains(":")) {
                 String variable = inputField.getText().substring(inputField.getText().lastIndexOf(":"));
                 variableField.getChildren().addAll(new Text(variable + "\n")); }
@@ -157,6 +164,10 @@ public class Visualization {
         palette.setSpacing(10);
         palette.setLayoutX(630);
         return palette;
+    }
+
+    public TurtleManager getTurtle() {
+        return new TurtleManager(displayScreen, new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("START.png"))));
     }
     private void startStage() {
         stage.setScene(scene);

@@ -13,10 +13,15 @@ public class TurtleManager {
 
     private List<Turtle> myTurtles = new ArrayList<>();
     private Pane myTurtlePane;
+    private Image myTurtleImage;
 
-    public TurtleManager(Pane myPane) {
+    public TurtleManager(Pane myPane, Image image) {
 
         myTurtlePane = myPane;
+        myTurtleImage = image;
+        Turtle turtle = new Turtle(image, "Turtle1");
+        myTurtles.add(turtle);
+        myTurtlePane.getChildren().add(turtle);
     }
 
     public Turtle getTurtle(String turtleID){
