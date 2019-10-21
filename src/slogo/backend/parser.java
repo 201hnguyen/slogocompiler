@@ -1,89 +1,134 @@
 package slogo.backend;
-
-import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class parser {
-    //test
-    /**
-     * Simple parser based on regular expressions that matches program strings to
-     * kinds of language features.
-     *
-     * @author Amber Johnson and Robert Duvall
-     */
-    //TODO: fix this path
-    //where to find resources specifically for this class
-    //private static final String RESOURCES_PACKAGE = "C://Users/amber1/Documents/CS308/slogo_team05/src/resources/languages";
+public class Parser {
 
-    private static final String RESOURCES_PACKAGE =  "resources.languages/";
+    private static final String WHITESPACE = "\\s+"; //used in splitInput(String input)
+    private static final String RESOURCES_PACKAGE =  "resources.languages/"; //where the language resource files are located
+    private static final String SYNTAX = "Syntax";
+
+    private static String[] mySplitInput; //used in splitInput()
+    private static List<Map.Entry<String, Pattern>> myLanguageEntries = new ArrayList<>(); // A list of map entries (command : regular expression pattern from Syntax.properties)
+    private static List<Map.Entry<String, Pattern>> mySyntaxEntries = new ArrayList<>(); //
+    private static ResourceBundle myResource; //used in addPattern()
+
+    private String myCommandsTranslated="";
+
+    //TODO:  what is input is more than one line?
+    //TODO:  put actual symbol not properties file key if from Syntax.properties
+
+    //constructor
+    public Parser (String language) {
+        addPatterns(myLanguageEntries, language);
+        addPatterns(mySyntaxEntries, SYNTAX);
+    }//end constructor
 
 
-    // "types" and the regular expression patterns that recognize those types
-    private List<Map.Entry<String, Pattern>> mySymbols;
-
-    // list of commands that are
-    public List<String> myCommands;
-
-
-    /**
-     * Create an empty parser
-     */
-    public parser () {
-        mySymbols = new ArrayList<>();
-        myCommands = new ArrayList<>();
-
-    }
-
-    /**
-     * Adds the given resource file to this language's recognized types
-     */
-    public void addPatterns (String syntax) {
-        //System.out.println("entered addPaterns()");
-        //System.out.println(RESOURCES_PACKAGE);
-
-        ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PACKAGE + syntax); //makes the path for syntax.properties
-        //System.out.println(RESOURCES_PACKAGE); //testing
-        for (String key : Collections.list(resources.getKeys())) {
-            String regex = resources.getString(key);
-            mySymbols.add(new AbstractMap.SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+    //addPatterns for given by getting languages resource bundle
+    private void addPatterns(List resourceEntries, String language) {
+        myResource = ResourceBundle.getBundle(RESOURCES_PACKAGE + language);
+        for (String key : Collections.list(myResource.getKeys())) {
+            String regex = myResource.getString(key);
+            resourceEntries.add(new AbstractMap.SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
         }
-    }
+    }//end method
 
-    /**
-     * Returns the type associated with the given text if one exists
-     * returned value will be one of the keys in Syntax.properties
-     * @param text
-     */
-    //TODO: add an exception
-    public String getSymbol (String text) {
-        // final String ERROR = "NO MATCH";
-//        try {
-        for (Map.Entry<String, Pattern> e : mySymbols) {
-            if (match(text, e.getValue())) {
+    //split the string from user input into an array list of strings
+    //called in translateMyCommands()
+    //TODO: add rules for multi-line code?
+    private String[] splitInput(String full_input) {
+        String[] initSplit = full_input.split(WHITESPACE);
+        mySplitInput = initSplit;
+        return mySplitInput;
+    }//end method
+
+
+    //get the key of a given pattern (value from Syntax.properties)
+    //called in translateMyCommands
+    //TODO: make a new cmdException
+    public String getResourceKey(String single_cmd) {
+        final String ERROR = "NO MATCH";
+        //for instructions
+        for (Map.Entry<String, Pattern> e : myLanguageEntries) {
+            if (match(single_cmd, e.getValue())) {
                 return e.getKey();
             }
         }
-        return "Commands not found for selected language"; //TODO: move to cmdException.java
-    }
-//        //}
-//       catch (IOException e) {
-//        return ERROR;
-//          throw new cmdException(e);
-//       }
+        //for symbols
+        for (Map.Entry<String, Pattern> e : mySyntaxEntries) {
+            if (match(single_cmd, e.getValue())) {
+                return single_cmd;
+            }
+        }
+        // FIXME: perhaps throw an exception instead
+        return ERROR;
+    }//end method
 
 
+    //logic to make the string that will be sent to the back-end IFF all commands are valid
+    public String translateMyCommands (String full_input, String language) {
+        String ERROR = "Not all commands valid given selected language\n";
 
+        //split input
+        //TODO: check splitInput is comprehensive
+        String[] inputSplit = splitInput(full_input);
+
+        //get resource key
+        int badStr = 0;
+        for (String s : inputSplit) {
+            if (s.trim().length() > 0) {
+                //System.out.println(String.format("%s : %s", s, getResourceKey(s)));
+                if (s.compareTo("NO MATCH") == 0) { //
+                    badStr++;
+                }
+            }
+        }
+
+        //todo: add cmdException instead of ERROR
+        //if all commands have an identified type (badStr = 0), put all commands in string (for back-end)
+        if (badStr == 0) {
+            for (String s : inputSplit) {
+                if (isStringInt(s) == true) { //working
+                //if (getResourceKey(s).compareTo("Constant") == 0) {
+                    //System.out.println("entered first if statement"); //testing
+                    myCommandsTranslated = myCommandsTranslated + s + " ";
+                }
+                else {
+                    myCommandsTranslated = myCommandsTranslated + getResourceKey(s) + " ";
+                }
+            }
+            return myCommandsTranslated;
+        }
+        else {
+            return ERROR;
+        }
+    }//end method
+
+
+    //method used in getResourceEntry
     /**
      * Returns true if the given text matches the given regular expression pattern
      * called in getSymbol() method
+     * @author Robert C. Duvall
      * @param text
      * @param regex
      */
-    private boolean match (String text, Pattern regex) {
-        // THIS IS THE IMPORTANT LINE
+    private boolean match(String text, Pattern regex) {
         return regex.matcher(text).matches();
-    }
+    }//end method
 
 
-}
+    //helper method from StackOverflow thread: https://stackoverflow.com/questions/12558206/how-can-i-check-if-a-value-is-of-type-integer
+    //TODO: put in exception class
+    private boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }//end method
+
+}//end class

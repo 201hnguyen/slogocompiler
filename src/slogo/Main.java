@@ -1,24 +1,42 @@
 package slogo;
 
-import javafx.application.Application;
-import javafx.scene.paint.Color;
-import javafx.stage.*;
-import slogo.frontend.Visualization;
+import slogo.backend.Parser;
 
-public class Main extends Application{
+import java.util.ResourceBundle;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Visualization visualization= new Visualization();
-        stage.setResizable(false);
-        stage.setTitle("SLOGO");
-        stage.setScene(visualization.getScene());
-        stage.show();
+public class Main {
 
-    }
+    private static String test_input1 = "";
+    private static String test_input2 = "fd 50";
+    private static String test_input3 = "repeat 2 [ fd 50 ]";
+    private static String myLanguage = "English";
 
     public static void main(String[] args) {
-        launch(args);
+
+        Parser p = new Parser(myLanguage);
+        String toBackend = p.translateMyCommands(test_input3, myLanguage);
+        System.out.println(toBackend);
+
+
+//        //test Parser.splitInput
+////      System.out.println(test_input2);
+////      String[] test = Parser.splitInput(test_input2);
+////      for (int i = 0; i < test.length; i++) {
+////          System.out.println(test[i]);
+////      }
+//
+//        //test Parser.getCommandType
+////        Parser.addPatterns(myLanguage);
+////        String test = Parser.getCommandType("fd");
+////        System.out.println(test);
+//
+//        //test Parser.getTranslatedCommands()
+//        String cmd_translated = Parser.getTranslatedCommand(ResourceBundle.getBundle("resources.languages/" + myLanguage), "fd");
+//
+//        //String cmd_translated = Parser.getTranslatedCommand(ResourceBundle.getBundle("resources.languages/" + myLanguage), "5");
+//        System.out.println(cmd_translated);
+
+
     }
 
 }
