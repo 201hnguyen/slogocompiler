@@ -34,7 +34,7 @@ public class Main extends Application {
         Visualization visualization = new Visualization(stage);
         visualization.helpHost = getHostServices();
         TurtleManager turtleManager = visualization.getTurtle();
-        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50", turtleManager);
+        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward Product 5 Sum 10 6 Right 135 Backward Left Forward 60", turtleManager);
         commandBlockManager.executeInstructionBlock();
 
     }
