@@ -23,9 +23,9 @@ public class Main extends Application {
 
        public static void main (String[] args) {
         launch(args);
-        Parser p = new Parser(myLanguage);
-        String toBackend = p.translateMyCommands(test_input3, myLanguage);
-        System.out.println(toBackend);
+        //Parser p = new Parser(myLanguage);
+        //String toBackend = p.translateMyCommands(test_input3, myLanguage);
+        //System.out.println(toBackend);
 
     }
 
