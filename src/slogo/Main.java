@@ -5,6 +5,7 @@ import javafx.application.HostServices;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
 
@@ -15,7 +16,7 @@ public class Main extends Application{
         Visualization visualization = new Visualization(stage);
         visualization.helpHost = getHostServices();
         TurtleManager turtleManager = visualization.getTurtle();
-        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50", turtleManager);
+        CommandBlockManager commandBlockManager = new CommandBlockManager("hello", turtleManager);
         commandBlockManager.executeInstructionBlock();
     }
 
