@@ -57,6 +57,7 @@ public class Visualization {
     public HostServices helpHost;
     private Stage stage;
     private Text readerText;
+    private boolean inputSent = false;
 
     private DisplayScreen displayScreen = new DisplayScreen();
 
@@ -65,6 +66,7 @@ public class Visualization {
         startButton = buttonCreator("Start", event -> {
             readerText = new Text(inputField.getText() + "\n");
             historyField.getChildren().add(readerText);
+            inputSent = true;
             System.out.print(getInput());
 
             if (inputField.getText().contains(":")) {
@@ -180,6 +182,10 @@ public class Visualization {
     }
 
     public String getInput() {
-        return readerText.getText();
+        if(inputSent) {
+            inputSent = false;
+            return readerText.getText();
+        }
+        return "";
     }
 }
