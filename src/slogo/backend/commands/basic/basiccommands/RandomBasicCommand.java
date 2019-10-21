@@ -8,6 +8,6 @@ public class RandomBasicCommand implements BasicCommandInterface {
 
     @Override
     public double getReturnValue(List<Double> parameters, String turtleID) {
-        return ((int) Math.random() * parameters.get(0));
+        return (int) (Math.random() * parameters.get(0));
     }
 }
