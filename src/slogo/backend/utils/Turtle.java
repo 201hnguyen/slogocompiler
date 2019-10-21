@@ -4,19 +4,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Turtle extends ImageView {
+
+    private static final double INITIAL_ORIENTATION = 90d;
+    private static final double INITIAL_DISPLACEMENT = 0d;
+
     private boolean showing;
     private boolean penDown;
-    private double xPos = 0;
-    private double yPos = 0;
-    private double orientation = 90;
+    private double xPos;
+    private double yPos;
+    private double orientation;
     private String myID;
 
     public Turtle(Image image, String myID) {
         super(image);
+        setX(200);
+        setY(200);
+        setFitHeight(30);
+        setFitWidth(30);
         this.myID = myID;
-        xPos = 0;
-        yPos = 0;
-        orientation = 90;
+        xPos = INITIAL_DISPLACEMENT;
+        yPos = INITIAL_DISPLACEMENT;
+        orientation = INITIAL_ORIENTATION;
         showing = true;
         penDown = true;
     }
@@ -49,5 +57,10 @@ public class Turtle extends ImageView {
     protected void update(Movement movement, DrawStatus drawStatus) {
         /**TODO: Update the turtle according to the movement object
          */
+        xPos = movement.getEndPosition().getX();
+        yPos = movement.getEndPosition().getY();
+        orientation = movement.getOrientation();
+        showing = drawStatus.isTurtleVisible();
+        penDown = drawStatus.isPenDown();
     }
 }

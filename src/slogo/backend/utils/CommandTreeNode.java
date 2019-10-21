@@ -1,15 +1,14 @@
 package slogo.backend.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CommandTreeNode {
+    private CommandTreeNode parentNode;
     private CommandTreeNode leftNode;
     private CommandTreeNode rightNode;
-    private List<String> commands = new ArrayList<>();
+    private String commandWord;
 
-    public CommandTreeNode(List<String> commands) {
-        this.commands.addAll(commands);
+    public CommandTreeNode(String commandWord, CommandTreeNode parentNode) {
+        this.parentNode = parentNode;
+        this.commandWord = commandWord;
     }
 
     public CommandTreeNode getLeftNode() {
@@ -28,7 +27,26 @@ public class CommandTreeNode {
         this.rightNode = rightNode;
     }
 
-    public void addToTreeNode(String str) {
-        commands.add(str);
+    public CommandTreeNode getParentNode() {
+        return parentNode;
+    }
+
+    public String getCommandWord() {
+        return commandWord;
+    }
+
+    public void setCommandWord(String commandWord) {
+        this.commandWord = commandWord;
+    }
+
+    public void deleteChildren() {
+        leftNode = null;
+        rightNode = null;
+    }
+
+    public int getChildrenNumber() {
+        int leftNodeNum = leftNode == null ? 0 : 1;
+        int rightNodeNum = rightNode == null ? 0 : 1;
+        return leftNodeNum + rightNodeNum;
     }
 }
