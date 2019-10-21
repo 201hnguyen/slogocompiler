@@ -17,8 +17,6 @@ public class Turtle extends ImageView {
 
     public Turtle(Image image, String myID) {
         super(image);
-        setX(0);
-        setY(0);
         setFitHeight(30);
         setFitWidth(30);
         this.myID = myID;
@@ -28,7 +26,6 @@ public class Turtle extends ImageView {
         showing = true;
         penDown = true;
     }
-
 
     public boolean isPenDown() {
         return penDown;
@@ -53,6 +50,10 @@ public class Turtle extends ImageView {
     public String getMyID() {
         return myID;
     }
+
+    protected double getCentralX() {return getX() + getBoundsInLocal().getWidth() / 2;}
+
+    protected double getCentralY() {return getY() + getBoundsInLocal().getHeight() / 2;}
 
     protected void update(Movement movement, DrawStatus drawStatus) {
         /**TODO: Update the turtle according to the movement object

@@ -1,35 +1,22 @@
-/*
 package slogo.connector;
 
 import javafx.animation.Animation;
-//import slogo.backend.external_api.BackendManager;
+import javafx.stage.Stage;
+import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.external_api.BackendManager;
+import slogo.backend.utils.TurtleManager;
+import slogo.frontend.Visualization;
 
 public class Connector {
-<<<<<<< HEAD
     //private BackendManager backendManager;
     private Animation myAnimation;
+    private Visualization myVisualization;
+    private BackendManager backendManager;
 
-    public String myLanguage;
-    public String myUserInput;
-
-
-
-    public Connector() {
-        myLanguage = getLanguage(); // from visualization.java
-        myUserInput = getUserInput(); // from visualization.java
-
+    public Connector(Stage stage) {
     }
 
     private void update() {
 
     }
-
-    public String getLanguage() {
-        return "English"; //for testing
-    }
-
-    public String getUserInput() {
-        return "fd 50"; //for testing
-    }
 }
-*/
