@@ -1,12 +1,13 @@
 package slogo.backend.commands;
 
 import slogo.backend.NeedValueOfParameterException;
-import slogo.backend.commands.control.ControlFactory;
+import slogo.backend.UnmatchedNumArgumentsException;
+import slogo.backend.commands.control.ControlExecutor;
+import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleManager;
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * This class executes sequential blocks of instructions (overhead class for entire block of instruction that user enters;
@@ -17,26 +18,24 @@ import java.util.regex.Pattern;
  */
 
 public class CommandBlockManager {
-    private static final String COMMANDS_RESOURCE_PATH = "resources/DefinedCommands";
     private static final String CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
-    private static final String MAKE_USER_DEFINED_RESOURCE_PATH = "resources/DefinedUserRelatedCommands";
+    private static final String MAKE_USER_DEFINED_RESOURCE_PATH = "resources/setVariableCommand";
 
-    private ResourceBundle myCommandsResourceBundle = ResourceBundle.getBundle(COMMANDS_RESOURCE_PATH);
     private ResourceBundle myControlsResourceBundle = ResourceBundle.getBundle(CONTROLS_RESOURCE_PATH);
     private ResourceBundle myUserDefinedResourceBundle = ResourceBundle.getBundle(MAKE_USER_DEFINED_RESOURCE_PATH);
     private String myCommandBlockString;
-    private ControlFactory myControlFactory;
+    private ControlExecutor myControlExecutor;
     private CommandTree myCommandTree;
     private TurtleManager myTurtleManager;
     private PeekableScanner myScanner;
     private Map<String, Double> myUserDefinedVariables;
-    private Map<String, String> myUserDefinedFunctions;
+    private Set<MakeUserInstruction> myUserDefinedFunctions;
 
     public CommandBlockManager(String commandBlock, TurtleManager turtleManager) {
         myCommandBlockString = commandBlock;
         myTurtleManager = turtleManager;
         myCommandTree = new CommandTree(myTurtleManager);
-        myControlFactory = new ControlFactory();
+        myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
@@ -45,37 +44,58 @@ public class CommandBlockManager {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
-            if (myCommandsResourceBundle.containsKey(command) || Pattern.matches("-?[0-9]+\\.?[0-9]*", command)) {
+            if (myControlsResourceBundle.containsKey(command)) {
+                List<Object> commandArguments = prepareBlockCommand();
+                try {
+                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleManager);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace(); //FIXME
+                }
+            } else if (myUserDefinedResourceBundle.containsKey(command)) {
+                //FIXME: Currently this only has make variables, I think making anything else should use control
+                prepareVariable();
+            } else {
                 try {
                     System.out.println("BlockManager, currently passing to command tree: " + command);
                     myCommandTree.addToCommandTree(command);
                 } catch (NeedValueOfParameterException e) {
                     //TODO: put parameter
                 }
-            } else if (myControlsResourceBundle.containsKey(command)) {
-                List<String> commandArguments = prepareBlockCommand();
-                try {
-                    returnValue = myControlFactory.execute(command, commandArguments, myTurtleManager);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
-                }
-            } else if (myUserDefinedResourceBundle.containsKey(command)) {
-                System.out.println("Command: " + command);
-            } else {
-
             }
         }
         return returnValue;
     }
 
-    private List<String> prepareBlockCommand() {
-        List<String> controlCommandArguments = new ArrayList<>();
+    private void prepareVariable() {
+        String variable = myScanner.next().replace(":", "");
+        try {
+            myCommandTree.addToCommandTree(myScanner.next());
+//            while (myCommandTree.stillNeedCommand()) { //FIXME: this can be uncommented once boolean for down to last double is made
+//                myCommandTree.addToCommandTree(myScanner.next());
+//            }
+            while (! myScanner.peek().equals("Forward")) {
+                myCommandTree.addToCommandTree(myScanner.next());
+            }
+            System.out.println("adding to map:" + variable + myCommandTree.getLastDouble());
+            myUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
+            for (String key : myUserDefinedVariables.keySet()) {
+                System.out.println("user map: " + key + ":" + myUserDefinedVariables.get(key));
+            }
+        } catch (NeedValueOfParameterException e) {
+            System.out.println(e.getParameterName() + " needed");
+        } catch (UnmatchedNumArgumentsException e) {
+            e.printStackTrace(); //FIXME: Not sure why this is causing an exception
+        }
+    }
+
+    private List<Object> prepareBlockCommand() {
+        List<Object> controlCommandArguments = new ArrayList<>();
         buildIndividualControlArgument("[", controlCommandArguments);
         buildIndividualControlArgument("]", controlCommandArguments);
         return controlCommandArguments;
     }
 
-    private void buildIndividualControlArgument(String endSignaler, List<String> arguments) {
+    private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
         while (!nextWord.equals(endSignaler)) {

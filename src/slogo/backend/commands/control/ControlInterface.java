@@ -5,5 +5,5 @@ import slogo.backend.utils.TurtleManager;
 import java.util.List;
 
 public interface ControlInterface {
-    double execute(TurtleManager turtleManager, List<String> parameters);
+    double execute(TurtleManager turtleManager, List<Object> parameters);
 }
