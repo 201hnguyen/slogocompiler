@@ -54,12 +54,13 @@ public class TurtleManager {
 
         turtle.setX(turtle.getXPos() + centralX - turtle.getBoundsInLocal().getWidth()/2);
         turtle.setY(centralY - turtle.getYPos() - turtle.getBoundsInLocal().getHeight()/2);
-        turtle.setRotate(turtle.getRotate() - initialDegree + turtle.getOrientation());
+        turtle.setRotate(turtle.getRotate() + initialDegree - turtle.getOrientation());
 
         Line line = new Line(initialXPos, initialYPos, turtle.getCentralX(), turtle.getCentralY());
         if(turtle.isPenDown()) {
             myTurtlePane.getChildren().add(line);
         }
+        turtle.setVisible(turtle.isShowing());
     }
 
     public List<Turtle> getAllTurtles() {
