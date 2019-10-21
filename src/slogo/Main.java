@@ -1,5 +1,8 @@
 package slogo;
 
+
+import slogo.backend.Parser;
+
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.scene.paint.Color;
@@ -8,28 +11,23 @@ import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
+import java.util.ResourceBundle;
 
-public class Main extends Application{
 
+public class Main extends Application {
 
-public class Main extends Application{
+    private static String test_input1 = "";
+    private static String test_input2 = "fd 50";
+    private static String test_input3 = "repeat 2 [ fd 50 ]";
+    private static String myLanguage = "English";
 
-    /**
-     * Start of the program.
-     */
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         launch(args);
-//        Repeat repeat = new Repeat();
-//        List<Object> parameters = new ArrayList<>();
-//        parameters.add(3);
-//        parameters.add("fd 50 fd 10"); // FIXME: currently split by comma just for sake of demo
-//        repeat.execute(parameters);
-//        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 IfElse LessThan 5 50 [ Forward 10 ] [ Forward 20 ] Forward 30", turtleManager);
-//        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50 Repeat 3 [ Forward 10 ] Forward 30", turtleManager);
-        //CommandBlockManager commandBlockManager = new CommandBlockManager("Sum 10 50 If LessThan 5 50 [ Sum 10 10 ] ", turtleManager);
-//        CommandBlockManager commandBlockManager = new CommandBlockManager("MakeVariable :a Sum 10 10 ", turtleManager);
-    }
+        //Parser p = new Parser(myLanguage);
+        //String toBackend = p.translateMyCommands(test_input3, myLanguage);
+        //System.out.println(toBackend);
 
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -38,10 +36,7 @@ public class Main extends Application{
         TurtleManager turtleManager = visualization.getTurtle();
         CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50", turtleManager);
         commandBlockManager.executeInstructionBlock();
-    }
 
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }

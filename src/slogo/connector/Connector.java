@@ -5,8 +5,9 @@ import javafx.animation.Animation;
 //import slogo.backend.external_api.BackendManager;
 
 public class Connector {
-//    private BackendManager backendManager;
-//    private Animation myAnimation;
+<<<<<<< HEAD
+    //private BackendManager backendManager;
+    private Animation myAnimation;
 
     public String myLanguage;
     public String myUserInput;
