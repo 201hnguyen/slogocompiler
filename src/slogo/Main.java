@@ -16,7 +16,7 @@ public class Main extends Application{
         Visualization visualization = new Visualization(stage);
         visualization.helpHost = getHostServices();
         TurtleManager turtleManager = visualization.getTurtle();
-        CommandBlockManager commandBlockManager = new CommandBlockManager("hello", turtleManager);
+        CommandBlockManager commandBlockManager = new CommandBlockManager("Forward 50", turtleManager);
         commandBlockManager.executeInstructionBlock();
     }
 
