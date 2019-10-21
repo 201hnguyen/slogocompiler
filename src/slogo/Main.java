@@ -8,9 +8,9 @@ import javafx.application.HostServices;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
-
 import java.util.ResourceBundle;
 
 
@@ -21,7 +21,7 @@ public class Main extends Application {
     private static String test_input3 = "repeat 2 [ fd 50 ]";
     private static String myLanguage = "English";
 
-       public static void main (String[] args) {
+    public static void main(String[] args) {
         launch(args);
         //Parser p = new Parser(myLanguage);
         //String toBackend = p.translateMyCommands(test_input3, myLanguage);

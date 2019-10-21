@@ -56,13 +56,18 @@ public class Visualization {
     private ScrollPane variablePane;
     public HostServices helpHost;
     private Stage stage;
+    private Text readerText;
+    private boolean inputSent = false;
 
     private DisplayScreen displayScreen = new DisplayScreen();
 
     public Visualization(Stage stage) throws FileNotFoundException {
         this.stage = stage;
         startButton = buttonCreator("Start", event -> {
-            historyField.getChildren().add(new Text(inputField.getText() + "\n"));
+            readerText = new Text(inputField.getText() + "\n");
+            historyField.getChildren().add(readerText);
+            inputSent = true;
+            System.out.print(getInput());
 
             if (inputField.getText().contains(":")) {
                 String variable = inputField.getText().substring(inputField.getText().lastIndexOf(":"));
@@ -174,5 +179,13 @@ public class Visualization {
         stage.setResizable(false);
         stage.show();
         stage.setTitle("SLOGO IDLE");
+    }
+
+    public String getInput() {
+        if(inputSent) {
+            inputSent = false;
+            return readerText.getText();
+        }
+        return "";
     }
 }
