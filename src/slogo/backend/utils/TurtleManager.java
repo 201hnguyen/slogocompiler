@@ -35,10 +35,12 @@ public class TurtleManager {
                     10, 10, true, true), turtleID);
             myTurtles.add(newTurtle);
             myTurtlePane.getChildren().add(newTurtle);
+            newTurtle.setVisible(true);
             return newTurtle;
         }
         return myTurtles.get(0);
-        //return null; there will be an exception later.
+        /** TODO: Fix this code when there are multiple turtles
+         */
     }
 
     public void updateTurtle(String turtleID, Movement movement, DrawStatus drawStatus) {
@@ -59,6 +61,7 @@ public class TurtleManager {
         Turtle removeTurtle = getTurtle(turtleID);
         myTurtles.remove(removeTurtle);
         myTurtlePane.getChildren().remove(removeTurtle);
+
         /**
          * TODO: add new turtle to myTurtlePane and myTurtles
          */

@@ -8,7 +8,8 @@ import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
 
-public class Main extends Application{
+import java.util.ArrayList;
+import java.util.List;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -19,8 +20,6 @@ public class Main extends Application{
         commandBlockManager.executeInstructionBlock();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+        commandBlockManager.executeInstructionBlock();
     }
-
 }
