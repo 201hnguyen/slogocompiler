@@ -14,7 +14,7 @@ public class HideTurtleBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos,turtle.getOrientation());

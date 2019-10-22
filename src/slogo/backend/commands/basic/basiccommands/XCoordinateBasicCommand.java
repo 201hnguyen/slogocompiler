@@ -14,7 +14,7 @@ public class XCoordinateBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         return turtle.getXPos();
     }

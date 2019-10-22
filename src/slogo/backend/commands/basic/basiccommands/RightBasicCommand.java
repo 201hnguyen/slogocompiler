@@ -16,7 +16,7 @@ public class RightBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         double angle = ((turtle.getOrientation() - parameters.get(0)) + FULL_CYCLE) % FULL_CYCLE;
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());

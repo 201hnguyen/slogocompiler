@@ -15,7 +15,7 @@ public class ForwardBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), turtle.getOrientation(), parameters.get(0));
 

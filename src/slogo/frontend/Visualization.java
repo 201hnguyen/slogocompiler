@@ -67,7 +67,7 @@ public class Visualization {
             readerText = new Text(inputField.getText() + "\n");
             historyField.getChildren().add(readerText);
             inputSent = true;
-            System.out.print(getInput());
+            //System.out.print(getInput());
 
             if (inputField.getText().contains(":")) {
                 String variable = inputField.getText().substring(inputField.getText().lastIndexOf(":"));

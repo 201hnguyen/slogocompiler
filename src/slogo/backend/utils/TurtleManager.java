@@ -25,12 +25,12 @@ public class TurtleManager {
         myTurtleImage = image;
         centralX = myTurtlePane.getWidth() / 2;
         centralY = myTurtlePane.getHeight() / 2;
-        addTurtle("Turtle1");
+        addTurtle(1);
     }
 
-    public Turtle getTurtle(String turtleID){
+    public Turtle getTurtle(int turtleID){
         for(Turtle turtle : myTurtles) {
-            if(turtle.getMyID().equals(turtleID)) {
+            if((turtle.getMyID()==turtleID)) {
                 return turtle;
             }
         }
@@ -38,13 +38,13 @@ public class TurtleManager {
             addTurtle(turtleID);
         }
         return getTurtle(turtleID);*/
-        System.out.println(hasTurtle("Turtle1"));
-        return getTurtle("Turtle1");
+        addTurtle(turtleID);
+        return getTurtle(turtleID);
         /** TODO: Fix this code when there are multiple turtles
          */
     }
 
-    public void updateTurtle(String turtleID, Movement movement, DrawStatus drawStatus) {
+    public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus) {
         Turtle turtle = getTurtle(turtleID);
         double initialDegree = turtle.getOrientation();
         double initialXPos = turtle.getCentralX();
@@ -69,12 +69,12 @@ public class TurtleManager {
         return list;
     }
 
-    public void addTurtle(String turtleID) {
+    public void addTurtle(int turtleID) {
 //        Turtle removeTurtle = getTurtle(turtleID);
 //        myTurtles.remove(removeTurtle);
 //        myTurtlePane.getChildren().remove(removeTurtle);
         if(!hasTurtle(turtleID)) {
-            Turtle turtle = new Turtle(myTurtleImage, "Turtle1");
+            Turtle turtle = new Turtle(myTurtleImage, turtleID);
             myTurtles.add(turtle);
             myTurtlePane.getChildren().add(turtle);
             turtle.setX(centralX - turtle.getBoundsInLocal().getWidth()/2);
@@ -105,9 +105,9 @@ public class TurtleManager {
         return null;
     }
 
-    private boolean hasTurtle(String turtleID) {
+    private boolean hasTurtle(int turtleID) {
         for(Turtle turtle : myTurtles) {
-            if(turtle.getMyID().equals(turtleID)) {
+            if(turtle.getMyID()==turtleID) {
                 return true;
             }
         }

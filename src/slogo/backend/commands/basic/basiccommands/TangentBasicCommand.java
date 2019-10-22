@@ -6,7 +6,7 @@ import java.util.List;
 
 public class TangentBasicCommand implements BasicCommandInterface {
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         return Math.tan(Math.toRadians(parameters.get(0)));
     }
 }

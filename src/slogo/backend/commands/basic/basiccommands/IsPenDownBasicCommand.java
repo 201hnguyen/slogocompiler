@@ -14,7 +14,7 @@ public class IsPenDownBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         return turtle.isPenDown()? 1d : 0d;
     }

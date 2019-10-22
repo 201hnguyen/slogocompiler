@@ -18,7 +18,7 @@ public class SetTowardsBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         double newAngle = getSlope(curPos, new Point2D(parameters.get(0), parameters.get(1)));
