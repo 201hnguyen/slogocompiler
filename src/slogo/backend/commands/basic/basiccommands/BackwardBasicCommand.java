@@ -21,7 +21,7 @@ public class BackwardBasicCommand implements BasicCommandInterface {
     }
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         Turtle turtle = turtleManager.getTurtle(turtleID);
         double angle = (turtle.getOrientation() + HALF_CYCLE) % FULL_CYCLE;
         Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), angle, parameters.get(0));

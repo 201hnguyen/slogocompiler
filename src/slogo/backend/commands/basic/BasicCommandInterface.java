@@ -5,5 +5,5 @@ import slogo.backend.utils.TurtleManager;
 import java.util.List;
 
 public interface BasicCommandInterface {
-    double getReturnValue(List<Double> parameters, String turtleID);
+    double getReturnValue(List<Double> parameters, int turtleID);
 }

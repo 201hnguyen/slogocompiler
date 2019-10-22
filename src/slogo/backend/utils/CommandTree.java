@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 
 public class CommandTree {
 
-    private final String decimalPattern = "-?[0-9]+\\.?[0-9]*";
+    private static final String DECIMAL_PATTERN = "-?[0-9]+\\.?[0-9]*";
 
     CommandTreeNode commandTreeNode = new CommandTreeNode("", null);
     CommandTreeNode rightMostNode = commandTreeNode;
 
     private CommandFactory myCommandFactory;
-    private String turtleID = "";
+    private int turtleID = 1;
 
     public CommandTree(TurtleManager turtleManager) {
         myCommandFactory = new CommandFactory(turtleManager);
@@ -92,7 +92,7 @@ public class CommandTree {
 
 
     private boolean isThisStringDouble(String command) {
-        return Pattern.matches(decimalPattern, command);
+        return Pattern.matches(DECIMAL_PATTERN, command);
     }
 
     private void replaceRightMostCommandWithNumber(double num) {

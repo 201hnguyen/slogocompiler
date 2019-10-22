@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SineBasicCommand implements BasicCommandInterface {
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         return Math.sin(Math.toRadians(parameters.get(0)));
     }
 }

@@ -13,9 +13,9 @@ public class Turtle extends ImageView {
     private double xPos;
     private double yPos;
     private double orientation;
-    private String myID;
+    private int myID;
 
-    public Turtle(Image image, String myID) {
+    public Turtle(Image image, int myID) {
         super(image);
         setFitHeight(30);
         setFitWidth(30);
@@ -47,7 +47,7 @@ public class Turtle extends ImageView {
         return showing;
     }
 
-    public String getMyID() {
+    public int getMyID() {
         return myID;
     }
 

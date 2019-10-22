@@ -28,7 +28,7 @@ public class CommandFactory {
         throw new ClassNotFoundException();
     }
 
-    public double execute(String command, String turtleID, List<Double> parameters) throws ClassNotFoundException {
+    public double execute(String command, int turtleID, List<Double> parameters) throws ClassNotFoundException {
         for (String key : Collections.list(resourceBundle.getKeys())) {
             if (key.equals(command)) {
                 String commandName = resourceBundle.getString(key).split(",")[0];

@@ -7,7 +7,7 @@ import java.util.List;
 public class RandomBasicCommand implements BasicCommandInterface {
 
     @Override
-    public double getReturnValue(List<Double> parameters, String turtleID) {
+    public double getReturnValue(List<Double> parameters, int turtleID) {
         return (int) (Math.random() * parameters.get(0));
     }
 }
