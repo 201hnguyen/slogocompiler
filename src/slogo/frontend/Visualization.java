@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleManager;
 
 import java.io.FileNotFoundException;
@@ -171,9 +172,18 @@ public class Visualization {
         return palette;
     }
 
-    public TurtleManager getTurtle() {
-        return new TurtleManager(displayScreen, new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("START.png"))));
+//    public TurtleManager getTurtle() {
+//        return new TurtleManager(displayScreen, new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("START.png"))));
+//    }
+
+    public void update() {
+        displayScreen.update();
     }
+
+    public void setHistory(TurtleHistory turtleHistory) {
+        displayScreen.setHistory(turtleHistory);
+    }
+
     private void startStage() {
         stage.setScene(scene);
         stage.setResizable(false);

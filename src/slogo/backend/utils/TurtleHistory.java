@@ -8,6 +8,10 @@ public class TurtleHistory {
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
     private int index = 0;
 
+    public TurtleHistory() {
+        myTurtles.add(new TurtleModel(1));
+        myTurtleHistory.add(new ArrayList<>());
+    }
 
     public TurtleModel getTurtleModel(int turtleID){
         for(TurtleModel turtle : myTurtles) {
@@ -18,14 +22,14 @@ public class TurtleHistory {
 
         addTurtleModel(turtleID);
         return getTurtleModel(turtleID);
-        /** TODO: Fix this code when there are multiple turtles
-         */
     }
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
         myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, drawStatus));
         turtle.update(movement, drawStatus);
+        System.out.println(turtle.getXPos() + ", " + turtle.getYPos() + ", " + turtle.getOrientation());
+        System.out.println(myTurtleHistory.get(0).size());
     }
 
     public void toNextTurn() {
@@ -43,6 +47,15 @@ public class TurtleHistory {
         List<List<TurtleMovement>> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;
+    }
+
+    public void clearHistory() {
+        myTurtleHistory.clear();
+        myTurtleHistory.add(new ArrayList<>());
+    }
+
+    public void initialize(){
+
     }
 
     private boolean hasTurtle(int turtleID) {

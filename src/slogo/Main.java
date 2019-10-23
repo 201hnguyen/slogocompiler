@@ -14,6 +14,7 @@ import javafx.stage.*;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.external_api.BackendManager;
 import slogo.backend.utils.Turtle;
+import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class Main extends Application {
 
     private Animation myAnimation;
     private BackendManager myBackEndManager;
+    private boolean moveStarted = false;
 
     private static String test_input1 = "";
     private static String test_input2 = "fd 50";
@@ -43,8 +45,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         visualization = new Visualization(stage);
         visualization.helpHost = getHostServices();
-        TurtleManager turtleManager = visualization.getTurtle();
-        myBackEndManager = new BackendManager("English", turtleManager);
+//        TurtleManager turtleManager = visualization.getTurtle();
+        myBackEndManager = new BackendManager("English", new TurtleHistory());
 //        myBackEndManager.setCommand("fd 50");
         var frame = new KeyFrame(Duration.millis(2), e -> step());
         var animation = new Timeline();
@@ -58,6 +60,11 @@ public class Main extends Application {
         if(!str.equals("")) {
             System.out.println(str);
             myBackEndManager.setCommand(str);
+            visualization.setHistory(myBackEndManager.getHistory());
+            moveStarted = true;
+        }
+        if(moveStarted) {
+            visualization.update();
         }
     }
 

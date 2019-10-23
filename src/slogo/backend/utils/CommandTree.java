@@ -17,9 +17,11 @@ public class CommandTree {
 
     private CommandFactory myCommandFactory;
     private int turtleID = 1;
+    private TurtleHistory myTurtleHistory;
 
-    public CommandTree(TurtleManager turtleManager) {
-        myCommandFactory = new CommandFactory(turtleManager);
+    public CommandTree(TurtleHistory turtleHistory) {
+        myTurtleHistory = turtleHistory;
+        myCommandFactory = new CommandFactory(turtleHistory);
     }
 
     public void addToCommandTree(String command) throws NeedValueOfParameterException {

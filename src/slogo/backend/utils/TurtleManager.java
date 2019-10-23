@@ -18,8 +18,8 @@ public class TurtleManager {
     private double centralX;
     private double centralY;
 
-    public TurtleManager(Pane myPane, Image image) {
-        myTurtlePane = myPane;
+    public TurtleManager(Image image) {
+//        myTurtlePane = myPane;
         myTurtleImage = image;
         centralX = myTurtlePane.getWidth() / 2;
         centralY = myTurtlePane.getHeight() / 2;
