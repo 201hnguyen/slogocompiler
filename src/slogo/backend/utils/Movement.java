@@ -17,8 +17,8 @@ public class Movement {
     public Movement(Point2D startPosition, double orientation, double length) {
         this.startPosition = startPosition;
         this.orientation = orientation;
-        this.endPosition = startPosition.add(new Point2D(length * Math.cos(Math.toRadians(orientation)),
-                length * Math.sin(Math.toRadians(orientation))));
+        this.endPosition = new Point2D(startPosition.getX() + length * Math.cos(Math.toRadians(orientation)),
+                startPosition.getY() + length * Math.sin(Math.toRadians(orientation)));
     }
 
     public Point2D getStartPosition() {
