@@ -1,7 +1,7 @@
 package slogo.backend.utils;
 
-import slogo.backend.NeedValueOfParameterException;
-import slogo.backend.UnmatchedNumArgumentsException;
+import slogo.backend.exceptions.NeedValueOfParameterException;
+import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.basic.CommandFactory;
 
 import java.util.ArrayList;

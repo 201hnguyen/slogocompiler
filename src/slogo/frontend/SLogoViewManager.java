@@ -1,8 +1,6 @@
 package slogo.frontend;
 
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import slogo.backend.utils.TurtleHistory;

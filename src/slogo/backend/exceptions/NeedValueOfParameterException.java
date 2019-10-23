@@ -1,4 +1,4 @@
-package slogo.backend;
+package slogo.backend.exceptions;
 
 public class NeedValueOfParameterException extends Exception {
     private String parameter;
