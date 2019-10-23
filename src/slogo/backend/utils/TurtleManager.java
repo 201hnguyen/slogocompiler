@@ -17,8 +17,6 @@ public class TurtleManager {
     private Image myTurtleImage;
     private double centralX;
     private double centralY;
-    private double turtleWidth;
-    private double turtleHeight;
 
     public TurtleManager(Pane myPane, Image image) {
         myTurtlePane = myPane;
@@ -96,13 +94,6 @@ public class TurtleManager {
             turtle.setImage(image);
         }
         myTurtleImage = image;
-    }
-
-    public TurtleManager copyOfThis() {
-        /**
-         * TODO: for undoing.
-         */
-        return null;
     }
 
     private boolean hasTurtle(int turtleID) {

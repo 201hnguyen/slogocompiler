@@ -25,11 +25,7 @@ public class CommandTree {
     public void addToCommandTree(String command) throws NeedValueOfParameterException {
 
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
-            if(isThisStringDouble(command)) {
-                // error
-            } else {
-                commandTreeNode.setCommandWord(command);
-            }
+            commandTreeNode.setCommandWord(command);
         }
         else {
             if (isThisStringDouble(command)) {
@@ -56,6 +52,10 @@ public class CommandTree {
             throw new UnmatchedNumArgumentsException("Ummatched Num");
         }
         return Double.parseDouble(commandTreeNode.getCommandWord());
+    }
+
+    public boolean onlyNumberLeft() {
+        return commandTreeNode.getChildrenNumber() == 0 && isThisStringDouble(commandTreeNode.getCommandWord());
     }
 
     private void interpretTreeFromRight() throws NeedValueOfParameterException{
