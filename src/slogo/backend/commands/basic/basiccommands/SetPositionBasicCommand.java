@@ -8,21 +8,21 @@ import java.util.List;
 
 public class SetPositionBasicCommand implements BasicCommandInterface {
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public SetPositionBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public SetPositionBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Point2D newPos = new Point2D(parameters.get(0), parameters.get(1));
 
         Movement movement = new Movement(curPos, newPos, turtle.getOrientation());
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
         return curPos.distance(newPos);
     }

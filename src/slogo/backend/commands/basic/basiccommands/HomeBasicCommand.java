@@ -9,20 +9,20 @@ import java.util.List;
 public class HomeBasicCommand implements BasicCommandInterface {
     private static final double INITIAL_ORIENTATION = 90;
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public HomeBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public HomeBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
         Point2D homePos = new Point2D(0, 0);
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, homePos, INITIAL_ORIENTATION);
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
         return curPos.distance(homePos);
     }

@@ -9,20 +9,20 @@ import java.util.List;
 public class RightBasicCommand implements BasicCommandInterface {
     private static final double FULL_CYCLE = 360;
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public RightBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public RightBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         double angle = ((turtle.getOrientation() - parameters.get(0)) + FULL_CYCLE) % FULL_CYCLE;
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos, angle);
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
         return parameters.get(0);
     }

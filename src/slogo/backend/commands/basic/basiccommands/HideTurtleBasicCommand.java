@@ -7,18 +7,18 @@ import slogo.backend.utils.*;
 import java.util.List;
 
 public class HideTurtleBasicCommand implements BasicCommandInterface {
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public HideTurtleBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public HideTurtleBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos,turtle.getOrientation());
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(false, turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(false, turtle.isPenDown()));
 
         return 0;
     }

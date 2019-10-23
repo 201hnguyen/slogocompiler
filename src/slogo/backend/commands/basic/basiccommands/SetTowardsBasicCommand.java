@@ -11,22 +11,22 @@ public class SetTowardsBasicCommand implements BasicCommandInterface {
     private static final double FULL_CYCLE = 360d;
     private static final double HALF_CYCLE = 180d;
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public SetTowardsBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public SetTowardsBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         double newAngle = getSlope(curPos, new Point2D(parameters.get(0), parameters.get(1)));
         double degreeTurned = Math.abs(turtle.getOrientation() - newAngle);
 
         Movement movement = new Movement(curPos, curPos, newAngle);
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
         return degreeTurned <= HALF_CYCLE ? degreeTurned : FULL_CYCLE - degreeTurned;
     }

@@ -10,22 +10,22 @@ public class ClearScreenBasicCommand implements BasicCommandInterface {
 
     private static final double INITIAL_ORIENTATION = 90;
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public ClearScreenBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public ClearScreenBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         double returnValue = curPos.distance(0, 0);
 
         Movement movement = new Movement(curPos, new Point2D(0, 0), INITIAL_ORIENTATION);
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
-        turtleManager.initialize();
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.initialize();
 
         return returnValue;
     }
