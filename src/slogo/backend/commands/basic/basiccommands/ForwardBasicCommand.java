@@ -8,18 +8,18 @@ import java.util.List;
 
 public class ForwardBasicCommand implements BasicCommandInterface {
 
-    private TurtleManager turtleManager;
+    private TurtleHistory turtleHistory;
 
-    public ForwardBasicCommand(TurtleManager turtleManager) {
-        this.turtleManager = turtleManager;
+    public ForwardBasicCommand(TurtleHistory turtleHistory) {
+        this.turtleHistory = turtleHistory;
     }
 
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
-        Turtle turtle = turtleManager.getTurtle(turtleID);
+        TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Movement movement = new Movement(new Point2D(turtle.getXPos(), turtle.getYPos()), turtle.getOrientation(), parameters.get(0));
 
-        turtleManager.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
 
         return parameters.get(0);
     }

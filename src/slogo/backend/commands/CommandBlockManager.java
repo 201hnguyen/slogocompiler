@@ -5,6 +5,7 @@ import slogo.backend.UnmatchedNumArgumentsException;
 import slogo.backend.commands.control.ControlExecutor;
 import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.utils.CommandTree;
+import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleManager;
 
 import java.util.*;
@@ -27,14 +28,15 @@ public class CommandBlockManager {
     private ControlExecutor myControlExecutor;
     private CommandTree myCommandTree;
     private TurtleManager myTurtleManager;
+    private TurtleHistory myTurtleHistory;
     private PeekableScanner myScanner;
     private Map<String, Double> myUserDefinedVariables;
     private Set<MakeUserInstruction> myUserDefinedFunctions;
 
-    public CommandBlockManager(String commandBlock, TurtleManager turtleManager) {
+    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory) {
         myCommandBlockString = commandBlock;
-        myTurtleManager = turtleManager;
-        myCommandTree = new CommandTree(myTurtleManager);
+        myTurtleHistory = turtleHistory;
+        myCommandTree = new CommandTree(myTurtleHistory);
         myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
         System.out.println("Full command string of this block: " + myCommandBlockString);
@@ -47,7 +49,7 @@ public class CommandBlockManager {
             if (myControlsResourceBundle.containsKey(command)) {
                 List<Object> commandArguments = prepareBlockCommand();
                 try {
-                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleManager);
+                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
