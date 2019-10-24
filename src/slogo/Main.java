@@ -4,20 +4,13 @@ package slogo;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import slogo.backend.Parser;
 
 import javafx.application.Application;
-import javafx.application.HostServices;
-import javafx.scene.paint.Color;
-import javafx.stage.*;
-import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.external_api.BackendManager;
-import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 import slogo.frontend.Visualization;
-import java.util.ResourceBundle;
 
 
 public class Main extends Application {
@@ -67,5 +60,4 @@ public class Main extends Application {
             visualization.update();
         }
     }
-
 }

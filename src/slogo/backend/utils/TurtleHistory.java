@@ -55,7 +55,7 @@ public class TurtleHistory {
     }
 
     public void initialize(){
-
+        return;
     }
 
     private boolean hasTurtle(int turtleID) {

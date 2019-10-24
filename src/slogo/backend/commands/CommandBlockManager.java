@@ -6,7 +6,6 @@ import slogo.backend.commands.control.ControlExecutor;
 import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 
 import java.util.*;
 
@@ -27,7 +26,6 @@ public class CommandBlockManager {
     private String myCommandBlockString;
     private ControlExecutor myControlExecutor;
     private CommandTree myCommandTree;
-    private TurtleManager myTurtleManager;
     private TurtleHistory myTurtleHistory;
     private PeekableScanner myScanner;
     private Map<String, Double> myUserDefinedVariables;
