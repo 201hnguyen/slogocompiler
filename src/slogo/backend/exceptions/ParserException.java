@@ -1,6 +1,6 @@
-package slogo.backend;
+package slogo.backend.exceptions;
 
-public class ParserException {
+public class ParserException extends RuntimeException {
 
     //constructor 1
     //Thrown when user-input language does not match language pattern
