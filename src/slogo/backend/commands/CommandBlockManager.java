@@ -58,8 +58,8 @@ public class CommandBlockManager {
                 try {
                     System.out.println("BlockManager, currently passing to command tree: " + command);
                     myCommandTree.addToCommandTree(command);
-                } catch (NeedValueOfParameterException e) {
-                    //TODO: put parameter
+                } catch (ClassNotFoundException e) {
+                    //FIXME
                 }
             }
         }
@@ -81,10 +81,10 @@ public class CommandBlockManager {
             for (String key : myUserDefinedVariables.keySet()) {
                 System.out.println("user map: " + key + ":" + myUserDefinedVariables.get(key));
             }
-        } catch (NeedValueOfParameterException e) {
-            System.out.println(e.getParameterName() + " needed");
         } catch (UnmatchedNumArgumentsException e) {
             e.printStackTrace(); //FIXME: Not sure why this is causing an exception
+        } catch (ClassNotFoundException e) {
+            //FIXME !!
         }
     }
 
