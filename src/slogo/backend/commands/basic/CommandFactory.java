@@ -1,10 +1,8 @@
 package slogo.backend.commands.basic;
 
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,7 +13,7 @@ public class CommandFactory {
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private TurtleHistory myTurtleHistory;
-    private boolean wasCommand = false;
+    //private boolean wasCommand = false;
 
     public CommandFactory(TurtleHistory turtleHistory) {
         myTurtleHistory = turtleHistory;
@@ -38,7 +36,7 @@ public class CommandFactory {
     public boolean isMovementCommand(String command) {
         try {
             getClass(command).getConstructor(TurtleHistory.class);
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -59,10 +57,10 @@ public class CommandFactory {
         try {
             Constructor<?> constructor = clazz.getConstructor(TurtleHistory.class);
             return ((BasicCommandInterface) constructor.newInstance(myTurtleHistory)).getReturnValue(parameters, turtleID);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ClassNotFoundException();
         } catch (NoSuchMethodException e) {
             return getDoubleFromDefaultConstructor(clazz, turtleID, parameters);
+        }catch (Exception e) {
+            throw new ClassNotFoundException();
         }
     }
 
@@ -70,10 +68,10 @@ public class CommandFactory {
         try {
             Constructor<?> constructor = clazz.getConstructor();
             return ((BasicCommandInterface) constructor.newInstance()).getReturnValue(parameters, turtleID);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ClassNotFoundException();
         } catch (NoSuchMethodException e) {
             return getDoubleFromDefaultConstructor(clazz, turtleID, parameters);
+        } catch (Exception e) {
+            throw new ClassNotFoundException();
         }
     }
 }

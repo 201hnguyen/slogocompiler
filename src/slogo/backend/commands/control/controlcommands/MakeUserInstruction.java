@@ -3,7 +3,6 @@ package slogo.backend.commands.control.controlcommands;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

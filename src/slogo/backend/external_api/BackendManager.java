@@ -4,9 +4,6 @@ package slogo.backend.external_api;
 import slogo.backend.Parser;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
-
-import java.util.List;
 import java.util.Map;
 
 public class BackendManager {
