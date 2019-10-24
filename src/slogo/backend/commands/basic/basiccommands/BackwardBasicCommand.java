@@ -2,14 +2,15 @@ package slogo.backend.commands.basic.basiccommands;
 
 import javafx.geometry.Point2D;
 import slogo.backend.commands.basic.BasicCommandInterface;
-import slogo.backend.utils.*;
+import slogo.backend.utils.DrawStatus;
+import slogo.backend.utils.Movement;
+import slogo.backend.utils.TurtleHistory;
+import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
 public class BackwardBasicCommand implements BasicCommandInterface {
 
-    private static final double FULL_CYCLE = 360;
-    private static final double HALF_CYCLE = 180;
 
     private TurtleHistory turtleHistory;
 

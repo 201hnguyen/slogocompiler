@@ -33,6 +33,7 @@ public class TurtleView extends ImageView {
     private boolean isPenDown;
     private boolean isVisible;
     private int direction = 1;
+    private int imageNum = 1;
     private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
@@ -93,6 +94,8 @@ public class TurtleView extends ImageView {
     public void setMyLineColor(Paint myLineColor) {
         this.myLineColor = myLineColor;
     }
+
+    public int getImageNum() {return imageNum;}
 
     private double getCentralX() {
         return getX() + getBoundsInLocal().getWidth() / 2;

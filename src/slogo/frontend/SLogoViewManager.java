@@ -50,7 +50,6 @@ public class SLogoViewManager {
         if(imageManager.getImage(imageNum)!=null) {
             image = imageManager.getImage(imageNum);
         }
-        //return new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("START.png")));
     }
 
     protected void setLineColor(Paint color) {
