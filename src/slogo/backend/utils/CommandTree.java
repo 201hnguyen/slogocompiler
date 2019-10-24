@@ -17,10 +17,8 @@ public class CommandTree {
 
     private CommandFactory myCommandFactory;
     private int turtleID = 1;
-    private TurtleHistory myTurtleHistory;
 
     public CommandTree(TurtleHistory turtleHistory) {
-        myTurtleHistory = turtleHistory;
         myCommandFactory = new CommandFactory(turtleHistory);
     }
 

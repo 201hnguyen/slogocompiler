@@ -22,7 +22,7 @@ public class LeftBasicCommand implements BasicCommandInterface {
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
-        double angle = ((turtle.getOrientation() + parameters.get(0))) % FULL_CYCLE;
+        double angle = (turtle.getOrientation() + parameters.get(0)) % FULL_CYCLE;
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos, angle);
 
