@@ -22,7 +22,7 @@ public class CommandTree {
         myCommandFactory = new CommandFactory(turtleHistory);
     }
 
-    public void addToCommandTree(String command) throws NeedValueOfParameterException {
+    public void addToCommandTree(String command) throws ClassNotFoundException {
 
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
             commandTreeNode.setCommandWord(command);
@@ -58,7 +58,7 @@ public class CommandTree {
         return commandTreeNode.getChildrenNumber() == 0 && isThisStringDouble(commandTreeNode.getCommandWord());
     }
 
-    private void interpretTreeFromRight() throws NeedValueOfParameterException{
+    private void interpretTreeFromRight() throws ClassNotFoundException{
         String command = rightMostNode.getCommandWord();
         try {
             int parameter = myCommandFactory.getNumParameter(command);
@@ -72,7 +72,7 @@ public class CommandTree {
         }
         catch (ClassNotFoundException e) {
             if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
-                throw new NeedValueOfParameterException(command);
+                throw new ClassNotFoundException(command);
             }
         }
     }

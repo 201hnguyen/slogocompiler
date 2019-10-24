@@ -1,16 +1,16 @@
-package slogo.backend;
+package slogo.backend.exceptions;
 
-public class cmdException {
+public class ParserException extends RuntimeException {
 
     //constructor 1
     //Thrown when user-input language does not match language pattern
-    public cmdException(String language) {
+    public ParserException(String language) {
 
     }
 
     //constructor 2
     //Thrown when user-input command does not match a command in the given language
-    public cmdException(String language, String cmd) {
+    public ParserException(String language, String cmd) {
 
     }
 
