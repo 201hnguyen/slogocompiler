@@ -3,6 +3,8 @@ package slogo.frontend;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import slogo.backend.utils.DrawStatus;
 import slogo.backend.utils.Movement;
@@ -10,13 +12,16 @@ import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 
 public class TurtleView extends ImageView {
 
-    private static final double CONSTANT_SCREEN_WIDTH = 600;
+    private static final double CONSTANT_SCREEN_WIDTH = 3000;
     private static final double ABSOLUTE_SIZE_X = 30;
     private static final double INITIAL_ORIENTATION = 90;
+    private static final double FULL_ANGLE = 360;
+    private static final Paint INITIAL_COLOR = Color.BLACK;
 
     private List<TurtleMovement> myMovements = new ArrayList<>();
     private int myID;
@@ -27,6 +32,8 @@ public class TurtleView extends ImageView {
     private double speed;
     private boolean isPenDown;
     private boolean isVisible;
+    private int direction = 1;
+    private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
         super(image);
@@ -42,17 +49,17 @@ public class TurtleView extends ImageView {
         Point2D initialPos = new Point2D(getCentralX(), getCentralY());
         Movement movement = myMovements.get(index).getMovement();
         updateDrawStatus(myMovements.get(index).getDrawStatus());
-        double angle = movement.getOrientation();
+        double angle = getAngle(movement.getStartPosition(), movement.getEndPosition());
         Point2D endPos = new Point2D(movement.getEndPosition().getX() + getScreenCenter().getX(),
                 getScreenCenter().getY() - movement.getEndPosition().getY());
         if(initialPos.distance(endPos) < speed) {
-            moveView(endPos, angle);
+            moveView(endPos, movement.getOrientation());
             index++;
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
         } else {
-            double targetXPos = getCentralX() + speed * Math.cos(Math.toRadians(angle));
-            double targetYPos = getCentralY() - speed * Math.sin(Math.toRadians(angle));
-            moveView(new Point2D(targetXPos, targetYPos), angle);
+            double targetXPos = getCentralX() +  speed * Math.cos(Math.toRadians(angle));
+            double targetYPos = getCentralY() -  speed * Math.sin(Math.toRadians(angle));
+            moveView(new Point2D(targetXPos, targetYPos), movement.getOrientation());
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
         }
     }
@@ -79,6 +86,14 @@ public class TurtleView extends ImageView {
         return myID;
     }
 
+    public Paint getMyLineColor() {
+        return myLineColor;
+    }
+
+    public void setMyLineColor(Paint myLineColor) {
+        this.myLineColor = myLineColor;
+    }
+
     private double getCentralX() {
         return getX() + getBoundsInLocal().getWidth() / 2;
     }
@@ -88,7 +103,6 @@ public class TurtleView extends ImageView {
     }
 
     private Point2D getScreenCenter() {
-        System.out.println(new Point2D(screenWidth/2, screenHeight/2));
         return new Point2D(screenWidth/2, screenHeight/2);
     }
 
@@ -96,5 +110,18 @@ public class TurtleView extends ImageView {
         isPenDown = drawStatus.isPenDown();
         isVisible = drawStatus.isTurtleVisible();
         setVisible(isVisible);
+    }
+
+    private void checkDirection(Point2D initialPos, Point2D targetPos, double orientation) {
+        double length = initialPos.distance(targetPos);
+        Point2D plannedArrival = new Point2D(initialPos.getX() + length * Math.cos(orientation),
+                initialPos.getY() + length * Math.sin(orientation));
+
+        direction = plannedArrival.distance(targetPos) > length ? -1 : 1;
+    }
+
+    private double getAngle(Point2D startPos, Point2D targetPos) {
+        double angle = new Point2D(1, 0).angle(targetPos.getX() - startPos.getX(), targetPos.getY() - startPos.getY());
+        return targetPos.getY() - startPos.getY() < 0 ? FULL_ANGLE - angle : angle;
     }
 }

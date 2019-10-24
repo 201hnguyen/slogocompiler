@@ -1,12 +1,11 @@
 package slogo.backend.commands.control.controlcommands;
 
-import slogo.backend.NeedValueOfParameterException;
-import slogo.backend.UnmatchedNumArgumentsException;
+import slogo.backend.exceptions.NeedValueOfParameterException;
+import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 
 import java.util.List;
 import java.util.Scanner;

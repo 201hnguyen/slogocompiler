@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleHistory;
 
@@ -37,5 +38,9 @@ public class DisplayScreen extends Pane {
 
     public void setHistory(TurtleHistory turtleHistory) {
         myViewManager.setHistory(turtleHistory);
+    }
+
+    public void setLineColor(Paint color) {
+        myViewManager.setLineColor(color);
     }
 }

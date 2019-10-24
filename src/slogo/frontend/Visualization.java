@@ -163,7 +163,11 @@ public class Visualization {
             colorCircle.setFill(colorPicker.getValue());
             if (backgroundBox.isSelected()) {
                 displayScreen.setBackground(colorPicker.getValue());
-            }});
+            }
+            if(penBox.isSelected()) {
+                displayScreen.setLineColor(colorPicker.getValue());
+            }
+        });
         palette.setPadding(new Insets(INSET_PADDING));
         palette.getChildren().addAll(colorCircle, colorPicker);
         palette.setLayoutY(420);
