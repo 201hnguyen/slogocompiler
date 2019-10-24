@@ -1,9 +1,7 @@
 package slogo.backend.commands.basic.basiccommands;
 
 import slogo.backend.commands.basic.BasicCommandInterface;
-import slogo.backend.utils.Turtle;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 import slogo.backend.utils.TurtleModel;
 
 import java.util.List;

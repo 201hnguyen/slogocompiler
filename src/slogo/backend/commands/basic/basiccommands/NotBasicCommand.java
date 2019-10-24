@@ -6,8 +6,6 @@ import java.util.List;
 
 public class NotBasicCommand implements BasicCommandInterface {
 
-    public NotBasicCommand() {}
-
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
         return parameters.get(0) == 0  ? 0d : 1d;
