@@ -1,6 +1,5 @@
 package slogo.backend.commands.control.controlcommands;
 
-import slogo.backend.exceptions.NeedValueOfParameterException;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
