@@ -31,8 +31,8 @@ public class TurtleHistory {
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
-        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, drawStatus));
         turtle.update(movement, drawStatus, penStatus);
+        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
         System.out.println(turtle.getXPos() + ", " + turtle.getYPos() + ", " + turtle.getOrientation());
     }
 

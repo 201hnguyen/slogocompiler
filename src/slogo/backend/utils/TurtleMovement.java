@@ -5,11 +5,13 @@ public class TurtleMovement {
     private int turtleID;
     private Movement movement;
     private DrawStatus drawStatus;
+    private PenStatus penStatus;
 
-    public TurtleMovement(int turtleID, Movement movement, DrawStatus drawStatus) {
+    public TurtleMovement(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         this.turtleID = turtleID;
         this.movement = movement;
         this.drawStatus = drawStatus;
+        this.penStatus = penStatus;
     }
 
     public int getTurtleID() {
@@ -22,5 +24,9 @@ public class TurtleMovement {
 
     public DrawStatus getDrawStatus() {
         return drawStatus;
+    }
+
+    public PenStatus getPenStatus() {
+        return penStatus;
     }
 }
