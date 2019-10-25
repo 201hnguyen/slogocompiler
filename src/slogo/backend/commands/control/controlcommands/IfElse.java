@@ -22,8 +22,8 @@ public class IfElse implements ControlInterface {
                 String command = conditionScanner.next();
                 System.out.println("IfElse condition, current passing to command tree: " + command);
                 commandTree.addToCommandTree(command);
-            } catch (NeedValueOfParameterException e) {
-                // commandTree.putValueInsteadOfParameter();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
 
