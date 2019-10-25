@@ -58,8 +58,8 @@ public class TurtleView extends ImageView {
             index++;
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
         } else {
-            double targetXPos = getCentralX() +  speed * Math.cos(Math.toRadians(angle));
-            double targetYPos = getCentralY() -  speed * Math.sin(Math.toRadians(angle));
+            double targetXPos = getCentralX() +  direction * speed * Math.cos(Math.toRadians(angle));
+            double targetYPos = getCentralY() -  direction * speed * Math.sin(Math.toRadians(angle));
             moveView(new Point2D(targetXPos, targetYPos), movement.getOrientation());
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
         }
@@ -110,7 +110,6 @@ public class TurtleView extends ImageView {
     }
 
     private void updateDrawStatus(DrawStatus drawStatus) {
-        isPenDown = drawStatus.isPenDown();
         isVisible = drawStatus.isTurtleVisible();
         setVisible(isVisible);
     }

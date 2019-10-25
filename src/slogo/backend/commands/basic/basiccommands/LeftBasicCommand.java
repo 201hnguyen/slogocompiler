@@ -2,7 +2,6 @@ package slogo.backend.commands.basic.basiccommands;
 
 import javafx.geometry.Point2D;
 import slogo.backend.commands.basic.BasicCommandInterface;
-import slogo.backend.utils.DrawStatus;
 import slogo.backend.utils.Movement;
 import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleModel;
@@ -18,7 +17,6 @@ public class LeftBasicCommand implements BasicCommandInterface {
         this.turtleHistory = turtleHistory;
     }
 
-
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
@@ -26,7 +24,7 @@ public class LeftBasicCommand implements BasicCommandInterface {
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos, angle);
 
-        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus());
 
         return parameters.get(0);
     }

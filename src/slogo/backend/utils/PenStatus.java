@@ -1,10 +1,12 @@
 package slogo.backend.utils;
 
 public class PenStatus {
+    private boolean penDown;
     private int penSize;
     private int penColor;
 
-    public PenStatus(int penSize, int penColor) {
+    public PenStatus(boolean penDown, int penSize, int penColor) {
+        this.penDown = penDown;
         this.penSize = penSize;
         this.penColor = penColor;
     }
@@ -15,5 +17,9 @@ public class PenStatus {
 
     public int getPenColor() {
         return penColor;
+    }
+
+    public boolean isPenDown() {
+        return penDown;
     }
 }

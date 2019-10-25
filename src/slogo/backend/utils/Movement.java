@@ -3,6 +3,8 @@ package slogo.backend.utils;
 import javafx.geometry.Point2D;
 
 public class Movement {
+    private static final double INITIAL_ORIENTATION = 90d;
+    private static final double INITIAL_DISPLACEMENT = 0d;
 
     private Point2D startPosition;
     private Point2D endPosition;

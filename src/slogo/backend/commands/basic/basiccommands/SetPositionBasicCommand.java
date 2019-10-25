@@ -25,7 +25,7 @@ public class SetPositionBasicCommand implements BasicCommandInterface {
 
         Movement movement = new Movement(curPos, newPos, turtle.getOrientation());
 
-        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus());
 
         return curPos.distance(newPos);
     }

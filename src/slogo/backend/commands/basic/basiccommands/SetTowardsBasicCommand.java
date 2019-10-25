@@ -29,7 +29,7 @@ public class SetTowardsBasicCommand implements BasicCommandInterface {
 
         Movement movement = new Movement(curPos, curPos, newAngle);
 
-        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(turtle.isShowing(), turtle.isPenDown()));
+        turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus());
 
         return degreeTurned <= HALF_CYCLE ? degreeTurned : FULL_CYCLE - degreeTurned;
     }

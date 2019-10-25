@@ -7,17 +7,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
 
 import java.io.FileNotFoundException;
-import java.util.Objects;
 
 public class Visualization {
     private static final double BUTTON_WIDTH = 400;
