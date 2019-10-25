@@ -1,5 +1,6 @@
 package slogo.backend.utils;
 
+import slogo.backend.exceptions.NeedValueOfParameterException;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.basic.CommandFactory;
 
@@ -34,6 +35,13 @@ public class CommandTree {
             }
         }
         interpretTreeFromRight();
+    }
+
+    public void putValueInsteadOfParameter(double value) {
+        rightMostNode.setCommandWord(""+value);
+        if(rightMostNode.getParentNode() != null) {
+            moveRightNodeUp();
+        }
     }
 
     public double getLastDouble() throws UnmatchedNumArgumentsException {
