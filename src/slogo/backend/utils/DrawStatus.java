@@ -17,6 +17,12 @@ public class DrawStatus {
         this.imageNum = imageNum;
     }
 
+    public DrawStatus(DrawStatus drawStatus) {
+        this.visible = drawStatus.isTurtleVisible();
+        this.backGround = drawStatus.getBackGround();
+        this.imageNum = drawStatus.getImageNum();
+    }
+
     public boolean isTurtleVisible() {
         return visible;
     }
@@ -41,14 +47,7 @@ public class DrawStatus {
         return imageChanged;
     }
 
-    public void update(DrawStatus other) {
-        compareAndSetChanged(other);
-        visible = other.isTurtleVisible();
-        backGround = other.getBackGround();
-        imageNum = other.getImageNum();
-    }
-
-    private void compareAndSetChanged(DrawStatus other) {
+    public void compareAndSetChanged(DrawStatus other) {
         visibleChanged = !(other.isTurtleVisible() == visible);
         backGroundChanged = !(other.getBackGround() == backGround);
         imageChanged = !(other.getImageNum() == imageNum);

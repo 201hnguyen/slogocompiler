@@ -30,10 +30,10 @@ public class TurtleHistory {
     }
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
+        System.out.println("sef");
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
         myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
-        System.out.println(turtle.getXPos() + ", " + turtle.getYPos() + ", " + turtle.getOrientation());
     }
 
     public void toNextTurn() {
@@ -49,6 +49,9 @@ public class TurtleHistory {
     }
 
     public List<List<TurtleMovement>> getMyTurtleHistory() {
+        for(TurtleMovement turtleMovement : myTurtleHistory.get(0)) {
+            System.out.println("Recorded: " + turtleMovement.getPenStatus().isPenDown() + ", " + turtleMovement.getPenStatus().isPenDownChanged());
+        }
         List<List<TurtleMovement>> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;

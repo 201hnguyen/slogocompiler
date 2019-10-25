@@ -24,6 +24,8 @@ public class HideTurtleBasicCommand implements BasicCommandInterface {
 
         DrawStatus initialDrawStatus = turtle.getDrawStatus();
         DrawStatus newDrawStatus = new DrawStatus(false, initialDrawStatus.getBackGround(), initialDrawStatus.getImageNum());
+
+        newDrawStatus.compareAndSetChanged(initialDrawStatus);
         turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
 
         return 0;

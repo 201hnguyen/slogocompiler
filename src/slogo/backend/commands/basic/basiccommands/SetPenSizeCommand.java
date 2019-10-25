@@ -26,6 +26,7 @@ public class SetPenSizeCommand implements BasicCommandInterface {
         PenStatus initialPenStatus = turtle.getPenStatus();
         int index = (int) (parameters.get(0) + ACCURACY);
         PenStatus newPenStatus = new PenStatus(initialPenStatus.isPenDown(), index, initialPenStatus.getPenColor());
+        newPenStatus.compareAndSetChanged(initialPenStatus);
         turtleHistory.updateTurtle(turtleID, new Movement(curPos, curPos,turtle.getOrientation()), turtle.getDrawStatus(), newPenStatus);
 
         return index;
