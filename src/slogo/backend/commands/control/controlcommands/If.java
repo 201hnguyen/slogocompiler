@@ -1,5 +1,6 @@
 package slogo.backend.commands.control.controlcommands;
 
+import slogo.backend.exceptions.NeedValueOfParameterException;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
@@ -20,8 +21,8 @@ public class If implements ControlInterface {
                 String command = conditionScanner.next();
                 System.out.println("If condition, current passing to command tree: " + command);
                 commandTree.addToCommandTree(command);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (NeedValueOfParameterException e) {
+                //FIXME
             }
         }
 

@@ -1,14 +1,14 @@
 package slogo.backend.external_api;
 
 
+import slogo.backend.parser.Parser;
 import slogo.backend.commands.CommandBlockManager;
-import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 import java.util.Map;
 
 public class BackendManager {
     private CommandBlockManager commandBlockManager;
-    private ParserForTest myCommandParser;
+    private Parser myCommandParser;
     private TurtleHistory turtleHistory;
 
     public BackendManager(String language, TurtleHistory turtleHistory) {
@@ -17,16 +17,14 @@ public class BackendManager {
     }
 
     public void setCommand(String commands) {
-        System.out.println(commands);
-        String translatedCommand = myCommandParser.translateMyCommands(commands);
-        System.out.println("translated: " + translatedCommand);
+        String translatedCommand = myCommandParser.translateMyCommands();
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory);
         commandBlockManager.executeInstructionBlock();
     }
 
     public void setLanguage(String language) {
-        myCommandParser = new ParserForTest(language);
+        myCommandParser = new Parser(language);
     }
 
     public Map<String, Double> getMyVariables() {
