@@ -105,6 +105,9 @@ public class CommandBlockManager {
 
             }
         }
+        if (nextWord.equals("]")) {
+            builder.append(nextWord);
+        }
         String argument = builder.toString();
         arguments.add(argument);
         try {
