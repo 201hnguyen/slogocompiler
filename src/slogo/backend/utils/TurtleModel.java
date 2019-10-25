@@ -31,8 +31,8 @@ public class TurtleModel {
         xPos = movement.getEndPosition().getX();
         yPos = movement.getEndPosition().getY();
         orientation = movement.getOrientation();
-        this.drawStatus = drawStatus;
-        this.penStatus = penStatus;
+        this.drawStatus.update(drawStatus);
+        this.penStatus.update(penStatus);
     }
 
     public double getXPos() {
