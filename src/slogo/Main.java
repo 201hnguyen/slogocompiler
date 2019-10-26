@@ -9,6 +9,7 @@ import javafx.util.Duration;
 
 import javafx.application.Application;
 import slogo.backend.external_api.BackendManager;
+import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        Parser p = new Parser(myLanguage);
+        ParserForTest p = new ParserForTest(myLanguage);
         //String toBackend = p.translateMyCommands(test_input3, myLanguage);
         //System.out.println(toBackend);
 
