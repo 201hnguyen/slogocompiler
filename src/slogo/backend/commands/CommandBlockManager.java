@@ -38,6 +38,7 @@ public class CommandBlockManager {
         myCommandTree = new CommandTree(myTurtleHistory);
         myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
+        myUserDefinedVariables = new HashMap<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -45,6 +46,7 @@ public class CommandBlockManager {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
+            command = checkAndInputUserVariable(command);
             if (myBlockControlsResourceBundle.containsKey(command)) {
                 List<Object> commandArguments = prepareBlockCommand();
                 try {
@@ -65,8 +67,15 @@ public class CommandBlockManager {
         return returnValue;
     }
 
+    private String checkAndInputUserVariable(String command) {
+        if (command.charAt(0) == ':' && myUserDefinedVariables.containsKey(command)) {
+            return myUserDefinedVariables.get(command).toString();
+        }
+        return command;
+    }
+
     private void addUserDefinedVariable() {
-        String variable = myScanner.next().replace(":", "");
+        String variable = myScanner.next();
         try {
             myCommandTree.addToCommandTree(myScanner.next());
             while (!myCommandTree.onlyNumberLeft()) {
@@ -75,11 +84,8 @@ public class CommandBlockManager {
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); //FIXME
         }
-
         try {
-            double y = myCommandTree.getLastDouble();
-            System.out.println("last double: " + y);
-//            myUserDefinedVariables.put(variable, y);
+            myUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
         } catch (UnmatchedNumArgumentsException e) {
             e.printStackTrace(); //FIXME
         }
@@ -98,12 +104,13 @@ public class CommandBlockManager {
     private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
+        nextWord = checkAndInputUserVariable(nextWord);
         while (!nextWord.equals(endSignaler)) {
             builder.append(nextWord + " ");
             try {
                 nextWord = myScanner.next();
             } catch (NullPointerException e) {
-
+                //FIXME
             }
         }
         if (nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
