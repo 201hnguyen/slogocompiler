@@ -7,7 +7,6 @@ import javafx.scene.paint.Paint;
 import slogo.backend.utils.TurtleHistory;
 
 
-
 public class DisplayScreen extends Pane {
     private static final double SCENE_WIDTH = 600;
     private static final double SCENE_HEIGHT = 400;

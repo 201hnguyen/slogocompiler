@@ -18,10 +18,10 @@ public class PenStatus {
         penColorChanged = false;
     }
 
-    public PenStatus(PenStatus other) {
-        penDown = other.isPenDown();
-        penSize = other.getPenSize();
-        penColor = other.getPenColor();
+    public PenStatus(PenStatus penStatus) {
+        this.penDown = penStatus.isPenDown();
+        this.penSize = penStatus.getPenSize();
+        this.penColor = penStatus.getPenColor();
     }
 
     public int getPenSize() {
@@ -48,14 +48,7 @@ public class PenStatus {
         return penColorChanged;
     }
 
-    public void update(PenStatus other) {
-        compareAndSetChanged(other);
-        penDown = other.isPenDown();
-        penColor = other.getPenColor();
-        penSize = other.getPenSize();
-    }
-
-    private void compareAndSetChanged(PenStatus other) {
+    public void compareAndSetChanged(PenStatus other) {
         penDownChanged = !(other.isPenDown() == penDown);
         penSizeChanged = !(other.getPenSize() == penSize);
         penColorChanged = !(other.getPenColor() == penColor);

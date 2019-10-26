@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
-    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
@@ -30,10 +30,10 @@ public class TurtleHistory {
     }
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
+        System.out.println("sef");
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
         myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
-        System.out.println(turtle.getXPos() + ", " + turtle.getYPos() + ", " + turtle.getOrientation());
     }
 
     public void toNextTurn() {
@@ -57,10 +57,6 @@ public class TurtleHistory {
     public void clearHistory() {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
-    }
-
-    public void initialize(){
-        return;
     }
 
     private boolean hasTurtle(int turtleID) {

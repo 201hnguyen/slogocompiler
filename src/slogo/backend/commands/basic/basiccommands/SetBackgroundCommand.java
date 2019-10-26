@@ -9,11 +9,12 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
-public class ShowTurtleBasicCommand implements BasicCommandInterface {
+public class SetBackgroundCommand implements BasicCommandInterface {
+    private static final double ACCURACY = 0.001;
 
     private TurtleHistory turtleHistory;
 
-    public ShowTurtleBasicCommand(TurtleHistory turtleHistory) {
+    public SetBackgroundCommand(TurtleHistory turtleHistory) {
         this.turtleHistory = turtleHistory;
     }
 
@@ -24,9 +25,10 @@ public class ShowTurtleBasicCommand implements BasicCommandInterface {
         Movement movement = new Movement(curPos, curPos,turtle.getOrientation());
 
         DrawStatus initialDrawStatus = turtle.getDrawStatus();
-        DrawStatus newDrawStatus = new DrawStatus(true, initialDrawStatus.getBackGround(), initialDrawStatus.getImageNum(), false);
+        int index = (int) (parameters.get(0) + ACCURACY);
+        DrawStatus newDrawStatus = new DrawStatus(initialDrawStatus.isTurtleVisible(), index, initialDrawStatus.getImageNum(), false);
         turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
 
-        return 1;
+        return index;
     }
 }
