@@ -32,15 +32,18 @@ public class CommandBlockManager {
     private TurtleHistory myTurtleHistory;
     private PeekableScanner myScanner;
     private Map<String, Double> myUserDefinedVariables;
-//    private Set<MakeUserInstruction> myUserDefinedFunctions;
+    private List<Map<String, Double>> myAccessibleVariables;
 
-    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, Map<String,Double> parentsVariables) {
+    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables) {
         myCommandBlockString = commandBlock;
         myTurtleHistory = turtleHistory;
         myCommandTree = new CommandTree(myTurtleHistory);
         myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
-        myUserDefinedVariables = new HashMap<>() {{ putAll(parentsVariables); }};
+        myUserDefinedVariables = new HashMap<>();
+        myAccessibleVariables = new ArrayList<>();
+        myAccessibleVariables.addAll(higherScopeVariables);
+        myAccessibleVariables.add(myUserDefinedVariables);
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -52,7 +55,7 @@ public class CommandBlockManager {
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
                 List<Object> commandArguments = prepareBlockCommand();
                 try {
-                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myUserDefinedVariables);
+                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
@@ -70,8 +73,12 @@ public class CommandBlockManager {
     }
 
     private String checkAndInputUserVariable(String command) {
-        if (command.charAt(0) == USER_DEFINED_SIGNAL && myUserDefinedVariables.containsKey(command)) {
-            return myUserDefinedVariables.get(command).toString();
+        if (command.charAt(0) == USER_DEFINED_SIGNAL) {
+            for (Map<String, Double> variableMap : myAccessibleVariables) {
+                if (variableMap.containsKey(command)) {
+                    return variableMap.get(command).toString();
+                }
+            }
         }
         return command;
     }
@@ -87,6 +94,12 @@ public class CommandBlockManager {
             e.printStackTrace(); //FIXME
         }
         try {
+            for (Map<String, Double> variableMap : myAccessibleVariables) {
+                if (variableMap.containsKey(variable)) {
+                    variableMap.put(variable, myCommandTree.getLastDouble());
+                    return;
+                }
+            }
             myUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
         } catch (UnmatchedNumArgumentsException e) {
             e.printStackTrace(); //FIXME
