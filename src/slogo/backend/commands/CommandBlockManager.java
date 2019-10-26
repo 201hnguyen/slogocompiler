@@ -1,8 +1,8 @@
 package slogo.backend.commands;
 
-import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.control.ControlExecutor;
 import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
+import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
@@ -17,11 +17,13 @@ import java.util.*;
  */
 
 public class CommandBlockManager {
-    private static final String CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
-    private static final String MAKE_USER_DEFINED_RESOURCE_PATH = "resources/setVariableCommand";
+    private static final String BLOCK_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
+    private static final String MAKE_VARIABLE_COMMAND = "MakeVariable";
+    private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
+    private static final String BLOCK_ARGUMENT_END_SIGNAL = "]";
+    private static final String BLOCK_ARGUMENT_BEGIN_SIGNAL = "[";
 
-    private ResourceBundle myControlsResourceBundle = ResourceBundle.getBundle(CONTROLS_RESOURCE_PATH);
-    private ResourceBundle myUserDefinedResourceBundle = ResourceBundle.getBundle(MAKE_USER_DEFINED_RESOURCE_PATH);
+    private ResourceBundle myBlockControlsResourceBundle = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
     private String myCommandBlockString;
     private ControlExecutor myControlExecutor;
     private CommandTree myCommandTree;
@@ -43,19 +45,17 @@ public class CommandBlockManager {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
-            if (myControlsResourceBundle.containsKey(command)) {
+            if (myBlockControlsResourceBundle.containsKey(command)) {
                 List<Object> commandArguments = prepareBlockCommand();
                 try {
                     returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
-            } else if (myUserDefinedResourceBundle.containsKey(command)) {
-                //FIXME: Currently this only has make variables, I think making anything else should use control
-                prepareVariable();
+            } else if (command.equals(MAKE_VARIABLE_COMMAND)) {
+                addUserDefinedVariable();
             } else {
                 try {
-                    System.out.println("BlockManager, currently passing to command tree: " + command);
                     myCommandTree.addToCommandTree(command);
                 } catch (ClassNotFoundException e) {
                     //FIXME
@@ -65,32 +65,33 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private void prepareVariable() {
+    private void addUserDefinedVariable() {
         String variable = myScanner.next().replace(":", "");
         try {
             myCommandTree.addToCommandTree(myScanner.next());
-//            while (myCommandTree.stillNeedCommand()) { //FIXME: this can be uncommented once boolean for down to last double is made
-//                myCommandTree.addToCommandTree(myScanner.next());
-//            }
-            while (! myScanner.peek().equals("Forward")) {
+            while (!myCommandTree.onlyNumberLeft()) {
                 myCommandTree.addToCommandTree(myScanner.next());
             }
-            System.out.println("adding to map:" + variable + myCommandTree.getLastDouble());
-            myUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
-            for (String key : myUserDefinedVariables.keySet()) {
-                System.out.println("user map: " + key + ":" + myUserDefinedVariables.get(key));
-            }
-        } catch (UnmatchedNumArgumentsException e) {
-            e.printStackTrace(); //FIXME: Not sure why this is causing an exception
         } catch (ClassNotFoundException e) {
-            //FIXME !!
+            e.printStackTrace(); //FIXME
+        }
+
+        try {
+            double y = myCommandTree.getLastDouble();
+            System.out.println("last double: " + y);
+//            myUserDefinedVariables.put(variable, y);
+        } catch (UnmatchedNumArgumentsException e) {
+            e.printStackTrace(); //FIXME
+        }
+        for (String key : myUserDefinedVariables.keySet()) {
+            System.out.println("User defined:" + key + " : " + myUserDefinedVariables.get(key));
         }
     }
 
     private List<Object> prepareBlockCommand() {
         List<Object> controlCommandArguments = new ArrayList<>();
-        buildIndividualControlArgument("[", controlCommandArguments);
-        buildIndividualControlArgument("]", controlCommandArguments);
+        buildIndividualControlArgument(NON_BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
+        buildIndividualControlArgument(BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
         return controlCommandArguments;
     }
 
@@ -105,13 +106,13 @@ public class CommandBlockManager {
 
             }
         }
-        if (nextWord.equals("]")) {
+        if (nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
             builder.append(nextWord);
         }
         String argument = builder.toString();
         arguments.add(argument);
         try {
-            if (endSignaler.equals("]") && myScanner.peek().equals("[")) {
+            if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
                 myScanner.next();
                 buildIndividualControlArgument(endSignaler, arguments);
             }
