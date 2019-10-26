@@ -6,6 +6,7 @@ public class ParserException extends RuntimeException {
     //Thrown when user-input language does not match language pattern
     public ParserException(String language) {
 
+
     }
 
     //constructor 2
@@ -14,13 +15,6 @@ public class ParserException extends RuntimeException {
 
     }
 
-
-
-    public String cmdException() {
-        return "";
-    }
-
-    //additional exceptions
 
 
 }
