@@ -51,6 +51,7 @@ public class DrawStatus {
     }
 
     public void compareAndSetChanged(DrawStatus other) {
+        System.out.println(this.isTurtleVisible() + ", " + other.isTurtleVisible() + "sdf");
         visibleChanged = !(other.isTurtleVisible() == visible);
         backGroundChanged = !(other.getBackGround() == backGround);
         imageChanged = !(other.getImageNum() == imageNum);

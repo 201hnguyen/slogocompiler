@@ -12,11 +12,14 @@ public class Parser {
     private static final String SYNTAX = "Syntax";
     private static final String WHITESPACE = "\\s+"; //used in splitInput(String input)
     private static final String COMMENT = "#";
+    private static final String RESOURCES_PACKAGE = "resources.languages/";
 
     private static String myFullInput = "";
+    private static ResourceBundle myResource;
     private static List<String> mySplitInput = new ArrayList<>(); //used in splitInput()
     private static String myLanguagePath = ""; //where language resource files are located
     private static String myExampleFilePath = ""; //where
+    private static String myError = "";
     private static List<Map.Entry<String, Pattern>> myLanguageEntries = new ArrayList<>(); // A list of map entries (command : regular expression pattern from Syntax.properties)
     private static List<Map.Entry<String, Pattern>> mySyntaxEntries = new ArrayList<>(); //
     private static ResourceBundle myLanguageResource; //used in addPattern()
@@ -26,36 +29,22 @@ public class Parser {
     //constructor 1: for use with command-line user-input
     public Parser(String full_input, String language) {
         myFullInput = full_input;
-        myLanguagePath = "resources.languages/" + language;
-        myLanguageResource = ResourceBundle.getBundle(myLanguagePath);
         addPatterns(myLanguageEntries, language);
         addPatterns(mySyntaxEntries, SYNTAX);
     }//end constructor
 
-    //constructor 2: for use with .slogo or .txt files
-    public Parser(String full_input, String language, String filename){
-        Parser p = new Parser(full_input, language);
-        myExampleFilePath = "resources.examples/" + filename;
-        myExampleFileResource = getBundle(myExampleFilePath);
-        try {
-            FileReader f = new FileReader(myExampleFilePath);
-            //TODO: read to string
-        }
-        catch (FileNotFoundException e) {
-        }
-    }
-
     //addPatterns for given by getting languages resource bundle
     private void addPatterns(List resourceEntries, String language) {
-        for (String key : Collections.list(myLanguageResource.getKeys())) {
-            String regex = myLanguageResource.getString(key);
+        myResource = ResourceBundle.getBundle(RESOURCES_PACKAGE + language);
+        for (String key : Collections.list(myResource.getKeys())) {
+            String regex = myResource.getString(key);
             resourceEntries.add(new AbstractMap.SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
         }
     }
 
     public String translateCommands () {
         initialize();
-        String ERROR = "Not all commands valid given selected language\n";
+        myError = "Not all commands valid given selected language\n";
 
         splitInput();
 
@@ -71,7 +60,7 @@ public class Parser {
             return myCommandsTranslated;
         }
         else {
-            return ERROR;
+            return myError;
         }
     }
 
@@ -79,6 +68,7 @@ public class Parser {
     private void initialize() {
         myCommandsTranslated = "";
         mySplitInput.clear();
+        myError = "";
     }
 
     //called in translateCommands
@@ -92,7 +82,7 @@ public class Parser {
 
     //called in translateCommands
     private void addToMySplitInput(String s) {
-        System.out.println(s);
+        System.out.println("entered addToMySplitInput" + " " + s); //testing
         String trimmed = s.trim();
         if(trimmed.equals("")) {
             return;
@@ -102,14 +92,15 @@ public class Parser {
             if(command.equals("#")) {
                 return;
             }
-            System.out.println(command);
+            System.out.println(command); //testing
             mySplitInput.add(command);
         }
     }
 
     //called in translateCommands()
     public String getResourceKey(String single_cmd) {
-        final String ERROR = "NO MATCH";
+        System.out.println("entered getResourceKey");
+        myError = "NO MATCH";
         //for instructions
         for (Map.Entry<String, Pattern> e : myLanguageEntries) {
             if (match(single_cmd, e.getValue())) {
@@ -123,7 +114,7 @@ public class Parser {
             }
         }
         // FIXME: perhaps throw an exception instead
-        return ERROR;
+        return myError;
     }//end method
 
     //called in getResourceKey()
