@@ -25,7 +25,6 @@ public class PenDownBasicCommand implements BasicCommandInterface {
 
         PenStatus initialPenStatus = turtle.getPenStatus();
         PenStatus newPenStatus = new PenStatus(true, initialPenStatus.getPenSize(), initialPenStatus.getPenColor());
-        newPenStatus.compareAndSetChanged(initialPenStatus);
 
         turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), newPenStatus);
 

@@ -26,8 +26,6 @@ public class PenUpBasicCommand implements BasicCommandInterface {
         PenStatus initialPenStatus = turtle.getPenStatus();
         PenStatus newPenStatus = new PenStatus(false, initialPenStatus.getPenSize(), initialPenStatus.getPenColor());
 
-        newPenStatus.compareAndSetChanged(initialPenStatus);
-
         turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), newPenStatus);
 
         return 0;

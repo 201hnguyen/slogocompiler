@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
-    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
@@ -49,9 +49,6 @@ public class TurtleHistory {
     }
 
     public List<List<TurtleMovement>> getMyTurtleHistory() {
-        for(TurtleMovement turtleMovement : myTurtleHistory.get(0)) {
-            System.out.println("Recorded: " + turtleMovement.getPenStatus().isPenDown() + ", " + turtleMovement.getPenStatus().isPenDownChanged());
-        }
         List<List<TurtleMovement>> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;
@@ -60,10 +57,6 @@ public class TurtleHistory {
     public void clearHistory() {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
-    }
-
-    public void initialize(){
-        return;
     }
 
     private boolean hasTurtle(int turtleID) {

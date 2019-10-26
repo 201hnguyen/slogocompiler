@@ -26,8 +26,7 @@ public class SetBackgroundCommand implements BasicCommandInterface {
 
         DrawStatus initialDrawStatus = turtle.getDrawStatus();
         int index = (int) (parameters.get(0) + ACCURACY);
-        DrawStatus newDrawStatus = new DrawStatus(initialDrawStatus.isTurtleVisible(), index, initialDrawStatus.getImageNum());
-        newDrawStatus.compareAndSetChanged(initialDrawStatus);
+        DrawStatus newDrawStatus = new DrawStatus(initialDrawStatus.isTurtleVisible(), index, initialDrawStatus.getImageNum(), false);
         turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
 
         return index;

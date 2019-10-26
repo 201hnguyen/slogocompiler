@@ -24,7 +24,6 @@ public class SetPenColorCommand implements BasicCommandInterface {
         PenStatus initialPenStatus = turtle.getPenStatus();
         int index = (int) (parameters.get(0) + ACCURACY);
         PenStatus newPenStatus = new PenStatus(initialPenStatus.isPenDown(), initialPenStatus.getPenSize(), index);
-        newPenStatus.compareAndSetChanged(initialPenStatus);
         turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), newPenStatus);
 
         return index;
