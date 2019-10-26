@@ -1,7 +1,7 @@
 package slogo.backend.commands;
 
 import slogo.backend.commands.control.ControlExecutor;
-import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
+//import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
@@ -18,27 +18,29 @@ import java.util.*;
 
 public class CommandBlockManager {
     private static final String BLOCK_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
-    private static final String MAKE_VARIABLE_COMMAND = "MakeVariable";
+    private static final String USER_DEFINED_RESOURCE_PATH = "resources/UserDefinedVariables";
+    private static final ResourceBundle CONTROLS_RESOURCE_BUNDLE = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
+    private static final ResourceBundle USER_DEFINED_RESOURCE_BUNDLE = ResourceBundle.getBundle(USER_DEFINED_RESOURCE_PATH);
     private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
     private static final String BLOCK_ARGUMENT_END_SIGNAL = "]";
     private static final String BLOCK_ARGUMENT_BEGIN_SIGNAL = "[";
+    private static final char USER_DEFINED_SIGNAL = ':';
 
-    private ResourceBundle myBlockControlsResourceBundle = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
     private String myCommandBlockString;
     private ControlExecutor myControlExecutor;
     private CommandTree myCommandTree;
     private TurtleHistory myTurtleHistory;
     private PeekableScanner myScanner;
     private Map<String, Double> myUserDefinedVariables;
-    private Set<MakeUserInstruction> myUserDefinedFunctions;
+//    private Set<MakeUserInstruction> myUserDefinedFunctions;
 
-    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory) {
+    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, Map<String,Double> parentsVariables) {
         myCommandBlockString = commandBlock;
         myTurtleHistory = turtleHistory;
         myCommandTree = new CommandTree(myTurtleHistory);
         myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
-        myUserDefinedVariables = new HashMap<>();
+        myUserDefinedVariables = new HashMap<>() {{ putAll(parentsVariables); }};
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -47,14 +49,14 @@ public class CommandBlockManager {
         while (myScanner.hasNext()) {
             String command = myScanner.next();
             command = checkAndInputUserVariable(command);
-            if (myBlockControlsResourceBundle.containsKey(command)) {
+            if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
                 List<Object> commandArguments = prepareBlockCommand();
                 try {
-                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory);
+                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myUserDefinedVariables);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
-            } else if (command.equals(MAKE_VARIABLE_COMMAND)) {
+            } else if (USER_DEFINED_RESOURCE_BUNDLE.containsKey(command)) {
                 addUserDefinedVariable();
             } else {
                 try {
@@ -68,7 +70,7 @@ public class CommandBlockManager {
     }
 
     private String checkAndInputUserVariable(String command) {
-        if (command.charAt(0) == ':' && myUserDefinedVariables.containsKey(command)) {
+        if (command.charAt(0) == USER_DEFINED_SIGNAL && myUserDefinedVariables.containsKey(command)) {
             return myUserDefinedVariables.get(command).toString();
         }
         return command;
