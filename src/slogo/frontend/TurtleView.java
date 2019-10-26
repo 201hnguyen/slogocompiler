@@ -31,6 +31,7 @@ public class TurtleView extends ImageView {
     private double screenHeight;
     private double speed;
     private int imageNum;
+    private boolean initialize = false;
     private boolean isPenDown = true;
     private boolean isVisible = true;
     private int direction = 1;
@@ -59,8 +60,8 @@ public class TurtleView extends ImageView {
             index++;
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
         } else {
-            double targetXPos = getCentralX() +  direction * speed * Math.cos(Math.toRadians(angle));
-            double targetYPos = getCentralY() -  direction * speed * Math.sin(Math.toRadians(angle));
+            double targetXPos = getCentralX() +  speed * Math.cos(Math.toRadians(angle));
+            double targetYPos = getCentralY() -  speed * Math.sin(Math.toRadians(angle));
             moveView(new Point2D(targetXPos, targetYPos), movement.getOrientation());
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
         }
@@ -98,6 +99,8 @@ public class TurtleView extends ImageView {
         this.myLineColor = myLineColor;
     }
 
+    public void initialize() {moveView(new Point2D(getCentralX(), getCentralY()), INITIAL_ORIENTATION);}
+
     public int getImageNum() {return imageNum;}
 
     private double getCentralX() {
@@ -115,6 +118,8 @@ public class TurtleView extends ImageView {
     private void updateDrawStatus(DrawStatus drawStatus) {
         isVisible = drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : isVisible;
         setVisible(isVisible);
+        imageNum = drawStatus.isImageChanged() ? drawStatus.getImageNum() : imageNum;
+        initialize = drawStatus.screenToBeErased();
     }
 
     private void updatePenStatus(PenStatus penStatus) {

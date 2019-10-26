@@ -2,18 +2,19 @@ package slogo.backend.commands.basic.basiccommands;
 
 import javafx.geometry.Point2D;
 import slogo.backend.commands.basic.BasicCommandInterface;
-import slogo.backend.utils.DrawStatus;
 import slogo.backend.utils.Movement;
+import slogo.backend.utils.PenStatus;
 import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
-public class ShowTurtleBasicCommand implements BasicCommandInterface {
+public class SetPenSizeCommand implements BasicCommandInterface {
+    private static final double ACCURACY = 0.001;
 
     private TurtleHistory turtleHistory;
 
-    public ShowTurtleBasicCommand(TurtleHistory turtleHistory) {
+    public SetPenSizeCommand(TurtleHistory turtleHistory) {
         this.turtleHistory = turtleHistory;
     }
 
@@ -21,12 +22,12 @@ public class ShowTurtleBasicCommand implements BasicCommandInterface {
     public double getReturnValue(List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
-        Movement movement = new Movement(curPos, curPos,turtle.getOrientation());
 
-        DrawStatus initialDrawStatus = turtle.getDrawStatus();
-        DrawStatus newDrawStatus = new DrawStatus(true, initialDrawStatus.getBackGround(), initialDrawStatus.getImageNum(), false);
-        turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
+        PenStatus initialPenStatus = turtle.getPenStatus();
+        int index = (int) (parameters.get(0) + ACCURACY);
+        PenStatus newPenStatus = new PenStatus(initialPenStatus.isPenDown(), index, initialPenStatus.getPenColor());
+        turtleHistory.updateTurtle(turtleID, new Movement(curPos, curPos,turtle.getOrientation()), turtle.getDrawStatus(), newPenStatus);
 
-        return 1;
+        return index;
     }
 }

@@ -29,6 +29,7 @@ public class SLogoViewManager {
         turtleMovements = turtleHistory.getMyTurtleHistory();
         for(TurtleMovement turtleMovement : turtleMovements.get(0)) {
             getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
+            System.out.println("History: " + turtleMovement.getPenStatus().isPenDown() + ", " + turtleMovement.getPenStatus().isPenDownChanged());
         }
     }
 

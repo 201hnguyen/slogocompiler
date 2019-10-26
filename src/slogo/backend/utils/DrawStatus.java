@@ -9,12 +9,21 @@ public class DrawStatus {
     private boolean visibleChanged;
     private boolean backGroundChanged;
     private boolean imageChanged;
+    private boolean eraseScreen = false;
 
 
-    public DrawStatus(boolean visible, int backGround, int imageNum) {
+    public DrawStatus(boolean visible, int backGround, int imageNum, boolean eraseScreen) {
         this.visible = visible;
         this.backGround = backGround;
         this.imageNum = imageNum;
+        this.eraseScreen = eraseScreen;
+    }
+
+    public DrawStatus(DrawStatus drawStatus) {
+        this.visible = drawStatus.isTurtleVisible();
+        this.backGround = drawStatus.getBackGround();
+        this.imageNum = drawStatus.getImageNum();
+        this.eraseScreen = drawStatus.screenToBeErased();
     }
 
     public boolean isTurtleVisible() {
@@ -41,16 +50,14 @@ public class DrawStatus {
         return imageChanged;
     }
 
-    public void update(DrawStatus other) {
-        compareAndSetChanged(other);
-        visible = other.isTurtleVisible();
-        backGround = other.getBackGround();
-        imageNum = other.getImageNum();
-    }
-
-    private void compareAndSetChanged(DrawStatus other) {
+    public void compareAndSetChanged(DrawStatus other) {
         visibleChanged = !(other.isTurtleVisible() == visible);
         backGroundChanged = !(other.getBackGround() == backGround);
         imageChanged = !(other.getImageNum() == imageNum);
+        eraseScreen = !other.screenToBeErased() && eraseScreen;
+    }
+
+    public boolean screenToBeErased() {
+        return eraseScreen;
     }
 }

@@ -2,6 +2,7 @@ package slogo.backend.commands.basic.basiccommands;
 
 import javafx.geometry.Point2D;
 import slogo.backend.commands.basic.BasicCommandInterface;
+import slogo.backend.utils.DrawStatus;
 import slogo.backend.utils.Movement;
 import slogo.backend.utils.TurtleHistory;
 import slogo.backend.utils.TurtleModel;
@@ -26,8 +27,9 @@ public class ClearScreenBasicCommand implements BasicCommandInterface {
 
         Movement movement = new Movement(curPos, new Point2D(0, 0), INITIAL_ORIENTATION);
 
-        turtleHistory.updateTurtle(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus());
-        turtleHistory.initialize();
+        DrawStatus initialDrawStatus = turtle.getDrawStatus();
+        DrawStatus newDrawStatus = new DrawStatus(initialDrawStatus.isTurtleVisible(), initialDrawStatus.getBackGround(), initialDrawStatus.getImageNum(), true);
+        turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
 
         return returnValue;
     }
