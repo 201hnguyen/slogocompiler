@@ -8,6 +8,7 @@ import javafx.util.Duration;
 
 import javafx.application.Application;
 import slogo.backend.external_api.BackendManager;
+import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
 

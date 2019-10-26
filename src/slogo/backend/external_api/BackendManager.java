@@ -5,6 +5,7 @@ import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.parser.Parser;
 import slogo.backend.utils.TurtleHistory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class BackendManager {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
-        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new HashMap<>());
+        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>());
         commandBlockManager.executeInstructionBlock();
     }
 
