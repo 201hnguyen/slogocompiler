@@ -1,6 +1,5 @@
 package slogo;
 
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,20 +18,10 @@ public class Main extends Application {
     private Animation myAnimation;
     private BackendManager myBackEndManager;
     private boolean moveStarted = false;
-
-    private static String test_input1 = "";
-    private static String test_input2 = "fd 50";
-    private static String test_input3 = "repeat 2 [ fd 50 ]";
-    private static String myLanguage = "English";
-
     private Visualization visualization;
 
     public static void main(String[] args) {
         launch(args);
-        ParserForTest p = new ParserForTest(myLanguage);
-        //String toBackend = p.translateMyCommands(test_input3, myLanguage);
-        //System.out.println(toBackend);
-
     }
 
     @Override
@@ -52,8 +41,9 @@ public class Main extends Application {
     private void step() {
         String str = visualization.getInput();
         if(!str.equals("")) {
-            System.out.println(str);
-            myBackEndManager.setCommand(str);
+            System.out.println("Entered main.step"); //testing
+            System.out.println(str); //testing
+            myBackEndManager.setCommand();
             visualization.setHistory(myBackEndManager.getHistory());
             moveStarted = true;
         }
