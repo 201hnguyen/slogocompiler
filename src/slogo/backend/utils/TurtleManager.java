@@ -1,3 +1,4 @@
+/*
 package slogo.backend.utils;
 
 import javafx.scene.image.Image;
@@ -32,14 +33,18 @@ public class TurtleManager {
                 return turtle;
             }
         }
-        /*if(myTurtles.isEmpty()) {
+        */
+/*if(myTurtles.isEmpty()) {
             addTurtle(turtleID);
         }
-        return getTurtle(turtleID);*/
+        return getTurtle(turtleID);*//*
+
         addTurtle(turtleID);
         return getTurtle(turtleID);
-        /** TODO: Fix this code when there are multiple turtles
-         */
+        */
+/** TODO: Fix this code when there are multiple turtles
+         *//*
+
     }
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus) {
@@ -110,3 +115,4 @@ public class TurtleManager {
         myLines.clear();
     }
 }
+*/
