@@ -51,16 +51,19 @@ public class CommandBlockManager {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
-            command = checkAndInputUserVariable(command);
+            command = checkAndInputUserVariable(command, myAccessibleVariables);
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
-                List<Object> commandArguments = prepareBlockCommand();
+                List<Object> commandArguments;
+                if (USER_DEFINED_RESOURCE_BUNDLE.containsKey(command)) {
+                    commandArguments = new ArrayList<>() {{ add(myScanner); }};
+                } else {
+                    commandArguments = prepareBlockCommand();
+                }
                 try {
                     returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
-            } else if (USER_DEFINED_RESOURCE_BUNDLE.containsKey(command)) {
-                addUserDefinedVariable();
             } else {
                 try {
                     myCommandTree.addToCommandTree(command);
@@ -72,50 +75,22 @@ public class CommandBlockManager {
                 try {
                     returnValue = myCommandTree.getLastDouble();
                 } catch (UnmatchedNumArgumentsException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //FIXME
                 }
             }
         }
         return returnValue;
     }
 
-    private String checkAndInputUserVariable(String command) {
+    public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {
         if (command.charAt(0) == USER_DEFINED_SIGNAL) {
-            for (Map<String, Double> variableMap : myAccessibleVariables) {
+            for (Map<String, Double> variableMap : accessibleVariables) {
                 if (variableMap.containsKey(command)) {
                     return variableMap.get(command).toString();
                 }
             }
         }
         return command;
-    }
-
-    private void addUserDefinedVariable() {
-        String variable = myScanner.next();
-        try {
-            myCommandTree.addToCommandTree(myScanner.next());
-            while (!myCommandTree.onlyNumberLeft()) {
-                String command = myScanner.next();
-                command = checkAndInputUserVariable(command);
-                myCommandTree.addToCommandTree(command);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //FIXME
-        }
-        try {
-            for (Map<String, Double> variableMap : myAccessibleVariables) {
-                if (variableMap.containsKey(variable)) {
-                    variableMap.put(variable, myCommandTree.getLastDouble());
-                    return;
-                }
-            }
-            myLocalUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
-        } catch (UnmatchedNumArgumentsException e) {
-            e.printStackTrace(); //FIXME
-        }
-        for (String key : myLocalUserDefinedVariables.keySet()) {
-            System.out.println("User defined:" + key + " : " + myLocalUserDefinedVariables.get(key));
-        }
     }
 
     private List<Object> prepareBlockCommand() {
@@ -128,7 +103,7 @@ public class CommandBlockManager {
     private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
-        nextWord = checkAndInputUserVariable(nextWord);
+        nextWord = checkAndInputUserVariable(nextWord, myAccessibleVariables);
         while (!nextWord.equals(endSignaler)) {
             builder.append(nextWord + " ");
             try {
