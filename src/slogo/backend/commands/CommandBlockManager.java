@@ -31,7 +31,7 @@ public class CommandBlockManager {
     private CommandTree myCommandTree;
     private TurtleHistory myTurtleHistory;
     private PeekableScanner myScanner;
-    private Map<String, Double> myUserDefinedVariables;
+    private Map<String, Double> myLocalUserDefinedVariables;
     private List<Map<String, Double>> myAccessibleVariables;
 
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables) {
@@ -40,10 +40,10 @@ public class CommandBlockManager {
         myCommandTree = new CommandTree(myTurtleHistory);
         myControlExecutor = new ControlExecutor();
         myScanner = new PeekableScanner(myCommandBlockString);
-        myUserDefinedVariables = new HashMap<>();
+        myLocalUserDefinedVariables = new HashMap<>();
         myAccessibleVariables = new ArrayList<>();
         myAccessibleVariables.addAll(higherScopeVariables);
-        myAccessibleVariables.add(myUserDefinedVariables);
+        myAccessibleVariables.add(myLocalUserDefinedVariables);
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -100,12 +100,12 @@ public class CommandBlockManager {
                     return;
                 }
             }
-            myUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
+            myLocalUserDefinedVariables.put(variable, myCommandTree.getLastDouble());
         } catch (UnmatchedNumArgumentsException e) {
             e.printStackTrace(); //FIXME
         }
-        for (String key : myUserDefinedVariables.keySet()) {
-            System.out.println("User defined:" + key + " : " + myUserDefinedVariables.get(key));
+        for (String key : myLocalUserDefinedVariables.keySet()) {
+            System.out.println("User defined:" + key + " : " + myLocalUserDefinedVariables.get(key));
         }
     }
 
