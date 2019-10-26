@@ -68,6 +68,13 @@ public class CommandBlockManager {
                     //FIXME
                 }
             }
+            if (myCommandTree.onlyNumberLeft()) {
+                try {
+                    returnValue = myCommandTree.getLastDouble();
+                } catch (UnmatchedNumArgumentsException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return returnValue;
     }
@@ -133,6 +140,7 @@ public class CommandBlockManager {
         if (nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
             builder.append(nextWord);
         }
+
         String argument = builder.toString();
         arguments.add(argument);
         try {
@@ -141,7 +149,7 @@ public class CommandBlockManager {
                 buildIndividualControlArgument(endSignaler, arguments);
             }
         } catch (NullPointerException e) {
-
+                //fixme
         }
 
     }
