@@ -88,7 +88,9 @@ public class CommandBlockManager {
         try {
             myCommandTree.addToCommandTree(myScanner.next());
             while (!myCommandTree.onlyNumberLeft()) {
-                myCommandTree.addToCommandTree(myScanner.next());
+                String command = myScanner.next();
+                command = checkAndInputUserVariable(command);
+                myCommandTree.addToCommandTree(command);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); //FIXME
