@@ -1,6 +1,5 @@
 package slogo.backend.utils;
 
-import slogo.backend.exceptions.NeedValueOfParameterException;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.basic.CommandFactory;
 
@@ -22,7 +21,7 @@ public class CommandTree {
         myCommandFactory = new CommandFactory(turtleHistory);
     }
 
-    public void addToCommandTree(String command) throws NeedValueOfParameterException {
+    public void addToCommandTree(String command) throws ClassNotFoundException {
 
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
             commandTreeNode.setCommandWord(command);
@@ -36,13 +35,7 @@ public class CommandTree {
         }
         interpretTreeFromRight();
     }
-
-    public void putValueInsteadOfParameter(double value) {
-        rightMostNode.setCommandWord(""+value);
-        if(rightMostNode.getParentNode() != null) {
-            moveRightNodeUp();
-        }
-    }
+    
 
     public double getLastDouble() throws UnmatchedNumArgumentsException {
         if(commandTreeNode.getCommandWord().equals("")) {
@@ -58,7 +51,7 @@ public class CommandTree {
         return commandTreeNode.getChildrenNumber() == 0 && isThisStringDouble(commandTreeNode.getCommandWord());
     }
 
-    private void interpretTreeFromRight() throws NeedValueOfParameterException{
+    private void interpretTreeFromRight() throws ClassNotFoundException{
         String command = rightMostNode.getCommandWord();
         try {
             int parameter = myCommandFactory.getNumParameter(command);
@@ -72,7 +65,7 @@ public class CommandTree {
         }
         catch (ClassNotFoundException e) {
             if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
-                throw new NeedValueOfParameterException(command);
+                throw new ClassNotFoundException(command);
             }
         }
     }

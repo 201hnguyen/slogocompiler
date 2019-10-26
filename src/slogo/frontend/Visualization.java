@@ -7,31 +7,20 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleManager;
-
-import java.io.FileNotFoundException;
-import java.util.Objects;
 
 public class Visualization {
     private static final double BUTTON_WIDTH = 400;
     private static final double BUTTON_HEIGHT = 50;
     private static final double DROP_WIDTH = 165;
     private static final double DROP_HEIGHT = 40;
-    private static final double PICKER_WIDTH = 100;
-    private static final double PICKER_HEIGHT = 40;
     private static final double SCENE_WIDTH = 800;
     private static final double SCENE_HEIGHT = 600;
-    private static final double INPUT_HEIGHT = 99;
-    private static final double INPUT_WIDTH = 600;
     private static final double INSET_PADDING = 10;
-    private static final double CIRCLE_RADIUS = 50;
 
 
     private String[] languageList;
@@ -45,11 +34,8 @@ public class Visualization {
     private HBox checkBoxes;
     private ComboBox languageDropDown;
     private ComboBox imageDropDown;
-    private ColorPicker colorPicker;
-    private Circle colorCircle;
     private CheckBox penBox;
     private CheckBox backgroundBox;
-    private TextArea inputField;
     private TextFlow historyField;
     private TextFlow variableField;
     private VBox historyTracker;
@@ -61,25 +47,35 @@ public class Visualization {
     private boolean inputSent = false;
 
     private DisplayScreen displayScreen = new DisplayScreen();
+    private CommandLine commandLine = new CommandLine();
+    private ColorPalette colorPalette = new ColorPalette();
 
-    public Visualization(Stage stage) throws FileNotFoundException {
+    public Visualization(Stage stage) {
         this.stage = stage;
         startButton = buttonCreator("Start", event -> {
-            readerText = new Text(inputField.getText() + "\n");
+            readerText = new Text(commandLine.getCommand().getText() + "\n");
             historyField.getChildren().add(readerText);
             inputSent = true;
-            //System.out.print(getInput());
 
-            if (inputField.getText().contains(":")) {
-                String variable = inputField.getText().substring(inputField.getText().lastIndexOf(":"));
+            if (commandLine.getCommand().getText().contains(":")) {
+                String variable = commandLine.getCommand().getText().substring(commandLine.getCommand().getText().lastIndexOf(":"));
                 variableField.getChildren().addAll(new Text(variable + "\n")); }
         });
-        clearButton = buttonCreator("Clear", event -> inputField.clear());
+        displayScreen.setBackground(colorPalette.getColor());
+        colorPalette.getPalette().setOnAction(event -> {
+            if (backgroundBox.isSelected()) {
+                displayScreen.setBackground(colorPalette.getColor());
+            }
+            if(penBox.isSelected()) {
+                displayScreen.setLineColor(colorPalette.getColor());
+            }
+        });
+        clearButton = buttonCreator("Clear", event -> commandLine.getCommand().clear());
         helpButton = buttonCreator("Help", event ->  helpHost.showDocument("https://www2.cs.duke.edu/courses/compsci308/current/assign/03_parser/commands.php"));
         languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"}, "Language");
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"}, "Image");
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, trackHistory(), buttons(), commandBox(), colorPalette(), checkBoxes());
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, trackHistory(), buttons(), checkBoxes());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
@@ -88,14 +84,6 @@ public class Visualization {
         comboBox.setPrefSize(DROP_WIDTH, DROP_HEIGHT);
         comboBox.setPromptText("Choose" + " " + tag);
         return comboBox;
-    }
-    private TilePane commandBox() {
-        inputField = new TextArea("Enter command here!");
-        inputField.setPrefSize(INPUT_WIDTH,INPUT_HEIGHT);
-        TilePane inputBox = new TilePane();
-        inputBox.getChildren().addAll(inputField);
-        inputBox.setLayoutY(500);
-        return inputBox;
     }
     private VBox trackHistory() {
         historyTracker = new VBox();
@@ -152,34 +140,6 @@ public class Visualization {
         checkBoxes.setSpacing(10);
         return checkBoxes;
     }
-    private VBox colorPalette() {
-        VBox palette = new VBox();
-        colorPicker = new ColorPicker();
-        colorPicker.setMaxSize(PICKER_WIDTH,PICKER_HEIGHT);
-        colorCircle = new Circle(CIRCLE_RADIUS);
-        colorCircle.setFill(colorPicker.getValue());
-        displayScreen.setBackground(colorPicker.getValue());
-        colorPicker.setOnAction(event -> {
-            colorCircle.setFill(colorPicker.getValue());
-            if (backgroundBox.isSelected()) {
-                displayScreen.setBackground(colorPicker.getValue());
-            }
-            if(penBox.isSelected()) {
-                displayScreen.setLineColor(colorPicker.getValue());
-            }
-        });
-        palette.setPadding(new Insets(INSET_PADDING));
-        palette.getChildren().addAll(colorCircle, colorPicker);
-        palette.setLayoutY(420);
-        palette.setSpacing(10);
-        palette.setLayoutX(630);
-        return palette;
-    }
-
-//    public TurtleManager getTurtle() {
-//        return new TurtleManager(displayScreen, new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("START.png"))));
-//    }
-
     public void update() {
         displayScreen.update();
     }

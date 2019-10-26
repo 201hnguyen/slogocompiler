@@ -16,6 +16,6 @@ public class IsShowingBasicCommand implements BasicCommandInterface {
     @Override
     public double getReturnValue(List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
-        return turtle.isShowing()? 1d : 0d;
+        return turtle.getDrawStatus().isTurtleVisible()? 1d : 0d;
     }
 }

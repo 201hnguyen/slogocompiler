@@ -22,7 +22,10 @@ public class ShowTurtleBasicCommand implements BasicCommandInterface {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos,turtle.getOrientation());
-        turtleHistory.updateTurtle(turtleID, movement, new DrawStatus(true, turtle.isPenDown()));
+
+        DrawStatus initialDrawStatus = turtle.getDrawStatus();
+        DrawStatus newDrawStatus = new DrawStatus(true, initialDrawStatus.getBackGround(), initialDrawStatus.getImageNum());
+        turtleHistory.updateTurtle(turtleID, movement, newDrawStatus, turtle.getPenStatus());
 
         return 1;
     }

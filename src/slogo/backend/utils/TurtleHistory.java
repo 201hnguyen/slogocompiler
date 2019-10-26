@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurtleHistory {
+    private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1);
+
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
+    private int curTurtleID = 1;
     private int index = 0;
 
     public TurtleHistory() {
-        myTurtles.add(new TurtleModel(1));
+        myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
         myTurtleHistory.add(new ArrayList<>());
     }
 
     public TurtleModel getTurtleModel(int turtleID){
         for(TurtleModel turtle : myTurtles) {
             if((turtle.getMyID()==turtleID)) {
+                curTurtleID = turtleID;
                 return turtle;
             }
         }
@@ -24,12 +29,11 @@ public class TurtleHistory {
         return getTurtleModel(turtleID);
     }
 
-    public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus) {
+    public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
-        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, drawStatus));
-        turtle.update(movement, drawStatus);
+        turtle.update(movement, drawStatus, penStatus);
+        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
         System.out.println(turtle.getXPos() + ", " + turtle.getYPos() + ", " + turtle.getOrientation());
-        System.out.println(myTurtleHistory.get(0).size());
     }
 
     public void toNextTurn() {
@@ -38,8 +42,9 @@ public class TurtleHistory {
 
     public void addTurtleModel(int turtleID) {
         if(!hasTurtle(turtleID)) {
-            TurtleModel turtle = new TurtleModel(turtleID);
-            myTurtles.add(turtle);
+            TurtleModel curTurtle = getTurtleModel(curTurtleID);
+            curTurtleID = turtleID;
+            myTurtles.add(new TurtleModel(turtleID, curTurtle.getPenStatus(), curTurtle.getDrawStatus()));
         }
     }
 

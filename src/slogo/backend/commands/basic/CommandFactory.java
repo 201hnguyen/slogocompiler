@@ -59,7 +59,7 @@ public class CommandFactory {
             return ((BasicCommandInterface) constructor.newInstance(myTurtleHistory)).getReturnValue(parameters, turtleID);
         } catch (NoSuchMethodException e) {
             return getDoubleFromDefaultConstructor(clazz, turtleID, parameters);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new ClassNotFoundException();
         }
     }

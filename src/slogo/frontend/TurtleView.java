@@ -8,6 +8,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import slogo.backend.utils.DrawStatus;
 import slogo.backend.utils.Movement;
+import slogo.backend.utils.PenStatus;
 import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;
@@ -26,20 +27,19 @@ public class TurtleView extends ImageView {
     private List<TurtleMovement> myMovements = new ArrayList<>();
     private int myID;
     private int index = 0;
-    private double ABSOLUTE_SIZE_Y;
     private double screenWidth;
     private double screenHeight;
     private double speed;
-    private boolean isPenDown;
-    private boolean isVisible;
+    private int imageNum;
+    private boolean isPenDown = true;
+    private boolean isVisible = true;
     private int direction = 1;
-    private int imageNum = 1;
     private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
         super(image);
         myID = turtleID;
-        ABSOLUTE_SIZE_Y = ABSOLUTE_SIZE_X * getBoundsInLocal().getHeight() / getBoundsInLocal().getWidth();
+        double ABSOLUTE_SIZE_Y = ABSOLUTE_SIZE_X * getBoundsInLocal().getHeight() / getBoundsInLocal().getWidth();
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         setFitWidth(CONSTANT_SCREEN_WIDTH * ABSOLUTE_SIZE_X / screenWidth);
@@ -50,6 +50,7 @@ public class TurtleView extends ImageView {
         Point2D initialPos = new Point2D(getCentralX(), getCentralY());
         Movement movement = myMovements.get(index).getMovement();
         updateDrawStatus(myMovements.get(index).getDrawStatus());
+        updatePenStatus(myMovements.get(index).getPenStatus());
         double angle = getAngle(movement.getStartPosition(), movement.getEndPosition());
         Point2D endPos = new Point2D(movement.getEndPosition().getX() + getScreenCenter().getX(),
                 getScreenCenter().getY() - movement.getEndPosition().getY());
@@ -58,15 +59,17 @@ public class TurtleView extends ImageView {
             index++;
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
         } else {
-            double targetXPos = getCentralX() +  speed * Math.cos(Math.toRadians(angle));
-            double targetYPos = getCentralY() -  speed * Math.sin(Math.toRadians(angle));
+            double targetXPos = getCentralX() +  direction * speed * Math.cos(Math.toRadians(angle));
+            double targetYPos = getCentralY() -  direction * speed * Math.sin(Math.toRadians(angle));
             moveView(new Point2D(targetXPos, targetYPos), movement.getOrientation());
             return isPenDown? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
         }
     }
 
     public void addMovement(TurtleMovement turtleMovement) {
+
         myMovements.add(turtleMovement);
+        System.out.println(turtleMovement.getPenStatus().isPenDown() + ", " + turtleMovement.getPenStatus().isPenDownChanged() + "sdfsdf");
     }
 
     public boolean isMoving() {
@@ -110,9 +113,12 @@ public class TurtleView extends ImageView {
     }
 
     private void updateDrawStatus(DrawStatus drawStatus) {
-        isPenDown = drawStatus.isPenDown();
-        isVisible = drawStatus.isTurtleVisible();
+        isVisible = drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : isVisible;
         setVisible(isVisible);
+    }
+
+    private void updatePenStatus(PenStatus penStatus) {
+        isPenDown = penStatus.isPenDownChanged() ? penStatus.isPenDown() : isPenDown;
     }
 
     private void checkDirection(Point2D initialPos, Point2D targetPos, double orientation) {
