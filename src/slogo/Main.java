@@ -43,7 +43,7 @@ public class Main extends Application {
         if(!str.equals("")) {
             System.out.println("Entered main.step"); //testing
             System.out.println(str); //testing
-            myBackEndManager.setCommand();
+            myBackEndManager.setCommand(str);
             visualization.setHistory(myBackEndManager.getHistory());
             moveStarted = true;
         }
