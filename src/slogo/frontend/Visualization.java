@@ -26,41 +26,23 @@ public class Visualization {
     private String[] imageList;
     private Scene scene;
     private AnchorPane root;
-    private Button startButton;
-    private Button clearButton;
-    private Button helpButton;
-    private HBox buttonBox;
     private ComboBox languageDropDown;
     private ComboBox imageDropDown;
     private VBox historyTracker;
     private Stage stage;
     private Text readerText;
-    private boolean inputSent = false;
 
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
-    //private ColorPalette colorPalette = new ColorPalette(displayScreen);
     private TabMaker tabPane = new TabMaker();
-
-    public HostServices helpHost;
+    private ButtonCreator buttonCreator = new ButtonCreator();
 
     public Visualization(Stage stage) {
         this.stage = stage;
-        startButton = buttonCreator("Start", event -> {
-            readerText = new Text(commandLine.getCommand().getText() + "\n");
-            tabPane.getHistory().getChildren().add(readerText);
-            inputSent = true;
-
-            if (commandLine.getCommand().getText().contains(":")) {
-                String variable = commandLine.getCommand().getText().substring(commandLine.getCommand().getText().lastIndexOf(":"));
-                tabPane.getVariable().getChildren().addAll(new Text(variable + "\n")); }
-        });
-        clearButton = buttonCreator("Clear", event -> commandLine.getCommand().clear());
-        helpButton = buttonCreator("Help", event ->  helpHost.showDocument("https://www2.cs.duke.edu/courses/compsci308/current/assign/03_parser/commands.php"));
         languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"}, "Language");
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"}, "Image");
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), trackHistory(), buttons());
+        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), trackHistory(), buttonCreator);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
@@ -77,22 +59,6 @@ public class Visualization {
         historyTracker.getChildren().addAll(tabPane);
         return historyTracker;
     }
-    private HBox buttons() {
-        GridPane buttons = new GridPane();
-        buttons.setPadding(new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING));
-        buttonBox = new HBox();
-        buttonBox.getChildren().addAll(startButton,languageDropDown, clearButton, imageDropDown, helpButton);
-        buttonBox.setSpacing(25);
-        buttonBox.setLayoutY(430);
-        buttonBox.setLayoutX(20);
-        return buttonBox;
-    }
-    private Button buttonCreator(String name, EventHandler<ActionEvent> handler) {
-        Button button = new Button(name);
-        button.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.setOnAction(handler);
-        return button;
-    }
     public void update() {
         displayScreen.update();
     }
@@ -103,14 +69,14 @@ public class Visualization {
 
     private void startStage() {
         stage.setScene(scene);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.show();
         stage.setTitle("SLOGO IDLE");
     }
 
     public String getInput() {
-        if(inputSent) {
-            inputSent = false;
+        if(buttonCreator.isStartButtonClicked()) {
+            readerText = new Text(commandLine.getCommand().getText() + "\n");
             return readerText.getText();
         }
         return "";

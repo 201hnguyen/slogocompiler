@@ -19,8 +19,11 @@ public class ColorPalette extends VBox {
     private static final double PICKER_HEIGHT = 40;
     private static final double CIRCLE_RADIUS = 50;
     private static final double INSET_PADDING = 10;
-    private static final double YLAYOUT = 420;
-    private static final double XLAYOUT = 630;
+    private static final double PALETTE_Y = 420;
+    private static final double PALETTE_X = 630;
+    private static final double CHECK_X = 570;
+    private static final double CHECK_Y = 630;
+    private static final double CHECK_SPACING = 10;
     private static final double SPACING = 10;
     private static final String RESOURCE_PATH = "resources.frontend.ColorPalette";
 
@@ -42,16 +45,17 @@ public class ColorPalette extends VBox {
             callMethods(colorPicker.getValue());
         });
         setPadding(new Insets(INSET_PADDING));
-        setLayoutY(YLAYOUT);
+        setLayoutY(PALETTE_Y);
         setSpacing(SPACING);
-        setLayoutX(XLAYOUT);
+        setLayoutX(PALETTE_X);
+        System.out.println(checkBoxes().getChildren().size());
     }
     private HBox checkBoxes() {
         HBox checkBoxes = new HBox();
         addColorPalettes(checkBoxes);
-        checkBoxes.setLayoutY(570);
-        checkBoxes.setLayoutX(620);
-        checkBoxes.setSpacing(10);
+        checkBoxes.setLayoutY(CHECK_Y);
+        checkBoxes.setLayoutX(CHECK_X);
+        checkBoxes.setSpacing(CHECK_SPACING);
         return checkBoxes;
     }
 
