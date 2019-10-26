@@ -49,7 +49,6 @@ public class PenStatus {
     }
 
     public void compareAndSetChanged(PenStatus other) {
-        System.out.println(this.isPenDown() + ", " + other.isPenDown());
         penDownChanged = !(other.isPenDown() == penDown);
         penSizeChanged = !(other.getPenSize() == penSize);
         penColorChanged = !(other.getPenColor() == penColor);
