@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
 
@@ -31,48 +30,37 @@ public class Visualization {
     private Button clearButton;
     private Button helpButton;
     private HBox buttonBox;
-    private HBox checkBoxes;
     private ComboBox languageDropDown;
     private ComboBox imageDropDown;
-    private TextFlow historyField;
-    private TextFlow variableField;
     private VBox historyTracker;
-    private ScrollPane historyPane;
-    private ScrollPane variablePane;
-    public HostServices helpHost;
     private Stage stage;
     private Text readerText;
     private boolean inputSent = false;
 
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
-    private ColorPalette colorPalette = new ColorPalette();
+    //private ColorPalette colorPalette = new ColorPalette(displayScreen);
+    private TabMaker tabPane = new TabMaker();
+
+    public HostServices helpHost;
 
     public Visualization(Stage stage) {
         this.stage = stage;
         startButton = buttonCreator("Start", event -> {
             readerText = new Text(commandLine.getCommand().getText() + "\n");
-            historyField.getChildren().add(readerText);
+            tabPane.getHistory().getChildren().add(readerText);
             inputSent = true;
 
             if (commandLine.getCommand().getText().contains(":")) {
                 String variable = commandLine.getCommand().getText().substring(commandLine.getCommand().getText().lastIndexOf(":"));
-                variableField.getChildren().addAll(new Text(variable + "\n")); }
-        });
-        colorPalette.getPalette().setOnAction(event -> {
-            if (colorPalette.getBackgroundBox().isSelected()) {
-                displayScreen.setBackground(colorPalette.getColor());
-            }
-            if(colorPalette.getPenBox().isSelected()) {
-                displayScreen.setLineColor(colorPalette.getColor());
-            }
+                tabPane.getVariable().getChildren().addAll(new Text(variable + "\n")); }
         });
         clearButton = buttonCreator("Clear", event -> commandLine.getCommand().clear());
         helpButton = buttonCreator("Help", event ->  helpHost.showDocument("https://www2.cs.duke.edu/courses/compsci308/current/assign/03_parser/commands.php"));
         languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"}, "Language");
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"}, "Image");
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, trackHistory(), buttons());
+        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), trackHistory(), buttons());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
@@ -86,30 +74,8 @@ public class Visualization {
         historyTracker = new VBox();
         historyTracker.setLayoutX(600);
         historyTracker.setLayoutY(200);
-        historyTracker.getChildren().addAll(tabPane());
+        historyTracker.getChildren().addAll(tabPane);
         return historyTracker;
-    }
-    private TabPane tabPane() {
-        TabPane tabs = new TabPane();
-        historyField = new TextFlow();
-        variableField = new TextFlow();
-        historyPane = scrollMaker();
-        variablePane = scrollMaker();
-        historyPane.setContent(historyField);
-        variablePane.setContent(variableField);
-        Tab historyTab = new Tab("History");
-        Tab variableTab = new Tab("Variables");
-        historyTab.setContent(historyPane);
-        variableTab.setContent(variablePane);
-        tabs.getTabs().addAll(historyTab, variableTab);
-        tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        return tabs;
-    }
-    private ScrollPane scrollMaker() {
-        ScrollPane pane = new ScrollPane();
-        pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        pane.setPrefSize(200,100);
-        return pane;
     }
     private HBox buttons() {
         GridPane buttons = new GridPane();

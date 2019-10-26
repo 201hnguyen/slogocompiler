@@ -8,7 +8,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.time.temporal.ChronoField;
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ColorPalette extends VBox {
     private static final double PICKER_WIDTH = 100;
@@ -18,14 +22,16 @@ public class ColorPalette extends VBox {
     private static final double YLAYOUT = 420;
     private static final double XLAYOUT = 630;
     private static final double SPACING = 10;
+    private static final String RESOURCE_PATH = "resources.frontend.ColorPalette";
 
     private ColorPicker colorPicker;
-    private CheckBox penBox;
-    private CheckBox backgroundBox;
     private Circle colorCircle;
-    private DisplayScreen displayScreen;
+    private ColorPaletteController colorPaletteController;
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private Map<CheckBox, String> checkBoxMap = new HashMap<>();
 
-    public ColorPalette() {
+    public ColorPalette(DisplayScreen displayScreen) {
+        colorPaletteController = new ColorPaletteController(displayScreen);
         colorPicker = new ColorPicker();
         colorPicker.setMaxSize(PICKER_WIDTH,PICKER_HEIGHT);
         colorCircle = new Circle(CIRCLE_RADIUS);
@@ -33,7 +39,7 @@ public class ColorPalette extends VBox {
         getChildren().addAll(colorCircle, colorPicker, checkBoxes());
         colorPicker.setOnAction(event -> {
             colorCircle.setFill(colorPicker.getValue());
-
+            callMethods(colorPicker.getValue());
         });
         setPadding(new Insets(INSET_PADDING));
         setLayoutY(YLAYOUT);
@@ -42,17 +48,32 @@ public class ColorPalette extends VBox {
     }
     private HBox checkBoxes() {
         HBox checkBoxes = new HBox();
-        penBox = new CheckBox("Pen");
-        backgroundBox = new CheckBox("Background");
-        checkBoxes.getChildren().addAll(penBox, backgroundBox);
+        addColorPalettes(checkBoxes);
         checkBoxes.setLayoutY(570);
         checkBoxes.setLayoutX(620);
         checkBoxes.setSpacing(10);
         return checkBoxes;
     }
 
-    Color getColor() {  return colorPicker.getValue(); }
-    CheckBox getPenBox() { return penBox; }
-    CheckBox getBackgroundBox() { return backgroundBox; }
-    ColorPicker getPalette() { return colorPicker; }
+    private void addColorPalettes(HBox hbox) {
+        for(String key : Collections.list(resourceBundle.getKeys())) {
+            CheckBox checkBox = new CheckBox(key);
+            checkBoxMap.put(checkBox, key);
+            hbox.getChildren().add(checkBox);
+        }
+    }
+
+    private void callMethods(Color color) {
+        for(CheckBox checkBox : checkBoxMap.keySet()) {
+            if(checkBox.isSelected()) {
+                try {
+                    String methodName = resourceBundle.getString(checkBoxMap.get(checkBox));
+                    Method m = colorPaletteController.getClass().getDeclaredMethod(methodName, Color.class);
+                    m.invoke(colorPaletteController, color);
+                } catch (Exception e) {
+
+                }
+            }
+        }
+    }
 }
