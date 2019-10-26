@@ -12,6 +12,7 @@ public class TurtleMovement {
         this.movement = movement;
         this.drawStatus = drawStatus;
         this.penStatus = penStatus;
+        System.out.println(penStatus.isPenDown() + ", " + penStatus.isPenDownChanged() + "movement");
     }
 
     public int getTurtleID() {
