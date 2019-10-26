@@ -34,8 +34,6 @@ public class Visualization {
     private HBox checkBoxes;
     private ComboBox languageDropDown;
     private ComboBox imageDropDown;
-    private CheckBox penBox;
-    private CheckBox backgroundBox;
     private TextFlow historyField;
     private TextFlow variableField;
     private VBox historyTracker;
@@ -61,12 +59,11 @@ public class Visualization {
                 String variable = commandLine.getCommand().getText().substring(commandLine.getCommand().getText().lastIndexOf(":"));
                 variableField.getChildren().addAll(new Text(variable + "\n")); }
         });
-        displayScreen.setBackground(colorPalette.getColor());
         colorPalette.getPalette().setOnAction(event -> {
-            if (backgroundBox.isSelected()) {
+            if (colorPalette.getBackgroundBox().isSelected()) {
                 displayScreen.setBackground(colorPalette.getColor());
             }
-            if(penBox.isSelected()) {
+            if(colorPalette.getPenBox().isSelected()) {
                 displayScreen.setLineColor(colorPalette.getColor());
             }
         });
@@ -75,7 +72,7 @@ public class Visualization {
         languageDropDown = dropDown(languageList = new String[]{"1", "2", "3"}, "Language");
         imageDropDown = dropDown(imageList = new String[]{"1", "2", "3"}, "Image");
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, trackHistory(), buttons(), checkBoxes());
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, trackHistory(), buttons());
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
@@ -130,16 +127,6 @@ public class Visualization {
         button.setOnAction(handler);
         return button;
     }
-    private HBox checkBoxes() {
-        checkBoxes = new HBox();
-        penBox = new CheckBox("Pen");
-        backgroundBox = new CheckBox ("Background");
-        checkBoxes.getChildren().addAll(penBox,backgroundBox);
-        checkBoxes.setLayoutY(570);
-        checkBoxes.setLayoutX(620);
-        checkBoxes.setSpacing(10);
-        return checkBoxes;
-    }
     public void update() {
         displayScreen.update();
     }
@@ -162,4 +149,5 @@ public class Visualization {
         }
         return "";
     }
+
 }

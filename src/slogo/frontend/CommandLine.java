@@ -10,8 +10,6 @@ public class CommandLine extends TilePane {
     private static final double LAYOUT = 500;
     private TextArea inputField;
 
-
-
     public CommandLine() {
         inputField = new TextArea();
         inputField.setPrefSize(WIDTH, HEIGHT);
