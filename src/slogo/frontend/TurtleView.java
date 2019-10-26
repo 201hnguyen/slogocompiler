@@ -31,6 +31,7 @@ public class TurtleView extends ImageView {
     private double screenHeight;
     private double speed;
     private int imageNum;
+    private int penSize;
     private boolean initialize = false;
     private boolean isPenDown = true;
     private boolean isVisible = true;
@@ -126,13 +127,13 @@ public class TurtleView extends ImageView {
         isPenDown = penStatus.isPenDownChanged() ? penStatus.isPenDown() : isPenDown;
     }
 
-    private void checkDirection(Point2D initialPos, Point2D targetPos, double orientation) {
-        double length = initialPos.distance(targetPos);
-        Point2D plannedArrival = new Point2D(initialPos.getX() + length * Math.cos(orientation),
-                initialPos.getY() + length * Math.sin(orientation));
-
-        direction = plannedArrival.distance(targetPos) > length ? -1 : 1;
-    }
+//    private void checkDirection(Point2D initialPos, Point2D targetPos, double orientation) {
+//        double length = initialPos.distance(targetPos);
+//        Point2D plannedArrival = new Point2D(initialPos.getX() + length * Math.cos(orientation),
+//                initialPos.getY() + length * Math.sin(orientation));
+//
+//        direction = plannedArrival.distance(targetPos) > length ? -1 : 1;
+//    }
 
     private double getAngle(Point2D startPos, Point2D targetPos) {
         double angle = new Point2D(1, 0).angle(targetPos.getX() - startPos.getX(), targetPos.getY() - startPos.getY());
