@@ -36,7 +36,7 @@ public class CommandBlockManager {
     private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
 
 
-    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables) {
+    public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
         myTurtleHistory = turtleHistory;
         myCommandTree = new CommandTree(myTurtleHistory);
@@ -47,6 +47,7 @@ public class CommandBlockManager {
         myAccessibleVariables.addAll(higherScopeVariables);
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
+        myAccessibleUserDefinedFunctions.putAll(definedFunctions);
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -71,14 +72,14 @@ public class CommandBlockManager {
                     commandArguments = prepareBlockCommand();
                 }
                 try {
-                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables);
+                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
                 List<Object> commandArguments = prepareUserDefinedFunction(command);
                 try {
-                    myControlExecutor.execute("UserDefined", commandArguments, myTurtleHistory, myAccessibleVariables);
+                    myControlExecutor.execute("UserDefined", commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
@@ -109,10 +110,13 @@ public class CommandBlockManager {
 
         for (int i=0; i<parametersNeeded; i++) {
             String argument = myScanner.next();
+            argument = checkAndInputUserVariable(argument, myAccessibleVariables);
             try {
                 myCommandTree.addToCommandTree(argument);
                 while (!myCommandTree.onlyNumberLeft()) {
-                    myCommandTree.addToCommandTree(myScanner.next());
+                    argument = myScanner.next();
+                    argument = checkAndInputUserVariable(argument, myAccessibleVariables);
+                    myCommandTree.addToCommandTree(argument);
                 }
                 numericalArgumentForMethod.add(myCommandTree.getLastDouble());
             } catch (ClassNotFoundException e) {
@@ -165,7 +169,6 @@ public class CommandBlockManager {
                 }
             }
         }
-
         String argument = builder.toString();
         arguments.add(argument);
         try {

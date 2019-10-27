@@ -8,7 +8,7 @@ import java.util.*;
 public class MakeUserInstruction implements ControlInterface {
 
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables) {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
         String methodName = parameters.get(0).toString();
         List<Object> blockArguments = (List<Object>) parameters.get(1);
         Map<String,List<Object>> userFunctionsMap = (Map<String, List<Object>>) parameters.get(2);
