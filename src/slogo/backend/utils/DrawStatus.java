@@ -24,6 +24,9 @@ public class DrawStatus {
         this.backGround = drawStatus.getBackGround();
         this.imageNum = drawStatus.getImageNum();
         this.eraseScreen = drawStatus.screenToBeErased();
+        this.visibleChanged = drawStatus.isVisibleChanged();
+        this.imageChanged = drawStatus.isImageChanged();
+        this.backGroundChanged = drawStatus.isBackGroundChanged();
     }
 
     public boolean isTurtleVisible() {

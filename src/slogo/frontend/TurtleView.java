@@ -29,11 +29,8 @@ public class TurtleView extends ImageView {
     private double screenWidth;
     private double screenHeight;
     private double speed;
-    private int imageNum;
-    private int penSize;
-    private boolean initialize = false;
-    private boolean isPenDown = true;
-    private boolean isVisible = true;
+    private PenStatus penStatus;
+    private DrawStatus drawStatus;
     private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
@@ -57,12 +54,12 @@ public class TurtleView extends ImageView {
         if(initialPos.distance(endPos) < speed) {
             moveView(endPos, movement.getOrientation());
             index++;
-            return isPenDown? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
+            return penStatus.isPenDown()? new Line(initialPos.getX(), initialPos.getY(), endPos.getX(), endPos.getY()) : null;
         } else {
             double targetXPos = getCentralX() +  speed * Math.cos(Math.toRadians(angle));
             double targetYPos = getCentralY() -  speed * Math.sin(Math.toRadians(angle));
             moveView(new Point2D(targetXPos, targetYPos), movement.getOrientation());
-            return isPenDown? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
+            return penStatus.isPenDown()? new Line(initialPos.getX(), initialPos.getY(), targetXPos, targetYPos) : null;
         }
     }
 
@@ -98,9 +95,17 @@ public class TurtleView extends ImageView {
         this.myLineColor = myLineColor;
     }
 
-    public void initialize() {moveView(new Point2D(getCentralX(), getCentralY()), INITIAL_ORIENTATION);}
+    public void lineColorChangedByUser() {
+        penStatus = new PenStatus(penStatus.isPenDown(), penStatus.getPenSize(), -1);
+    }
 
-    public int getImageNum() {return imageNum;}
+    public void setPenStatus(PenStatus penStatus) {
+        this.penStatus = penStatus;
+    }
+
+    public void setDrawStatus(DrawStatus drawStatus) {this.drawStatus = drawStatus;}
+
+    public void initialize() {moveView(new Point2D(getCentralX(), getCentralY()), INITIAL_ORIENTATION);}
 
     private double getCentralX() {
         return getX() + getBoundsInLocal().getWidth() / 2;
@@ -115,23 +120,22 @@ public class TurtleView extends ImageView {
     }
 
     private void updateDrawStatus(DrawStatus drawStatus) {
-        isVisible = drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : isVisible;
+        boolean isVisible = drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : this.drawStatus.isTurtleVisible();
         setVisible(isVisible);
-        imageNum = drawStatus.isImageChanged() ? drawStatus.getImageNum() : imageNum;
-        initialize = drawStatus.screenToBeErased();
+        int imageNum = drawStatus.isImageChanged() ? drawStatus.getImageNum() : this.drawStatus.getImageNum();
+        int backGround = drawStatus.isBackGroundChanged() ? drawStatus.getBackGround() : this.drawStatus.getBackGround();
+        boolean initialize = drawStatus.screenToBeErased();
+
+        this.drawStatus = new DrawStatus(isVisible, backGround, imageNum, initialize);
     }
 
     private void updatePenStatus(PenStatus penStatus) {
-        isPenDown = penStatus.isPenDownChanged() ? penStatus.isPenDown() : isPenDown;
-    }
+        boolean isPenDown = penStatus.isPenDownChanged() ? penStatus.isPenDown() : this.penStatus.isPenDown();
+        int penSize = penStatus.isPenSizeChanged() ? penStatus.getPenSize() : this.penStatus.getPenSize();
+        int penColor = penStatus.isPenColorChanged() ? penStatus.getPenColor() : this.penStatus.getPenColor();
 
-//    private void checkDirection(Point2D initialPos, Point2D targetPos, double orientation) {
-//        double length = initialPos.distance(targetPos);
-//        Point2D plannedArrival = new Point2D(initialPos.getX() + length * Math.cos(orientation),
-//                initialPos.getY() + length * Math.sin(orientation));
-//
-//        direction = plannedArrival.distance(targetPos) > length ? -1 : 1;
-//    }
+        this.penStatus = new PenStatus(isPenDown, penSize, penColor);
+    }
 
     private double getAngle(Point2D startPos, Point2D targetPos) {
         double angle = new Point2D(1, 0).angle(targetPos.getX() - startPos.getX(), targetPos.getY() - startPos.getY());
