@@ -5,6 +5,7 @@ import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BackendManager {
