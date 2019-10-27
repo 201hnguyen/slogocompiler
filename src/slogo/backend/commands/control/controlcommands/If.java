@@ -1,6 +1,6 @@
 package slogo.backend.commands.control.controlcommands;
 
-import slogo.backend.exceptions.UnmatchedNumArgumentsException;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.CommandTree;
@@ -27,11 +27,9 @@ public class If implements ControlInterface {
             }
         }
 
-        try {
+        if(commandTree.onlyNumberLeft()) {
             conditionValue = commandTree.getLastDouble();
             System.out.println("condition value: " + conditionValue);
-        } catch (UnmatchedNumArgumentsException e) {
-            e.printStackTrace();
         }
 
         if (conditionValue != 0) {
