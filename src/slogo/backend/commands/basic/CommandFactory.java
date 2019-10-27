@@ -29,8 +29,7 @@ public class CommandFactory {
     }
 
     public double execute(String command, int turtleID, List<Double> parameters) throws ClassNotFoundException {
-        Class<?> clazz = getClass(command);
-        return getDoubleFromInstance(clazz, turtleID, parameters);
+        return getDoubleFromInstance(getClass(command), turtleID, parameters);
     }
 
     public boolean isMovementCommand(String command) {
@@ -46,8 +45,7 @@ public class CommandFactory {
         for (String key : Collections.list(resourceBundle.getKeys())) {
             if (key.equals(command)) {
                 String commandName = resourceBundle.getString(key).split(",")[0];
-                Class<?> clazz = Class.forName(CLASS_PATH + commandName);
-                return clazz;
+                return Class.forName(CLASS_PATH + commandName);
             }
         }
         throw new ClassNotFoundException();
