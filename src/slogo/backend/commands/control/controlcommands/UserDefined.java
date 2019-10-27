@@ -8,7 +8,7 @@ import java.util.*;
 
 public class UserDefined implements ControlInterface {
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables) {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
         List<Double> numericalArguments = (List<Double>) parameters.get(0);
         Map<String, Double> methodParameters = (LinkedHashMap<String, Double>) parameters.get(1);
         String commandBlockAsString = parameters.get(2).toString();
@@ -31,7 +31,7 @@ public class UserDefined implements ControlInterface {
             System.out.println("In user defined, testing parameters arguments: " + key + ":" + methodParameters.get(key));
         }
 
-        CommandBlockManager commandBlockManager = new CommandBlockManager(commandBlockAsString, turtleHistory, currentAccessibleVariables);
+        CommandBlockManager commandBlockManager = new CommandBlockManager(commandBlockAsString, turtleHistory, currentAccessibleVariables, definedFunctions);
         commandBlockManager.executeInstructionBlock();
         return 1;
     }
