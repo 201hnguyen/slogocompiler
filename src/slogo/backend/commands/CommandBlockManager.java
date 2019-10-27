@@ -49,7 +49,8 @@ public class CommandBlockManager {
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
-        myActiveTurtles = myTurtleHistory.getActiveTurtles();
+//        myActiveTurtles = myTurtleHistory.getActiveTurtles();
+        myActiveTurtles = new ArrayList<>() {{ add(1); add(2); }};
         myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
@@ -109,6 +110,7 @@ public class CommandBlockManager {
                                 String s = builder.toString();
                                 System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
                                 CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
+                                repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
                                 for (String commandToRerun : myCommandsToReRun) {
                                     repeatCommandTree.addToCommandTree(commandToRerun);
                                 }
