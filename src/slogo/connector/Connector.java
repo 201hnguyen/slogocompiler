@@ -9,9 +9,13 @@ import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
 
 public class Connector {
+
+    private static final double DURATION_MILLIS = 2;
+
     private Visualization myVisualization;
     private BackendManager myBackEndManager;
     private boolean moveStarted = false;
+    private Timeline myAnimation;
 
     public Connector(Stage stage) {
         myVisualization = new Visualization(stage);
@@ -19,11 +23,11 @@ public class Connector {
     }
 
     public void begin() {
-        var frame = new KeyFrame(Duration.millis(2), e -> step());
-        var animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
+        var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
+        myAnimation = new Timeline();
+        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.getKeyFrames().add(frame);
+        myAnimation.play();
     }
 
     private void step() {
