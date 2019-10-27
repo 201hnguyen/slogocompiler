@@ -1,11 +1,8 @@
 package slogo.frontend;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 import java.lang.reflect.Method;
 import java.util.Collections;

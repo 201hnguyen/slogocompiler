@@ -1,11 +1,15 @@
 package slogo.frontend;
 
+import slogo.frontend.reference.ReferenceWindow;
+
 public class ButtonController {
     private boolean startButtonClicked = false;
     private boolean clearButtonClicked = false;
 
     public ButtonController() {
-
+        /**
+         * TODO: Constructor will have to get language as input parameter.
+         */
     }
 
     public void startButtonAction() {
@@ -17,7 +21,8 @@ public class ButtonController {
     }
 
     public void helpButtonAction() {
-
+        ReferenceWindow referenceWindow = new ReferenceWindow("English");
+        referenceWindow.createNewWindow();
     }
 
     public boolean isStartButtonClicked() {
