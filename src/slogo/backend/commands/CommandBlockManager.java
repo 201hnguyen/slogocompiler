@@ -19,8 +19,10 @@ import java.util.*;
 public class CommandBlockManager {
     private static final String BLOCK_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
     private static final String USER_DEFINED_RESOURCE_PATH = "resources/UserDefinedVariables";
+    private static final String MOVEMENT_COMMANDS_RESOURCE_PATH = "resources/DefinedMovementCommands";
     private static final ResourceBundle CONTROLS_RESOURCE_BUNDLE = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
     private static final ResourceBundle USER_DEFINED_RESOURCE_BUNDLE = ResourceBundle.getBundle(USER_DEFINED_RESOURCE_PATH);
+    private static final ResourceBundle MOVEMENT_COMMANDS_RESOURCE_BUNDLE = ResourceBundle.getBundle(MOVEMENT_COMMANDS_RESOURCE_PATH);
     private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
     private static final String BLOCK_ARGUMENT_END_SIGNAL = "]";
     private static final String BLOCK_ARGUMENT_BEGIN_SIGNAL = "[";
@@ -34,7 +36,8 @@ public class CommandBlockManager {
     private Map<String, Double> myLocalUserDefinedVariables;
     private List<Map<String, Double>> myAccessibleVariables;
     private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
-
+    private List<Integer> myActiveTurtles;
+    private List<String> myCommandsToReRun;
 
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
@@ -48,6 +51,8 @@ public class CommandBlockManager {
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
+        myActiveTurtles = new ArrayList<>() {{ add(1); }};
+        myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -84,8 +89,15 @@ public class CommandBlockManager {
                     e.printStackTrace(); //FIXME
                 }
             } else {
+                if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
+
+                }
+
+
+
                 try {
                     myCommandTree.addToCommandTree(command);
+
                 } catch (ClassNotFoundException e) {
                     //FIXME
                 }
