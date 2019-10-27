@@ -33,6 +33,8 @@ public class CommandBlockManager {
     private PeekableScanner myScanner;
     private Map<String, Double> myLocalUserDefinedVariables;
     private List<Map<String, Double>> myAccessibleVariables;
+    private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
+
 
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables) {
         myCommandBlockString = commandBlock;
@@ -44,6 +46,7 @@ public class CommandBlockManager {
         myAccessibleVariables = new ArrayList<>();
         myAccessibleVariables.addAll(higherScopeVariables);
         myAccessibleVariables.add(myLocalUserDefinedVariables);
+        myAccessibleUserDefinedFunctions = new HashMap<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -55,12 +58,27 @@ public class CommandBlockManager {
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
                 List<Object> commandArguments;
                 if (USER_DEFINED_RESOURCE_BUNDLE.containsKey(command)) {
-                    commandArguments = new ArrayList<>() {{ add(myScanner); }};
+                    commandArguments = new ArrayList<>() {{
+                        add(myScanner);
+                    }};
+                } else if (command.equals("MakeUserInstruction")) {
+                    commandArguments = new ArrayList<>();
+                    String methodName = myScanner.next();
+                    commandArguments.add(methodName);
+                    commandArguments.add(prepareBlockCommand());
+                    commandArguments.add(myAccessibleUserDefinedFunctions);
                 } else {
                     commandArguments = prepareBlockCommand();
                 }
                 try {
                     returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace(); //FIXME
+                }
+            } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
+                List<Object> commandArguments = prepareUserDefinedFunction(command);
+                try {
+                    myControlExecutor.execute("UserDefined", commandArguments, myTurtleHistory, myAccessibleVariables);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
@@ -71,6 +89,7 @@ public class CommandBlockManager {
                     //FIXME
                 }
             }
+
             if (myCommandTree.onlyNumberLeft()) {
                 try {
                     returnValue = myCommandTree.getLastDouble();
@@ -80,6 +99,31 @@ public class CommandBlockManager {
             }
         }
         return returnValue;
+    }
+
+    private List<Object> prepareUserDefinedFunction(String command) {
+        List<Object> commandArguments = new ArrayList<>();
+        List<Double> numericalArgumentForMethod = new ArrayList<>();
+        int parametersNeeded = ((Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0)).size();
+        System.out.println("test parameters needed: " + parametersNeeded);
+
+        for (int i=0; i<parametersNeeded; i++) {
+            String argument = myScanner.next();
+            try {
+                myCommandTree.addToCommandTree(argument);
+                while (!myCommandTree.onlyNumberLeft()) {
+                    myCommandTree.addToCommandTree(myScanner.next());
+                }
+                numericalArgumentForMethod.add(myCommandTree.getLastDouble());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace(); //FIXME
+            } catch (UnmatchedNumArgumentsException e) {
+                e.printStackTrace(); //FIXME
+            }
+        }
+        commandArguments.add(numericalArgumentForMethod);
+        commandArguments.addAll(myAccessibleUserDefinedFunctions.get(command));
+        return commandArguments;
     }
 
     public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {
@@ -95,7 +139,11 @@ public class CommandBlockManager {
 
     private List<Object> prepareBlockCommand() {
         List<Object> controlCommandArguments = new ArrayList<>();
-        buildIndividualControlArgument(NON_BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
+        if (! myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
+            buildIndividualControlArgument(NON_BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
+        } else {
+            myScanner.next();
+        }
         buildIndividualControlArgument(BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
         return controlCommandArguments;
     }
@@ -103,17 +151,19 @@ public class CommandBlockManager {
     private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
+        int endSignalersNeeded = 1;
         nextWord = checkAndInputUserVariable(nextWord, myAccessibleVariables);
-        while (!nextWord.equals(endSignaler)) {
+        while (endSignalersNeeded != 0) {
             builder.append(nextWord + " ");
-            try {
+            if (myScanner.hasNext()) {
                 nextWord = myScanner.next();
-            } catch (NullPointerException e) {
-                //FIXME
+                if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
+                    endSignalersNeeded++;
+                } else if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL) ||
+                        endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
+                    endSignalersNeeded--;
+                }
             }
-        }
-        if (nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
-            builder.append(nextWord);
         }
 
         String argument = builder.toString();

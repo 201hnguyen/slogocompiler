@@ -20,6 +20,7 @@ public class If implements ControlInterface {
             try {
                 String command = conditionScanner.next();
                 System.out.println("If condition, current passing to command tree: " + command);
+                command = CommandBlockManager.checkAndInputUserVariable(command, accessibleVariables);
                 commandTree.addToCommandTree(command);
             } catch (ClassNotFoundException e) {
                 //FIXME
