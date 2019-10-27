@@ -13,11 +13,8 @@ public class Visualization {
     private static final double SCENE_HEIGHT = 600;
 
 
-    private String[] languageList;
-    private String[] imageList;
     private Scene scene;
     private AnchorPane root;
-    private VBox historyTracker;
     private Stage stage;
     private Text readerText;
 
@@ -25,23 +22,19 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
     private ButtonCreator buttonCreator = new ButtonCreator();
+    //private String[] languageList;
+    //private String[] imageList;
     //private DropDownCreator languageDropDown = new DropDownCreator(languageList = new String[]{"1", "2", "3"}, "Language");
     //private DropDownCreator imageDropDown = new DropDownCreator(imageList = new String[]{"1", "2", "3"}, "Image");
 
     public Visualization(Stage stage) {
-        this.stage = stage;;
+        this.stage = stage;
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), trackHistory(), buttonCreator);
+        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), tabPane, buttonCreator);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
-    private VBox trackHistory() {
-        historyTracker = new VBox();
-        historyTracker.setLayoutX(600);
-        historyTracker.setLayoutY(200);
-        historyTracker.getChildren().addAll(tabPane);
-        return historyTracker;
-    }
+
     public void update() {
         if (buttonCreator.isClearButtonClicked()) {
             commandLine.getCommand().clear();
