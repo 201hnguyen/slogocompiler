@@ -31,7 +31,6 @@ public class TurtleHistory {
     }
 
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
-        System.out.println("sef");
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
         myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
