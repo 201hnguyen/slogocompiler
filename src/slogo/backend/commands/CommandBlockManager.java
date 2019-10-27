@@ -49,8 +49,7 @@ public class CommandBlockManager {
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
-//        myActiveTurtles = myTurtleHistory.getActiveTurtles();
-        myActiveTurtles = new ArrayList<>() {{ add(1); add(2); }};
+        myActiveTurtles = myTurtleHistory.getActiveTurtles();
         myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
