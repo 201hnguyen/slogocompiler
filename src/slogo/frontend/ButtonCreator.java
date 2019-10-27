@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class ButtonCreator extends HBox {
-    private static final double BUTTON_WIDTH = 500;
-    private static final double BUTTON_HEIGHT = 100;
     private static final double INSET_PADDING = 10;
     private static final double SPACING = 25;
     private static final double Y_LAYOUT = 430;
@@ -34,6 +32,8 @@ public class ButtonCreator extends HBox {
     public boolean isStartButtonClicked() {
         return myButtonController.isStartButtonClicked();
     }
+
+    public boolean isClearButtonClicked() { return myButtonController.isClearButtonClicked();}
 
     private void createButtons() {
         for(String key : Collections.list(resourceBundle.getKeys())) {
