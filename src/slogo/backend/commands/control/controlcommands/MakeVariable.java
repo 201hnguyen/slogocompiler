@@ -3,7 +3,7 @@ package slogo.backend.commands.control.controlcommands;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.PeekableScanner;
 import slogo.backend.commands.control.ControlInterface;
-import slogo.backend.exceptions.UnmatchedNumArgumentsException;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
@@ -29,8 +29,6 @@ public class MakeVariable implements ControlInterface {
             }
             returnValue = commandTree.getLastDouble();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //FIXME
-        } catch (UnmatchedNumArgumentsException e) {
             e.printStackTrace(); //FIXME
         }
         for (Map<String, Double> variableMap : accessibleVariables) {

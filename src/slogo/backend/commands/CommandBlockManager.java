@@ -1,7 +1,6 @@
 package slogo.backend.commands;
 
 import slogo.backend.commands.control.ControlExecutor;
-import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
@@ -123,11 +122,7 @@ public class CommandBlockManager {
             }
 
             if (myCommandTree.onlyNumberLeft()) {
-                try {
-                    returnValue = myCommandTree.getLastDouble();
-                } catch (UnmatchedNumArgumentsException e) {
-                    e.printStackTrace(); //FIXME
-                }
+                returnValue = myCommandTree.getLastDouble();
             }
         }
         return returnValue;
@@ -151,8 +146,6 @@ public class CommandBlockManager {
                 }
                 numericalArgumentForMethod.add(myCommandTree.getLastDouble());
             } catch (ClassNotFoundException e) {
-                e.printStackTrace(); //FIXME
-            } catch (UnmatchedNumArgumentsException e) {
                 e.printStackTrace(); //FIXME
             }
         }

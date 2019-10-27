@@ -1,6 +1,5 @@
 package slogo.backend.utils;
 
-import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.commands.basic.CommandFactory;
 
 import java.util.ArrayList;
@@ -37,12 +36,9 @@ public class CommandTree {
     }
     
 
-    public double getLastDouble() throws UnmatchedNumArgumentsException {
+    public double getLastDouble() {
         if(commandTreeNode.getCommandWord().equals("")) {
             return 0d;
-        }
-        if(commandTreeNode.getChildrenNumber() != 0 || (!isThisStringDouble(commandTreeNode.getCommandWord()))) {
-            throw new UnmatchedNumArgumentsException("Ummatched Num");
         }
         return Double.parseDouble(commandTreeNode.getCommandWord());
     }
@@ -68,6 +64,10 @@ public class CommandTree {
                 throw new ClassNotFoundException(command);
             }
         }
+    }
+
+    public void setTurtleID(int turtleID) {
+        this.turtleID = turtleID;
     }
 
     private void addNumberToTree(String command) {
