@@ -9,6 +9,7 @@ public class TurtleHistory {
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
+    private List<Integer> activeTurtles = new ArrayList<>();
     private int curTurtleID = 1;
     private int index = 0;
 
@@ -57,6 +58,17 @@ public class TurtleHistory {
     public void clearHistory() {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
+    }
+
+    public List<Integer> getActiveTurtles() {
+        List<Integer> list = new ArrayList<>();
+        list.addAll(activeTurtles);
+        return list;
+    }
+
+    public void setActiveTurtles(List<Integer> activeTurtles) {
+        this.activeTurtles.clear();
+        this.activeTurtles.addAll(activeTurtles);
     }
 
     private boolean hasTurtle(int turtleID) {
