@@ -27,7 +27,7 @@ public class SLogoViewManager {
     public SLogoViewManager(Pane pane) {
         turtlePane = pane;
         imageManager = new ImageManager();
-        setImage(1);
+        setImage(2);
         addTurtleView(1);
     }
 
