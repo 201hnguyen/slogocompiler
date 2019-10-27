@@ -1,7 +1,6 @@
 package slogo.backend.commands;
 
 import slogo.backend.commands.control.ControlExecutor;
-//import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
@@ -51,7 +50,7 @@ public class CommandBlockManager {
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
-        myActiveTurtles = new ArrayList<>() {{ add(1); }};
+        myActiveTurtles = myTurtleHistory.getActiveTurtles();
         myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
@@ -89,15 +88,35 @@ public class CommandBlockManager {
                     e.printStackTrace(); //FIXME
                 }
             } else {
-                if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
-
-                }
-
-
-
                 try {
                     myCommandTree.addToCommandTree(command);
+                    if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
+                        myCommandsToReRun.add(command);
+                        while (!myCommandTree.onlyNumberLeft()) {
+                            command = myScanner.next();
+                            command = checkAndInputUserVariable(command, myAccessibleVariables);
+                            myCommandsToReRun.add(command);
+                            myCommandTree.addToCommandTree(command);
+                        }
 
+                        for (int i=0; i<myActiveTurtles.size(); i++) {
+                            if (i == 0) {
+                                continue;
+                            } else {
+                                StringBuilder builder = new StringBuilder();
+                                for (String c : myCommandsToReRun) {
+                                    builder.append(c);
+                                }
+                                String s = builder.toString();
+                                System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
+                                CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
+                                for (String commandToRerun : myCommandsToReRun) {
+                                    repeatCommandTree.addToCommandTree(commandToRerun);
+                                }
+                            }
+                        }
+                        myCommandsToReRun.clear();
+                    }
                 } catch (ClassNotFoundException e) {
                     //FIXME
                 }
