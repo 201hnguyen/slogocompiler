@@ -38,7 +38,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         visualization = new Visualization(stage);
-        visualization.helpHost = getHostServices();
+//        visualization.helpHost = getHostServices();
 //        TurtleManager turtleManager = visualization.getTurtle();
         myBackEndManager = new BackendManager("English", new TurtleHistory());
 //        myBackEndManager.setCommand("fd 50");
