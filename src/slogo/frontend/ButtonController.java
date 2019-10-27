@@ -1,5 +1,8 @@
 package slogo.frontend;
 
+import slogo.frontend.reference.ReferenceWindow;
+import slogo.frontend.reference.TableWindow;
+
 public class ButtonController {
     private boolean startButtonClicked = false;
     private boolean clearButtonClicked = false;
@@ -17,7 +20,8 @@ public class ButtonController {
     }
 
     public void helpButtonAction() {
-
+        ReferenceWindow referenceWindow = new ReferenceWindow();
+        referenceWindow.createNewWindow();
     }
 
     public boolean isStartButtonClicked() {

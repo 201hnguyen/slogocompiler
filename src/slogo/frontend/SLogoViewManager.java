@@ -31,7 +31,7 @@ public class SLogoViewManager {
         addTurtleView(1);
     }
 
-    
+
     protected void setHistory(TurtleHistory turtleHistory) {
         turtleMovements = turtleHistory.getMyTurtleHistory();
         for(TurtleMovement turtleMovement : turtleMovements.get(0)) {
