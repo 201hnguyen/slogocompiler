@@ -1,9 +1,5 @@
 package slogo.frontend.reference;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-
 import java.util.ResourceBundle;
 
 public class TableRowData {
