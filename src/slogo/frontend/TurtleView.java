@@ -13,7 +13,6 @@ import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class TurtleView extends ImageView {
@@ -35,7 +34,6 @@ public class TurtleView extends ImageView {
     private boolean initialize = false;
     private boolean isPenDown = true;
     private boolean isVisible = true;
-    private int direction = 1;
     private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
