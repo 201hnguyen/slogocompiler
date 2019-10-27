@@ -61,6 +61,12 @@ public class CommandBlockManager {
                     commandArguments = new ArrayList<>() {{
                         add(myScanner);
                     }};
+                } else if (command.equals("MakeUserInstruction")) {
+                    commandArguments = new ArrayList<>();
+                    String methodName = myScanner.next();
+                    commandArguments.add(methodName);
+                    commandArguments.add(prepareBlockCommand());
+                    commandArguments.add(myAccessibleUserDefinedFunctions);
                 } else {
                     commandArguments = prepareBlockCommand();
                 }
@@ -69,19 +75,6 @@ public class CommandBlockManager {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
-            } else if (command.equals("MakeUserInstruction")) {
-                String methodName = myScanner.next();
-                List<Object> preprocessedCommandArguments = prepareBlockCommand();
-                List<String> variables = Arrays.asList(preprocessedCommandArguments.get(0).toString().split(" "));
-                List<Object> commandArguments = new ArrayList<>();
-                Map<String, Double> variablesMap = new TreeMap<>();
-                for(String variable : variables) {
-                    variablesMap.put(variable, null);
-                }
-                commandArguments.add(variablesMap);
-                commandArguments.add(preprocessedCommandArguments.get(1));
-                myAccessibleUserDefinedFunctions.put(methodName, commandArguments);
-
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
                 Map<String, Double> variablesToFill = (TreeMap<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0);
 
