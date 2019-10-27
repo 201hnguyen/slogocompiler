@@ -76,36 +76,11 @@ public class CommandBlockManager {
                     e.printStackTrace(); //FIXME
                 }
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
-                Map<String, Double> variablesToFill = (TreeMap<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0);
-
-                for (String key : variablesToFill.keySet()) {
-                    String currentValue = "";
-                    if (myScanner.hasNext()) {
-                        currentValue = myScanner.next();
-                    }
-                    while (!myCommandTree.onlyNumberLeft()) {
-                        try {
-                            myCommandTree.addToCommandTree(currentValue);
-                        } catch (ClassNotFoundException e) {
-                            //FIXME
-                        }
-                    }
-
-                    try {
-                        variablesToFill.put(key, myCommandTree.getLastDouble());
-                    } catch (UnmatchedNumArgumentsException e) {
-                        //FIXME
-                    }
-                }
-
-                String commandBlock = (String) myAccessibleUserDefinedFunctions.get(command).get(1);
-                List<Object> argumentsToPass = new ArrayList<>();
-                argumentsToPass.add(variablesToFill);
-                argumentsToPass.add(commandBlock);
+                List<Object> commandArguments = prepareUserDefinedFunction(command);
                 try {
-                    returnValue = myControlExecutor.execute("UserDefined", argumentsToPass, myTurtleHistory, myAccessibleVariables);
+                    myControlExecutor.execute("UserDefined", commandArguments, myTurtleHistory, myAccessibleVariables);
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //FIXME
                 }
             } else {
                 try {
@@ -124,6 +99,31 @@ public class CommandBlockManager {
             }
         }
         return returnValue;
+    }
+
+    private List<Object> prepareUserDefinedFunction(String command) {
+        List<Object> commandArguments = new ArrayList<>();
+        List<Double> numericalArgumentForMethod = new ArrayList<>();
+        int parametersNeeded = ((Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0)).size();
+        System.out.println("test parameters needed: " + parametersNeeded);
+
+        for (int i=0; i<parametersNeeded; i++) {
+            String argument = myScanner.next();
+            try {
+                myCommandTree.addToCommandTree(argument);
+                while (!myCommandTree.onlyNumberLeft()) {
+                    myCommandTree.addToCommandTree(myScanner.next());
+                }
+                numericalArgumentForMethod.add(myCommandTree.getLastDouble());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace(); //FIXME
+            } catch (UnmatchedNumArgumentsException e) {
+                e.printStackTrace(); //FIXME
+            }
+        }
+        commandArguments.add(numericalArgumentForMethod);
+        commandArguments.addAll(myAccessibleUserDefinedFunctions.get(command));
+        return commandArguments;
     }
 
     public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {

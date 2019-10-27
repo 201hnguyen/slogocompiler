@@ -19,7 +19,7 @@ public class MakeUserInstruction implements ControlInterface {
         List<Object> commandArgumentsToStore = new ArrayList<>();
 
         List<String> variables = Arrays.asList(variablesAsString.split(" "));
-        Map<String, Double> variablesMap = new TreeMap<>();
+        Map<String, Double> variablesMap = new LinkedHashMap<>();
         for (String variable : variables) {
             variablesMap.put(variable, null);
         }
