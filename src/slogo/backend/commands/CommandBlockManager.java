@@ -1,7 +1,6 @@
 package slogo.backend.commands;
 
 import slogo.backend.commands.control.ControlExecutor;
-//import slogo.backend.commands.control.controlcommands.MakeUserInstruction;
 import slogo.backend.exceptions.UnmatchedNumArgumentsException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
@@ -19,8 +18,10 @@ import java.util.*;
 public class CommandBlockManager {
     private static final String BLOCK_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
     private static final String USER_DEFINED_RESOURCE_PATH = "resources/UserDefinedVariables";
+    private static final String MOVEMENT_COMMANDS_RESOURCE_PATH = "resources/DefinedMovementCommands";
     private static final ResourceBundle CONTROLS_RESOURCE_BUNDLE = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
     private static final ResourceBundle USER_DEFINED_RESOURCE_BUNDLE = ResourceBundle.getBundle(USER_DEFINED_RESOURCE_PATH);
+    private static final ResourceBundle MOVEMENT_COMMANDS_RESOURCE_BUNDLE = ResourceBundle.getBundle(MOVEMENT_COMMANDS_RESOURCE_PATH);
     private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
     private static final String BLOCK_ARGUMENT_END_SIGNAL = "]";
     private static final String BLOCK_ARGUMENT_BEGIN_SIGNAL = "[";
@@ -34,7 +35,8 @@ public class CommandBlockManager {
     private Map<String, Double> myLocalUserDefinedVariables;
     private List<Map<String, Double>> myAccessibleVariables;
     private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
-
+    private List<Integer> myActiveTurtles;
+    private List<String> myCommandsToReRun;
 
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
@@ -48,6 +50,8 @@ public class CommandBlockManager {
         myAccessibleVariables.add(myLocalUserDefinedVariables);
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
+        myActiveTurtles = myTurtleHistory.getActiveTurtles();
+        myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -86,6 +90,33 @@ public class CommandBlockManager {
             } else {
                 try {
                     myCommandTree.addToCommandTree(command);
+                    if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
+                        myCommandsToReRun.add(command);
+                        while (!myCommandTree.onlyNumberLeft()) {
+                            command = myScanner.next();
+                            command = checkAndInputUserVariable(command, myAccessibleVariables);
+                            myCommandsToReRun.add(command);
+                            myCommandTree.addToCommandTree(command);
+                        }
+
+                        for (int i=0; i<myActiveTurtles.size(); i++) {
+                            if (i == 0) {
+                                continue;
+                            } else {
+                                StringBuilder builder = new StringBuilder();
+                                for (String c : myCommandsToReRun) {
+                                    builder.append(c);
+                                }
+                                String s = builder.toString();
+                                System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
+                                CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
+                                for (String commandToRerun : myCommandsToReRun) {
+                                    repeatCommandTree.addToCommandTree(commandToRerun);
+                                }
+                            }
+                        }
+                        myCommandsToReRun.clear();
+                    }
                 } catch (ClassNotFoundException e) {
                     //FIXME
                 }
