@@ -38,7 +38,7 @@ public class BackendManager {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateMyCommands(commands);
         turtleHistory.clearHistory();
-        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>());
+        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
         commandBlockManager.executeInstructionBlock();
     }
 
