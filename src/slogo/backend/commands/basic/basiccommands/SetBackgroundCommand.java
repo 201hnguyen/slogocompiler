@@ -12,14 +12,8 @@ import java.util.List;
 public class SetBackgroundCommand implements BasicCommandInterface {
     private static final double ACCURACY = 0.001;
 
-    private TurtleHistory turtleHistory;
-
-    public SetBackgroundCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
-
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Movement movement = new Movement(curPos, curPos,turtle.getOrientation());

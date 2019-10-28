@@ -6,14 +6,9 @@ import slogo.backend.utils.TurtleHistory;
 import java.util.List;
 
 public class TurtlesCommand implements BasicCommandInterface {
-    private TurtleHistory turtleHistory;
-
-    public TurtlesCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
 
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         return turtleHistory.getActiveTurtles().size();
     }
 }

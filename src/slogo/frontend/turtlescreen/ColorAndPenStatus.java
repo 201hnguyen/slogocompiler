@@ -2,8 +2,6 @@ package slogo.frontend.turtlescreen;
 
 import javafx.scene.paint.Color;
 import slogo.backend.utils.ColorManager;
-import slogo.frontend.turtlescreen.TurtleView;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +13,14 @@ public class ColorAndPenStatus {
     private Map<TurtleView, Double> myPenSizes = new HashMap<>();
     private double currentPenSize = 1;
 
-    public ColorAndPenStatus(ColorManager colorManager) {
+    protected ColorAndPenStatus(ColorManager colorManager) {
         this.colorManager = colorManager;
     }
 
-    public void setLineColor(TurtleView turtle, Color color) {
-        myLineColors.put(turtle, color);
+    protected void setDefaultLineColor(Color color) {
+        for(TurtleView turtleView : myLineColors.keySet()) {
+            myLineColors.put(turtleView, color);
+        }
         currentLineColor = color;
     }
 
@@ -28,36 +28,36 @@ public class ColorAndPenStatus {
         myLineColors.put(turtle, colorManager.getColor(index, false));
     }
 
-    public Color getLineColor(TurtleView turtleView) {
+    protected Color getLineColor(TurtleView turtleView) {
         return myLineColors.get(turtleView);
     }
 
-    public void addLineColor(TurtleView turtleView) {
+    protected void addLineColor(TurtleView turtleView) {
         myLineColors.put(turtleView, currentLineColor);
     }
 
-    public void setColorManager(ColorManager colorManager) {this.colorManager = colorManager;}
+    protected void setColorManager(ColorManager colorManager) {this.colorManager = colorManager;}
 
-    public void setBackgroundColor(int index) {
+    protected void setBackgroundColor(int index) {
         currentBackgroundColor = colorManager.getColor(index, true);
     }
 
-    public void setBackgroundColor(Color color) {
+    protected void setBackgroundColor(Color color) {
         currentBackgroundColor = color;
     }
 
-    public Color getBackgroundColor() {
+    protected Color getBackgroundColor() {
         return currentBackgroundColor;
     }
 
-    public void setPenSize(TurtleView turtleView, double penSize, boolean changeDefaultSize) {
+    protected void setPenSize(TurtleView turtleView, double penSize, boolean changeDefaultSize) {
         myPenSizes.put(turtleView, penSize);
         if(changeDefaultSize) {
             currentPenSize = penSize;
         }
     }
 
-    public void addPenSize(TurtleView turtleView) {myPenSizes.put(turtleView, currentPenSize);}
+    protected void addPenSize(TurtleView turtleView) {myPenSizes.put(turtleView, currentPenSize);}
 
-    public double getPenSize(TurtleView turtleView) {return myPenSizes.get(turtleView);}
+    protected double getPenSize(TurtleView turtleView) {return myPenSizes.get(turtleView);}
 }

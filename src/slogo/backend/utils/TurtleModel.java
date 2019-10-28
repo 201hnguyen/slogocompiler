@@ -41,8 +41,6 @@ public class TurtleModel {
 
         PenStatus newPenStatus = new PenStatus(penStatus);
         newPenStatus.compareAndSetChanged(this.penStatus);
-        System.out.println(newPenStatus.isPenDown() + ", " + penStatus.isPenDown() + " in model");
-        System.out.println(newPenStatus.isPenDownChanged() + " in model");
         this.penStatus = newPenStatus;
     }
 

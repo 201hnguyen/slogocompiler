@@ -13,14 +13,8 @@ public class ClearScreenBasicCommand implements BasicCommandInterface {
 
     private static final double INITIAL_ORIENTATION = 90;
 
-    private TurtleHistory turtleHistory;
-
-    public ClearScreenBasicCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
-
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         double returnValue = curPos.distance(0, 0);
