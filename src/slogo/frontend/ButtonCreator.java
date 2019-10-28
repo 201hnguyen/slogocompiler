@@ -35,6 +35,8 @@ public class ButtonCreator extends HBox {
 
     public boolean isClearButtonClicked() { return myButtonController.isClearButtonClicked();}
 
+    public boolean isNewButtonClicked() { return myButtonController.isNewButtonClicked();}
+
     private void createButtons() {
         for(String key : Collections.list(resourceBundle.getKeys())) {
             Button button = new Button(key);

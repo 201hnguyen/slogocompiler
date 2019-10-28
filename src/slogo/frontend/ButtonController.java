@@ -5,6 +5,7 @@ import slogo.frontend.reference.ReferenceWindow;
 public class ButtonController {
     private boolean startButtonClicked = false;
     private boolean clearButtonClicked = false;
+    private boolean newButtonClicked = false;
     private String animationStatus;
     private String language;
 
@@ -37,6 +38,10 @@ public class ButtonController {
 
     }
 
+    public void newButtonAction() {
+        newButtonClicked = true;
+    }
+
     public boolean isStartButtonClicked() {
         boolean returnValue = startButtonClicked;
         startButtonClicked = false;
@@ -46,6 +51,12 @@ public class ButtonController {
     public boolean isClearButtonClicked() {
         boolean returnValue = clearButtonClicked;
         clearButtonClicked = false;
+        return returnValue;
+    }
+
+    public boolean isNewButtonClicked() {
+        boolean returnValue = newButtonClicked;
+        newButtonClicked = false;
         return returnValue;
     }
 

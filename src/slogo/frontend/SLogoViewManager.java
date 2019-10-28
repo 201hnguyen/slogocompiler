@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SLogoViewManager {
 
-    private static final double INITIAL_SPEED = 0.2;
+    private static final double INITIAL_SPEED = 2;
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
