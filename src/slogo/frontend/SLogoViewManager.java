@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import slogo.backend.utils.*;
+import slogo.util.DrawStatus;
+import slogo.util.PenStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +82,7 @@ public class SLogoViewManager {
         }
     }
 
-    protected void setPenSize(double penSize) {
+    public void setPenSize(double penSize) {
         penStatus.setPenSize(penSize);
         for(TurtleView turtleView : turtleViewList) {
             myColorAndPenStatus.setPenSize(turtleView, penSize, true);
@@ -92,6 +94,10 @@ public class SLogoViewManager {
         for (TurtleView turtleView : turtleViewList) {
             turtleView.setSpeed(speed);
         }
+    }
+
+    public void setAnimation(String animationString) {
+
     }
 
     private void updateDrawing(TurtleView turtleView) {

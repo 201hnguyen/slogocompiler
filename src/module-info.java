@@ -12,6 +12,5 @@ module slogo_team05 {
     exports slogo.backend.exceptions;
     exports slogo.backend.external_api;
 
-    exports slogo.backend.utils;
     exports slogo;
 }

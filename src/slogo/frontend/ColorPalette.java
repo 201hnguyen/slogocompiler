@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import slogo.frontend.controller.ColorPaletteController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;

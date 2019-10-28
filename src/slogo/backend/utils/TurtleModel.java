@@ -1,5 +1,9 @@
 package slogo.backend.utils;
 
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
 public class TurtleModel {
     private static final double INITIAL_ORIENTATION = 90d;
     private static final double INITIAL_DISPLACEMENT = 0d;

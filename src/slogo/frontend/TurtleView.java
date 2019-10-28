@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import slogo.backend.utils.DrawStatus;
-import slogo.backend.utils.Movement;
-import slogo.backend.utils.PenStatus;
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
 import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;

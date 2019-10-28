@@ -3,6 +3,7 @@ package slogo.frontend;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import slogo.frontend.controller.DropDownController;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -51,8 +52,8 @@ public class DropDownCreator extends HBox {
         System.out.println(key);
         String methodName = resourceBundle.getString(comboBoxId);
         try {
-            Method m = myController.getClass().getDeclaredMethod(methodName, String.class);
-            m.invoke(myController, key);
+            Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
+            m.invoke(myController, comboBoxId, key);
         } catch (Exception e) {
 
         }

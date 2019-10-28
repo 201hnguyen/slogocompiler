@@ -1,7 +1,10 @@
 package slogo.backend.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
+import java.util.*;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
@@ -10,6 +13,7 @@ public class TurtleHistory {
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<TurtleMovement> myTurtleHistory = new ArrayList<>();
     private List<Integer> activeTurtles = new ArrayList<>();
+    private List<Map<String, Double>> listOfActiveVariables = new ArrayList<>();
     private int curTurtleID = 1;
 
     public TurtleHistory() {
@@ -41,6 +45,15 @@ public class TurtleHistory {
             curTurtleID = turtleID;
             myTurtles.add(new TurtleModel(turtleID, curTurtle.getPenStatus(), curTurtle.getDrawStatus()));
         }
+    }
+
+    /**
+     * TODO: @Ha call this method after each movement command ends (when the rerunCommand~~ method is at its end)
+     */
+    public void toNextTurn(Map<String, Double> myGlobalVariables) {
+        Map<String, Double> map = new TreeMap<>();
+        map.putAll(myGlobalVariables);
+        listOfActiveVariables.add(map);
     }
 
     public List<TurtleMovement> getMyTurtleHistory() {

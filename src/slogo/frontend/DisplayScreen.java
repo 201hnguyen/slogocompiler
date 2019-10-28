@@ -41,4 +41,12 @@ public class DisplayScreen extends Pane {
     public void setImage(int imageNum) {
         myViewManager.setImage(imageNum);
     }
+
+    public void setPenSize(int penSize) {
+        myViewManager.setPenSize(penSize);
+    }
+
+    public void setAnimation(String animationString) {
+
+    }
 }

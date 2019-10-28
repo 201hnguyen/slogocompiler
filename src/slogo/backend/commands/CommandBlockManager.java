@@ -58,6 +58,7 @@ public class CommandBlockManager {
         while (myScanner.hasNext()) {
             String command = myScanner.next();
             command = checkAndInputUserVariable(command, myAccessibleVariables);
+            System.out.println(command + " will now be put somewhere");
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
                 returnValue = buildAndExecuteControlCommand(command);
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
@@ -90,6 +91,7 @@ public class CommandBlockManager {
         }
         try {
             returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+            myCommandTree.addToCommandTree(returnValue+"");
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); //FIXME
         }
@@ -101,6 +103,7 @@ public class CommandBlockManager {
         List<Object> commandArguments = prepareUserDefinedFunction(command);
         try {
             returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+            myCommandTree.addToCommandTree(returnValue+"");
         } catch (ClassNotFoundException e) {
             e.printStackTrace(); //FIXME
         }
@@ -109,12 +112,12 @@ public class CommandBlockManager {
 
     private double buildAndExecuteBasicCommand(String command) {
         double returnValue = 0;
+        System.out.println(command + " is inside the tree now");
         try {
             if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
-                returnValue = rerunMovementCommands(command);
-            } else {
-                myCommandTree.addToCommandTree(command);
+                command = rerunMovementCommands(command) + "";
             }
+            myCommandTree.addToCommandTree(command);
         } catch (ClassNotFoundException e) {
             //FIXME
         }
@@ -138,6 +141,7 @@ public class CommandBlockManager {
                 command = myScanner.next();
                 System.out.println(command + "sdfsdfsdf123");
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
+                System.out.println(command + "sdfsdfsdf");
                 repeatCommandTree.addToCommandTree(command);
             }
             returnVal = repeatCommandTree.getLastDouble();
