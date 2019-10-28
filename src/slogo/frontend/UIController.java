@@ -23,7 +23,7 @@ public class UIController {
     }
 
     public void newWindowAction(String key) {
-        newButtonClicked = false;
+        newButtonClicked = true;
     }
 
     public void languageAction(String language) {

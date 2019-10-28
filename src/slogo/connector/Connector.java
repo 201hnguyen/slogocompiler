@@ -18,6 +18,7 @@ public class Connector {
     private Map<Stage, Visualization> visualizationMap;
     private Map<Stage, BackendManager> backendManagerMap;
     private Timeline myAnimation;
+    private boolean newWindow = false;
 
     public Connector(Stage stage) {
         visualizationMap = new HashMap<>();
@@ -36,6 +37,13 @@ public class Connector {
     private void step() {
         for(Stage stage : visualizationMap.keySet()) {
             update(visualizationMap.get(stage), backendManagerMap.get(stage));
+            if(newWindow) {
+                break;
+            }
+        }
+        if(newWindow) {
+            newWindow = false;
+            createWorkSpace();
         }
     }
 
@@ -48,7 +56,7 @@ public class Connector {
         }
         myVisualization.update();
         if(myVisualization.needNewWindow()) {
-            createWorkSpace();
+            newWindow = true;
         }
     }
 
