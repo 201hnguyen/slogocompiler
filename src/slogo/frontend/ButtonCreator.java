@@ -3,11 +3,13 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import slogo.backend.parser.Parser;
 import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -38,7 +40,9 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     }
 
     public Map<String, String> getChangedValues() {
-        return myButtonController.getChangedValues();
+        Map<String, String> map = new HashMap<>();
+        map.putAll(myButtonController.getChangedValues());
+        return map;
     }
 
     @Override

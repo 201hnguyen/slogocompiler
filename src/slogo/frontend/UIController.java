@@ -14,6 +14,7 @@ public class UIController {
     }
 
     public void startAction(String key) {
+        System.out.println("sdfsdfsf");
         startButtonClicked = true;
     }
 
@@ -32,6 +33,7 @@ public class UIController {
     public String getInput() {
         String command = commandLine.getCommand().getText();
         if(startButtonClicked && !command.equals("")) {
+            startButtonClicked = false;
             Text readerText = new Text(command + "\n");
             return readerText.getText();
         }

@@ -85,7 +85,7 @@ public class ColorPalette extends VBox implements ChangeableNode{
 
     @Override
     public Map<String, String> getChangedValues() {
-        return null;
+        return colorPaletteController.getChangedValues();
     }
 
     @Override

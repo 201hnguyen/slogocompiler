@@ -20,11 +20,9 @@ public class UIManager {
 
     public void update() {
         for(ChangeableNode changeableNode : changeableNodes) {
-            if(changeableNode.getChangedValues() != null) {
-                changedValues.putAll(changeableNode.getChangedValues());
-            }
+            changedValues.putAll(changeableNode.getChangedValues());
         }
-        if(changedValues == null) {
+        if(changedValues.size() == 0) {
             return;
         }
 

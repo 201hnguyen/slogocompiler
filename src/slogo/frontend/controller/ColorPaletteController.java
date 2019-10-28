@@ -3,6 +3,7 @@ package slogo.frontend.controller;
 import javafx.scene.paint.Color;
 import slogo.frontend.DisplayScreen;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ColorPaletteController implements NodeController {
@@ -22,7 +23,7 @@ public class ColorPaletteController implements NodeController {
 
     @Override
     public Map<String, String> getChangedValues() {
-        return null;
+        return new HashMap<>();
     }
 
     @Override
