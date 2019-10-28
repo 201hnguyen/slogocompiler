@@ -1,8 +1,6 @@
 package slogo.backend.commands;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 //public class PeekableScanner {
 //    private List<String> myCommands;
@@ -29,32 +27,68 @@ import java.util.Scanner;
 //}
 
 
+//public class PeekableScanner {
+//    private Scanner myFirstScanner;
+//    private Scanner mySecondScanner;
+//    private String myNextString;
+//
+//    public PeekableScanner(String source) {
+//        myFirstScanner = new Scanner(source);
+//        mySecondScanner = new Scanner(source);
+//        myNextString = mySecondScanner.next();
+//    }
+//
+//    public boolean hasNext() {
+//        return myFirstScanner.hasNext();
+//    }
+//
+//    public String next() {
+//        if (mySecondScanner.hasNext()) {
+//            myNextString = mySecondScanner.next();
+//        } else {
+//            myNextString = null;
+//        }
+//
+//        return myFirstScanner.next();
+//    }
+//
+//    public String peek() {
+//        return myNextString;
+//    }
+//}
+
 public class PeekableScanner {
-    private Scanner myFirstScanner;
-    private Scanner mySecondScanner;
-    private String myNextString;
+    private int index;
+    private int memoryIndex;
+    private List<String> myWords = new ArrayList<>();
 
     public PeekableScanner(String source) {
-        myFirstScanner = new Scanner(source);
-        mySecondScanner = new Scanner(source);
-        myNextString = mySecondScanner.next();
+        String[] arr = source.split(" ");
+        for(int i=0; i<arr.length; i++) {
+            myWords.add(arr[i]);
+        }
+        index = 0;
     }
 
     public boolean hasNext() {
-        return myFirstScanner.hasNext();
+        return index < myWords.size();
     }
 
     public String next() {
-        if (mySecondScanner.hasNext()) {
-            myNextString = mySecondScanner.next();
-        } else {
-            myNextString = null;
-        }
+        String str = myWords.get(index);
+        index++;
+        return str;
+    }
 
-        return myFirstScanner.next();
+    public void rememberPreviousWord() {
+        memoryIndex = index-1;
+    }
+
+    public void goBackToLastMemory() {
+        index = memoryIndex;
     }
 
     public String peek() {
-        return myNextString;
+        return myWords.get(index);
     }
 }
