@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class ImageManager {
 
-    private static final String RESOURCE_PATH = "resources.ImageBundle";
+    private static final String RESOURCE_PATH = "resources.frontend.dropdown.Image";
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
 
