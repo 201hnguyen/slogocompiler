@@ -128,7 +128,12 @@ public class CommandBlockManager {
     }
 
     private void runCommandForFirstTurtle(String command, List<String> commandsToRerun) throws ClassNotFoundException {
-        int firstTurtleID = myActiveTurtles.get(0);
+        int firstTurtleID;
+        if (myActiveTurtles.size()>0) {
+            firstTurtleID = myActiveTurtles.get(0);
+        } else {
+            firstTurtleID = 1;
+        }
         myCommandTree.setTurtleID(firstTurtleID);
         commandsToRerun.add(command);
         while (!myCommandTree.onlyNumberLeft()) {
