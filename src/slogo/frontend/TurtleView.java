@@ -73,12 +73,6 @@ public class TurtleView extends ImageView {
         return index < myMovements.size();
     }
 
-    private void moveView(Point2D targetPos, double orientation) {
-        setX(targetPos.getX() - getFitWidth()/2);
-        setY(targetPos.getY() - getFitHeight()/2);
-        setRotate(INITIAL_ORIENTATION - orientation);
-    }
-
     public void setSpeed(double speed) {
         this.speed = speed;
     }
@@ -87,25 +81,21 @@ public class TurtleView extends ImageView {
         return myID;
     }
 
-    public Paint getMyLineColor() {
-        return myLineColor;
-    }
-
-    public void setMyLineColor(Paint myLineColor) {
-        this.myLineColor = myLineColor;
-    }
-
-    public void lineColorChangedByUser() {
-        penStatus = new PenStatus(penStatus.isPenDown(), penStatus.getPenSize(), -1);
-    }
-
     public void setPenStatus(PenStatus penStatus) {
         this.penStatus = penStatus;
     }
 
     public void setDrawStatus(DrawStatus drawStatus) {this.drawStatus = drawStatus;}
 
-    public void initialize() {moveView(new Point2D(getCentralX(), getCentralY()), INITIAL_ORIENTATION);}
+    public PenStatus getPenStatus() {return penStatus;}
+
+    public DrawStatus getDrawStatus() {return drawStatus;}
+
+    private void moveView(Point2D targetPos, double orientation) {
+        setX(targetPos.getX() - getFitWidth()/2);
+        setY(targetPos.getY() - getFitHeight()/2);
+        setRotate(INITIAL_ORIENTATION - orientation);
+    }
 
     private double getCentralX() {
         return getX() + getBoundsInLocal().getWidth() / 2;
@@ -120,21 +110,21 @@ public class TurtleView extends ImageView {
     }
 
     private void updateDrawStatus(DrawStatus drawStatus) {
-        boolean isVisible = drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : this.drawStatus.isTurtleVisible();
-        setVisible(isVisible);
-        int imageNum = drawStatus.isImageChanged() ? drawStatus.getImageNum() : this.drawStatus.getImageNum();
-        int backGround = drawStatus.isBackGroundChanged() ? drawStatus.getBackGround() : this.drawStatus.getBackGround();
-        boolean initialize = drawStatus.screenToBeErased();
+        DrawStatus newDrawStatus = new DrawStatus(drawStatus);
+        newDrawStatus.setTurtleVisible(drawStatus.isVisibleChanged() ? drawStatus.isTurtleVisible() : this.drawStatus.isTurtleVisible());
+        newDrawStatus.setImageNum(drawStatus.isImageChanged() ? drawStatus.getImageNum() : this.drawStatus.getImageNum());
+        newDrawStatus.setBackGround(drawStatus.isBackGroundChanged() ? drawStatus.getBackGround() : this.drawStatus.getBackGround());
 
-        this.drawStatus = new DrawStatus(isVisible, backGround, imageNum, initialize);
+        this.drawStatus = newDrawStatus;
     }
 
     private void updatePenStatus(PenStatus penStatus) {
-        boolean isPenDown = penStatus.isPenDownChanged() ? penStatus.isPenDown() : this.penStatus.isPenDown();
-        int penSize = penStatus.isPenSizeChanged() ? penStatus.getPenSize() : this.penStatus.getPenSize();
-        int penColor = penStatus.isPenColorChanged() ? penStatus.getPenColor() : this.penStatus.getPenColor();
+        PenStatus newPenStatus = new PenStatus(penStatus);
+        newPenStatus.setPenDown(penStatus.isPenDownChanged() ? penStatus.isPenDown() : this.penStatus.isPenDown());
+        newPenStatus.setPenSize(penStatus.isPenSizeChanged() ? penStatus.getPenSize() : this.penStatus.getPenSize());
+        newPenStatus.setPenColor(penStatus.isPenColorChanged() ? penStatus.getPenColor() : this.penStatus.getPenColor());
 
-        this.penStatus = new PenStatus(isPenDown, penSize, penColor);
+        this.penStatus = newPenStatus;
     }
 
     private double getAngle(Point2D startPos, Point2D targetPos) {

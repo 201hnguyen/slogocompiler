@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
-    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 2, false);
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<TurtleMovement> myTurtleHistory = new ArrayList<>();

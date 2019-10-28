@@ -27,6 +27,7 @@ public class SetShapeCommand implements BasicCommandInterface {
         int index = (int) (parameters.get(0) + ACCURACY);
         DrawStatus newDrawStatus = new DrawStatus(initialDrawStatus.isTurtleVisible(), initialDrawStatus.getBackGround(), index, false);
         newDrawStatus.compareAndSetChanged(initialDrawStatus);
+        System.out.println(initialDrawStatus.getImageNum() + ", " + newDrawStatus.getImageNum());
         turtleHistory.updateTurtle(turtleID, new Movement(curPos, curPos,turtle.getOrientation()), newDrawStatus, turtle.getPenStatus());
 
         return index;
