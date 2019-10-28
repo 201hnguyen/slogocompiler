@@ -33,7 +33,6 @@ public class Connector {
     private void step() {
         String str = myVisualization.getInput();
         if(!str.equals("")) {
-            System.out.println(str);
             myBackEndManager.setCommand(str);
             myVisualization.setHistory(myBackEndManager.getHistory());
             moveStarted = true;
@@ -42,4 +41,6 @@ public class Connector {
             myVisualization.update();
         }
     }
+
+
 }
