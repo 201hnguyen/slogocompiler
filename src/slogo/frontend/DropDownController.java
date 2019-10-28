@@ -22,6 +22,10 @@ public class DropDownController {
         displayScreen.setImage(this.imageNum);
     }
 
+    public void choosePenSize(String penSize) {
+        displayScreen.setPenSize(Integer.parseInt(penSize));
+    }
+
     public void chooseLanguage(String language) {
         this.language = language;
     }

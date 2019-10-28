@@ -1,5 +1,9 @@
 package slogo.backend.utils;
 
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
 public class TurtleMovement {
 
     private int turtleID;

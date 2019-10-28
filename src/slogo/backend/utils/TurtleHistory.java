@@ -1,5 +1,9 @@
 package slogo.backend.utils;
 
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 

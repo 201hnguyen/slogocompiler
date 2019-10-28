@@ -1,4 +1,4 @@
-package slogo.backend.utils;
+package slogo.util;
 
 public class PenStatus {
     private boolean penDown;
