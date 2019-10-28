@@ -14,6 +14,8 @@ public class TurtleHistory {
 
     public TurtleHistory() {
         myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
+        myTurtleHistory.add(new ArrayList<>());
+        activeTurtles.add(1);
     }
 
     public TurtleModel getTurtleModel(int turtleID){
