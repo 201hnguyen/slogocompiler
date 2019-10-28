@@ -2,6 +2,30 @@ package slogo.backend.commands;
 
 import java.util.Scanner;
 
+//public class PeekableScanner {
+//    private String[] myCommands;
+//    private int myIndex;
+//
+//
+//    public PeekableScanner(String source) {
+//        myCommands = source.split("\\s+");
+//        myIndex = 0;
+//    }
+//
+//    public boolean hasNext() {
+//        return myIndex != myCommands.length - 1;
+//    }
+//
+//    public String next() {
+//        return myCommands[myIndex++];
+//    }
+//
+//    public String peek() {
+//        return myCommands[myIndex + 1];
+//    }
+//}
+
+
 public class PeekableScanner {
     private Scanner myFirstScanner;
     private Scanner mySecondScanner;
