@@ -8,17 +8,16 @@ import java.util.ResourceBundle;
 
 public class ImageManager {
 
-    private static final String RESOURCE_PATH = "resources.ImageBundle";
+    private static final String RESOURCE_PATH = "resources.frontend.dropdown.Image";
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
 
     public Image getImage(int imageIndex) {
         System.out.println(resourceBundle.getKeys());
         for(String key : Collections.list(resourceBundle.getKeys())) {
-            int index = Integer.parseInt(resourceBundle.getString(key));
-            System.out.println(index + "," +imageIndex);
-            if(resourceBundle.getString(key).equals(imageIndex+"")) {
-                return new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(key)));
+            int index = Integer.parseInt(key);
+            if(index == imageIndex) {
+                return new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(resourceBundle.getString(key))));
             }
         }
         return null;

@@ -1,6 +1,8 @@
 package slogo.frontend;
 
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,6 +22,10 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
     private ButtonCreator buttonCreator = new ButtonCreator();
+    //private String[] languageList;
+    //private String[] imageList;
+    //private DropDownCreator languageDropDown = new DropDownCreator(languageList = new String[]{"1", "2", "3"}, "Language");
+    //private DropDownCreator imageDropDown = new DropDownCreator(imageList = new String[]{"1", "2", "3"}, "Image");
 
     public Visualization(Stage stage) {
         this.stage = stage;
@@ -51,9 +57,6 @@ public class Visualization {
         String command = commandLine.getCommand().getText();
         if(buttonCreator.isStartButtonClicked() && !command.equals("")) {
             readerText = new Text(command + "\n");
-            System.out.println(readerText.getText());
-            readerText.setOnMouseClicked(e -> commandLine.getCommand().setText(readerText.getText()));
-            tabPane.getHistory().getChildren().addAll(readerText);
             return readerText.getText();
         }
         return "";

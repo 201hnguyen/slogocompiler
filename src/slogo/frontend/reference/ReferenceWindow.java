@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class ReferenceWindow {
-    private static final String RESOURCE_PATH = "resources.commandreference.CommandTypes";
+    private static final String RESOURCE_PATH = "resources.frontend.commandreference.CommandTypes";
     private static final String TITLE = "Command References";
     private static final double WIDTH = 800;
     private static final double HEIGHT = 400;

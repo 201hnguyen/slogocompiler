@@ -22,6 +22,9 @@ public class PenStatus {
         this.penDown = penStatus.isPenDown();
         this.penSize = penStatus.getPenSize();
         this.penColor = penStatus.getPenColor();
+        this.penDownChanged = penStatus.isPenDownChanged();
+        this.penSizeChanged = penStatus.isPenSizeChanged();
+        this.penColorChanged = penStatus.isPenColorChanged();
     }
 
     public int getPenSize() {
