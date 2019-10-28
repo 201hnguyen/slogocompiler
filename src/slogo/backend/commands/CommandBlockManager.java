@@ -122,23 +122,25 @@ public class CommandBlockManager {
     }
 
     private double rerunMovementCommands(String command) throws ClassNotFoundException {
-        myScanner.rememberPreviousWord();
+        int index = myScanner.getIndex() - 1;
         double returnVal = 0;
+        myActiveTurtles.clear();
+        myActiveTurtles.addAll(myTurtleHistory.getActiveTurtles());
         for(int i=0; i<myActiveTurtles.size(); i++) {
             System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing ");
+            myScanner.goToIndex(index);
 
             CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
             repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
-            repeatCommandTree.addToCommandTree(command);
             System.out.println(command  + "sdfsdf");
 
             while (!repeatCommandTree.onlyNumberLeft() && myScanner.hasNext()) {
                 command = myScanner.next();
+                System.out.println(command + "sdfsdfsdf123");
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
                 repeatCommandTree.addToCommandTree(command);
             }
             returnVal = repeatCommandTree.getLastDouble();
-            //myScanner.goBackToLastMemory();
         }
         return returnVal;
     }

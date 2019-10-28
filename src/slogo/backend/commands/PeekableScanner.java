@@ -80,12 +80,12 @@ public class PeekableScanner {
         return str;
     }
 
-    public void rememberPreviousWord() {
-        memoryIndex = index-1;
+    public int getIndex() {
+        return index;
     }
 
-    public void goBackToLastMemory() {
-        index = memoryIndex;
+    public void goToIndex(int index) {
+        this.index = index;
     }
 
     public String peek() {
