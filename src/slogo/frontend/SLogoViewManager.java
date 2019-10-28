@@ -96,6 +96,10 @@ public class SLogoViewManager {
         }
     }
 
+    public void setAnimation(String animationString) {
+
+    }
+
     private void updateDrawing(TurtleView turtleView) {
         DrawStatus drawStatus = turtleView.getDrawStatus();
         System.out.println(drawStatus.getImageNum());

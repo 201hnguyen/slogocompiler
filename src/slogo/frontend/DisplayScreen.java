@@ -45,4 +45,8 @@ public class DisplayScreen extends Pane {
     public void setPenSize(int penSize) {
         myViewManager.setPenSize(penSize);
     }
+
+    public void setAnimation(String animationString) {
+
+    }
 }

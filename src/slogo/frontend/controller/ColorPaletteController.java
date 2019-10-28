@@ -1,8 +1,11 @@
-package slogo.frontend;
+package slogo.frontend.controller;
 
 import javafx.scene.paint.Color;
+import slogo.frontend.DisplayScreen;
 
-public class ColorPaletteController {
+import java.util.Map;
+
+public class ColorPaletteController implements NodeController {
     private DisplayScreen displayScreen;
 
     public ColorPaletteController(DisplayScreen displayScreen) {
@@ -15,5 +18,10 @@ public class ColorPaletteController {
 
     public void backgroundAction(Color color) {
         displayScreen.setBackground(color);
+    }
+
+    @Override
+    public Map<String, String> getChangedValues() {
+        return null;
     }
 }

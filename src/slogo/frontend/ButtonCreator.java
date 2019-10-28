@@ -3,6 +3,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import slogo.frontend.controller.ButtonController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -15,12 +16,13 @@ public class ButtonCreator extends HBox {
     private static final double X_LAYOUT = 20;
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
 
-    private ButtonController myButtonController = new ButtonController("English");
+    private ButtonController myButtonController;
     private ResourceBundle resourceBundle;
 
 
-    public ButtonCreator() {
+    public ButtonCreator(DisplayScreen displayScreen) {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+        myButtonController = new ButtonController("English", displayScreen);
         GridPane buttons = new GridPane();
         buttons.setPadding(new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING));
         createButtons();
@@ -30,12 +32,12 @@ public class ButtonCreator extends HBox {
     }
 
     public boolean isStartButtonClicked() {
-        return myButtonController.isStartButtonClicked();
+        return false;
     }
 
-    public boolean isClearButtonClicked() { return myButtonController.isClearButtonClicked();}
+    public boolean isClearButtonClicked() { return false;}
 
-    public boolean isNewButtonClicked() { return myButtonController.isNewButtonClicked();}
+    public boolean isNewButtonClicked() { return false;}
 
     private void createButtons() {
         for(String key : Collections.list(resourceBundle.getKeys())) {
@@ -48,9 +50,9 @@ public class ButtonCreator extends HBox {
 
     private void callAction(String key) {
         try {
-            String methodName = resourceBundle.getString(key);
-            Method m = myButtonController.getClass().getDeclaredMethod(methodName);
-            m.invoke(myButtonController);
+            String methodName = resourceBundle.getString(key).split(",")[0];
+            Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
+            m.invoke(myButtonController, key);
         } catch (Exception e) {
             /**
              * TODO: action for exception

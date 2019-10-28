@@ -20,7 +20,7 @@ public class Visualization {
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
-    private ButtonCreator buttonCreator = new ButtonCreator();
+    private ButtonCreator buttonCreator = new ButtonCreator(displayScreen);
     private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
 
     public Visualization(Stage stage) {
