@@ -1,8 +1,9 @@
-package slogo.frontend.controller;
+package slogo.frontend.creater;
 
 import java.util.Map;
 
-public interface NodeController {
+public interface ChangeableNode {
+
     Map<String, String> getChangedValues();
 
     void setLanguage(String language);

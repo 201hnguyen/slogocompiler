@@ -1,22 +1,26 @@
-package slogo.frontend;
+package slogo.frontend.creater;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ButtonController;
+import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ButtonCreator extends HBox {
+public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
     private static final double SPACING = 25;
     private static final double Y_LAYOUT = 430;
     private static final double X_LAYOUT = 20;
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
 
-    private ButtonController myButtonController;
+    private NodeController myButtonController;
     private ResourceBundle resourceBundle;
 
 
@@ -31,13 +35,22 @@ public class ButtonCreator extends HBox {
         setLayoutX(X_LAYOUT);
     }
 
-    public boolean isStartButtonClicked() {
-        return false;
+    public void setButtonCreator(NodeController nodeController) {
+        myButtonController = nodeController;
     }
 
-    public boolean isClearButtonClicked() { return false;}
+    public Map<String, String> getChangedValues() {
+        Map<String, String> map = new HashMap<>();
+        map.putAll(myButtonController.getChangedValues());
+        return map;
+    }
 
-    public boolean isNewButtonClicked() { return false;}
+    @Override
+    public void setLanguage(String language) {
+        /**
+         * TODO: Fill this up
+         */
+    }
 
     private void createButtons() {
         for(String key : Collections.list(resourceBundle.getKeys())) {

@@ -1,6 +1,6 @@
 package slogo.frontend.controller;
 
-import slogo.frontend.DisplayScreen;
+import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.reference.ReferenceWindow;
 
 import java.util.HashMap;
@@ -51,5 +51,10 @@ public class ButtonController implements NodeController {
         map.putAll(changedValues);
         changedValues.clear();
         return map;
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

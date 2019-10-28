@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.turtlescreen;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;

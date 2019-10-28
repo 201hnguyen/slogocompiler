@@ -1,9 +1,8 @@
-package slogo.frontend;
+package slogo.frontend.turtlescreen;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import slogo.backend.utils.TurtleHistory;
 
 
