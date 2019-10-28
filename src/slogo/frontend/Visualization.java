@@ -22,6 +22,7 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
     private ButtonCreator buttonCreator = new ButtonCreator();
+    private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
     //private String[] languageList;
     //private String[] imageList;
     //private DropDownCreator languageDropDown = new DropDownCreator(languageList = new String[]{"1", "2", "3"}, "Language");
@@ -30,7 +31,7 @@ public class Visualization {
     public Visualization(Stage stage) {
         this.stage = stage;
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), tabPane, buttonCreator);
+        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), tabPane, buttonCreator, dropDownCreator);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }

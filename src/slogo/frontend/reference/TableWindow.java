@@ -15,9 +15,9 @@ import java.util.ResourceBundle;
 
 public class TableWindow {
 
-    private static final String RESOURCE_PATH = "resources.commandreference.";
+    private static final String RESOURCE_PATH = "resources.frontend.commandreference.";
     private static final String DESCRIPTION_FILE_NAME="CommandDescription";
-    private static final String TABLE_COL_PATH="resources.commandreference.TableColumn";
+    private static final String TABLE_COL_PATH="resources.frontend.commandreference.TableColumn";
     private static final double WIDTH = 1200;
     private static final double HEIGHT = 800;
     private static final double XPOS = 600;
