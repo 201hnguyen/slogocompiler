@@ -4,9 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import slogo.backend.utils.ColorManager;
-import slogo.backend.utils.TurtleHistory;
-import slogo.backend.utils.TurtleMovement;
+import slogo.backend.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,8 @@ import java.util.List;
 public class SLogoViewManager {
 
     private static final double INITIAL_SPEED = 0.2;
+    private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleView> turtleViewList = new ArrayList<>();
     private List<List<TurtleMovement>> turtleMovements = new ArrayList<>();
@@ -22,9 +22,13 @@ public class SLogoViewManager {
     private Pane turtlePane;
     private Image image;
     private double speed = INITIAL_SPEED;
+    private PenStatus penStatus;
+    private DrawStatus drawStatus;
 
 
     public SLogoViewManager(Pane pane) {
+        penStatus = INITIAL_PEN_STATUS;
+        drawStatus = INITIAL_DRAW_STATUS;
         turtlePane = pane;
         imageManager = new ImageManager();
         setImage(2);
@@ -85,6 +89,7 @@ public class SLogoViewManager {
     private void addTurtleView(int myID) {
         if(!hasTurtleView(myID)) {
             TurtleView turtleView = new TurtleView(image, myID, turtlePane.getWidth(), turtlePane.getHeight());
+            updateTurtleStatus(turtleView);
             turtleViewList.add(turtleView);
             turtlePane.getChildren().add(turtleView);
             turtleView.setSpeed(speed);
@@ -101,4 +106,10 @@ public class SLogoViewManager {
         }
         return false;
     }
+
+    private void updateTurtleStatus(TurtleView turtleView) {
+        turtleView.setPenStatus(penStatus);
+        turtleView.setDrawStatus(drawStatus);
+    }
+
 }
