@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class DropDownCreator extends HBox {
-    private static final double DROP_WIDTH = 165;
+    private static final double DROP_WIDTH = 330;
     private static final double DROP_HEIGHT = 40;
     private static final double SPACING = 15;
     private static final String DROPDOWN_RESOURCE = "resources.frontend.DropDownResource";
@@ -41,7 +41,7 @@ public class DropDownCreator extends HBox {
                 list.add(item);
             }
             dropdown.setItems(FXCollections.observableArrayList(list));
-            dropdown.setPromptText(list.get(0));
+            dropdown.setPromptText(key);
             getChildren().add(dropdown);
             dropdown.setOnAction(e -> callAction(key, dropdown.getValue().toString()));
         }

@@ -16,7 +16,7 @@ public class SLogoViewManager {
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleView> turtleViewList = new ArrayList<>();
-    private List<List<TurtleMovement>> turtleMovements = new ArrayList<>();
+    private List<TurtleMovement> turtleMovements = new ArrayList<>();
     private ImageManager imageManager;
     private ColorManager colorManager;
     private Pane turtlePane;
@@ -38,7 +38,7 @@ public class SLogoViewManager {
 
     protected void setHistory(TurtleHistory turtleHistory) {
         turtleMovements = turtleHistory.getMyTurtleHistory();
-        for(TurtleMovement turtleMovement : turtleMovements.get(0)) {
+        for(TurtleMovement turtleMovement : turtleMovements) {
             getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
         }
     }
