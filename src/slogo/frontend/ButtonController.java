@@ -5,6 +5,7 @@ import slogo.frontend.reference.ReferenceWindow;
 public class ButtonController {
     private boolean startButtonClicked = false;
     private boolean clearButtonClicked = false;
+    private boolean selectFileButtonClicked = false;
 
     public ButtonController() {
         /**
@@ -19,6 +20,8 @@ public class ButtonController {
     public void clearButtonAction() {
         clearButtonClicked = true;
     }
+
+    public void selectFileButtonAction(){ selectFileButtonClicked = true; }
 
     public void helpButtonAction() {
         ReferenceWindow referenceWindow = new ReferenceWindow("English");
@@ -35,5 +38,12 @@ public class ButtonController {
         boolean returnValue = clearButtonClicked;
         clearButtonClicked = false;
         return returnValue;
+    }
+
+    public boolean isSelectFileButtonClicked() {
+        boolean returnValue = selectFileButtonClicked;
+        selectFileButtonClicked = false;
+        return returnValue;
+
     }
 }
