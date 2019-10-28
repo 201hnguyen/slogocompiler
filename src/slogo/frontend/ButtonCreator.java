@@ -15,7 +15,7 @@ public class ButtonCreator extends HBox {
     private static final double X_LAYOUT = 20;
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
 
-    private ButtonController myButtonController = new ButtonController();
+    private ButtonController myButtonController = new ButtonController("English");
     private ResourceBundle resourceBundle;
 
 
@@ -39,6 +39,7 @@ public class ButtonCreator extends HBox {
         for(String key : Collections.list(resourceBundle.getKeys())) {
             Button button = new Button(key);
             button.setOnAction(e -> callAction(key));
+            button.setPrefHeight(getHeight());
             getChildren().add(button);
         }
     }

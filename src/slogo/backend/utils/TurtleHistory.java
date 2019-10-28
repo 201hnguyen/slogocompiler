@@ -8,14 +8,12 @@ public class TurtleHistory {
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
-    private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
+    private List<TurtleMovement> myTurtleHistory = new ArrayList<>();
     private List<Integer> activeTurtles = new ArrayList<>();
     private int curTurtleID = 1;
-    private int index = 0;
 
     public TurtleHistory() {
         myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
-        myTurtleHistory.add(new ArrayList<>());
     }
 
     public TurtleModel getTurtleModel(int turtleID){
@@ -33,11 +31,7 @@ public class TurtleHistory {
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
-        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
-    }
-
-    public void toNextTurn() {
-        myTurtleHistory.add(new ArrayList<>());
+        myTurtleHistory.add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
     }
 
     public void addTurtleModel(int turtleID) {
@@ -48,15 +42,14 @@ public class TurtleHistory {
         }
     }
 
-    public List<List<TurtleMovement>> getMyTurtleHistory() {
-        List<List<TurtleMovement>> list = new ArrayList<>();
+    public List<TurtleMovement> getMyTurtleHistory() {
+        List<TurtleMovement> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;
     }
 
     public void clearHistory() {
         myTurtleHistory.clear();
-        myTurtleHistory.add(new ArrayList<>());
     }
 
     public List<Integer> getActiveTurtles() {

@@ -5,11 +5,11 @@ import slogo.frontend.reference.ReferenceWindow;
 public class ButtonController {
     private boolean startButtonClicked = false;
     private boolean clearButtonClicked = false;
+    private String animationStatus;
+    private String language;
 
-    public ButtonController() {
-        /**
-         * TODO: Constructor will have to get language as input parameter.
-         */
+    public ButtonController(String language) {
+        this.language = language;
     }
 
     public void startButtonAction() {
@@ -21,8 +21,20 @@ public class ButtonController {
     }
 
     public void helpButtonAction() {
-        ReferenceWindow referenceWindow = new ReferenceWindow("English");
+        ReferenceWindow referenceWindow = new ReferenceWindow(language);
         referenceWindow.createNewWindow();
+    }
+
+    public void playButtonAction() {
+
+    }
+
+    public void stopButtonAction() {
+
+    }
+
+    public void stepButtonAction() {
+
     }
 
     public boolean isStartButtonClicked() {
@@ -35,5 +47,9 @@ public class ButtonController {
         boolean returnValue = clearButtonClicked;
         clearButtonClicked = false;
         return returnValue;
+    }
+
+    public String getAnimationStatus() {
+        return animationStatus;
     }
 }
