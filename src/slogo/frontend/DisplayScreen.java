@@ -34,7 +34,7 @@ public class DisplayScreen extends Pane {
         myViewManager.setHistory(turtleHistory);
     }
 
-    public void setLineColor(Paint color) {
+    public void setLineColor(Color color) {
         myViewManager.setLineColor(color);
     }
 

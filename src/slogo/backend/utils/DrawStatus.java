@@ -53,8 +53,19 @@ public class DrawStatus {
         return imageChanged;
     }
 
+    public void setTurtleVisible(boolean isVisible) {
+        this.visible = isVisible;
+    }
+
+    public void setBackGround(int backGround) {
+        this.backGround = backGround;
+    }
+
+    public void setImageNum(int imageNum) {
+        this.imageNum = imageNum;
+    }
+
     public void compareAndSetChanged(DrawStatus other) {
-        System.out.println(this.isTurtleVisible() + ", " + other.isTurtleVisible() + "sdf");
         visibleChanged = !(other.isTurtleVisible() == visible);
         backGroundChanged = !(other.getBackGround() == backGround);
         imageChanged = !(other.getImageNum() == imageNum);

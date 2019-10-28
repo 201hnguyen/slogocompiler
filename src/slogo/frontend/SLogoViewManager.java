@@ -1,8 +1,7 @@
 package slogo.frontend;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import slogo.backend.utils.*;
 
@@ -18,18 +17,20 @@ public class SLogoViewManager {
     private List<TurtleView> turtleViewList = new ArrayList<>();
     private List<TurtleMovement> turtleMovements = new ArrayList<>();
     private ImageManager imageManager;
-    private ColorManager colorManager;
-    private Pane turtlePane;
+    private ColorManager colorManager = new ColorManager();
+    private ColorAndPenStatus myColorAndPenStatus;
+    private DisplayScreen turtlePane;
     private Image image;
     private double speed = INITIAL_SPEED;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
 
 
-    public SLogoViewManager(Pane pane) {
+    public SLogoViewManager(DisplayScreen displayScreen) {
         penStatus = INITIAL_PEN_STATUS;
         drawStatus = INITIAL_DRAW_STATUS;
-        turtlePane = pane;
+        myColorAndPenStatus = new ColorAndPenStatus(colorManager);
+        turtlePane = displayScreen;
         imageManager = new ImageManager();
         setImage(2);
         addTurtleView(1);
@@ -47,8 +48,13 @@ public class SLogoViewManager {
         for(TurtleView turtleView : turtleViewList) {
             if(turtleView.isMoving()) {
                 Line line = turtleView.updateAndGetLine();
+                updateDrawing(turtleView);
+                if(turtleView.getPenStatus().isPenSizeChanged()) {
+                    myColorAndPenStatus.setPenSize(turtleView, turtleView.getPenStatus().getPenSize(), false);
+                }
                 if(line != null) {
-                    line.setStroke(turtleView.getMyLineColor());
+                    line.setStroke(myColorAndPenStatus.getLineColor(turtleView));
+                    line.setStrokeWidth(myColorAndPenStatus.getPenSize(turtleView));
                     turtlePane.getChildren().add(line);
                     turtlePane.getChildren().remove(turtleView);
                     turtlePane.getChildren().add(turtleView);
@@ -65,11 +71,19 @@ public class SLogoViewManager {
         for(TurtleView turtleView : turtleViewList) {
             turtleView.setImage(image);
         }
+        drawStatus.setImageNum(imageNum);
     }
 
-    protected void setLineColor(Paint color) {
+    protected void setLineColor(Color color) {
         for(TurtleView turtleView : turtleViewList) {
-            turtleView.setMyLineColor(color);
+            myColorAndPenStatus.setLineColor(turtleView, color);
+        }
+    }
+
+    protected void setPenSize(double penSize) {
+        penStatus.setPenSize(penSize);
+        for(TurtleView turtleView : turtleViewList) {
+            myColorAndPenStatus.setPenSize(turtleView, penSize, true);
         }
     }
 
@@ -77,6 +91,20 @@ public class SLogoViewManager {
         this.speed = speed;
         for (TurtleView turtleView : turtleViewList) {
             turtleView.setSpeed(speed);
+        }
+    }
+
+    private void updateDrawing(TurtleView turtleView) {
+        DrawStatus drawStatus = turtleView.getDrawStatus();
+        System.out.println(drawStatus.getImageNum());
+        if(drawStatus.isVisibleChanged()) {
+            turtleView.setVisible(drawStatus.isTurtleVisible());
+        }
+        if(drawStatus.isImageChanged()) {
+            turtleView.setImage(imageManager.getImage(drawStatus.getImageNum()));
+        }
+        if(drawStatus.isBackGroundChanged()) {
+            myColorAndPenStatus.setBackgroundColor(drawStatus.getImageNum());
         }
     }
 
@@ -96,6 +124,8 @@ public class SLogoViewManager {
             updateTurtleStatus(turtleView);
             turtleViewList.add(turtleView);
             turtlePane.getChildren().add(turtleView);
+            myColorAndPenStatus.addLineColor(turtleView);
+            myColorAndPenStatus.addPenSize(turtleView);
             turtleView.setSpeed(speed);
             turtleView.setX(turtlePane.getWidth()/2 - turtleView.getFitWidth()/2);
             turtleView.setY(turtlePane.getHeight()/2 - turtleView.getFitHeight()/2);
