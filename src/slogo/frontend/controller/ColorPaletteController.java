@@ -24,4 +24,9 @@ public class ColorPaletteController implements NodeController {
     public Map<String, String> getChangedValues() {
         return null;
     }
+
+    @Override
+    public void setLanguage(String language) {
+        return;
+    }
 }

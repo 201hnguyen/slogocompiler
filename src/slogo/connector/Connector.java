@@ -17,7 +17,6 @@ public class Connector {
 
     private Map<Stage, Visualization> visualizationMap;
     private Map<Stage, BackendManager> backendManagerMap;
-    private boolean moveStarted = false;
     private Timeline myAnimation;
 
     public Connector(Stage stage) {

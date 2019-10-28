@@ -52,4 +52,9 @@ public class ButtonController implements NodeController {
         changedValues.clear();
         return map;
     }
+
+    @Override
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

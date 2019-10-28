@@ -1,5 +1,10 @@
 package slogo.frontend;
 
-public interface LanguageChangeableNodes {
+import java.util.Map;
+
+public interface ChangeableNode {
+
+    Map<String, String> getChangedValues();
+
     void setLanguage(String language);
 }

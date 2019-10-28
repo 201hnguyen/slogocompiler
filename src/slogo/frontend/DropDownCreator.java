@@ -6,12 +6,9 @@ import javafx.scene.layout.HBox;
 import slogo.frontend.controller.DropDownController;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class DropDownCreator extends HBox {
+public class DropDownCreator extends HBox implements ChangeableNode{
     private static final double DROP_WIDTH = 330;
     private static final double DROP_HEIGHT = 40;
     private static final double SPACING = 15;
@@ -28,6 +25,15 @@ public class DropDownCreator extends HBox {
         setPrefSize(DROP_WIDTH, DROP_HEIGHT);
         createDropDown();
         setSpacing(SPACING);
+    }
+
+    public Map<String, String> getChangedValues() {
+        return myController.getChangedValues();
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        //
     }
 
     private void createDropDown() {
@@ -57,9 +63,5 @@ public class DropDownCreator extends HBox {
         } catch (Exception e) {
 
         }
-    }
-
-    public String getLanguage() {
-        return myController.getLanguage();
     }
 }

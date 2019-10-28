@@ -42,4 +42,9 @@ public class DropDownController implements NodeController {
         changedValues.clear();
         return map;
     }
+
+    @Override
+    public void setLanguage(String language) {
+
+    }
 }
