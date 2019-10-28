@@ -1,27 +1,30 @@
 package slogo.backend.commands;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 //public class PeekableScanner {
-//    private String[] myCommands;
+//    private List<String> myCommands;
 //    private int myIndex;
 //
 //
 //    public PeekableScanner(String source) {
-//        myCommands = source.split("\\s+");
+//        myCommands = Arrays.asList(source.split("\\s+"));
 //        myIndex = 0;
 //    }
 //
 //    public boolean hasNext() {
-//        return myIndex != myCommands.length - 1;
+//        return myIndex != myCommands.size() - 1;
 //    }
 //
 //    public String next() {
-//        return myCommands[myIndex++];
+//        if (hasNext())
+//        return myCommands.get(myIndex++);
 //    }
 //
 //    public String peek() {
-//        return myCommands[myIndex + 1];
+//        return myCommands.get(myIndex+1);
 //    }
 //}
 

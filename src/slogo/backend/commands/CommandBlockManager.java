@@ -110,9 +110,10 @@ public class CommandBlockManager {
     private double buildAndExecuteBasicCommand(String command) {
         double returnValue = 0;
         try {
-            myCommandTree.addToCommandTree(command);
             if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
-                rerunMovementCommands(command);
+                returnValue = rerunMovementCommands(command);
+            } else {
+                myCommandTree.addToCommandTree(command);
             }
         } catch (ClassNotFoundException e) {
             //FIXME
@@ -120,11 +121,12 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private void rerunMovementCommands(String command) throws ClassNotFoundException {
+    private double rerunMovementCommands(String command) throws ClassNotFoundException {
         List<String> commandsToRerun = new ArrayList<>();
         runCommandForFirstTurtle(command, commandsToRerun);
         System.out.println(myActiveTurtles.size());
-        runCommandForOtherTurtles(commandsToRerun);
+        double returnVal = runCommandForOtherTurtles(commandsToRerun);
+        return returnVal;
     }
 
     private void runCommandForFirstTurtle(String command, List<String> commandsToRerun) throws ClassNotFoundException {
@@ -134,34 +136,38 @@ public class CommandBlockManager {
         } else {
             firstTurtleID = 1;
         }
-        myCommandTree.setTurtleID(firstTurtleID);
+        CommandTree testCommandtree = new CommandTree(myTurtleHistory);
+        testCommandtree.setTurtleID(firstTurtleID);
         commandsToRerun.add(command);
-        while (!myCommandTree.onlyNumberLeft()) {
+        while (!testCommandtree.onlyNumberLeft()) {
             command = myScanner.next();
             command = checkAndInputUserVariable(command, myAccessibleVariables);
             commandsToRerun.add(command);
-            myCommandTree.addToCommandTree(command);
+            testCommandtree.addToCommandTree(command);
         }
     }
 
-    private void runCommandForOtherTurtles(List<String> commandsToRerun) throws ClassNotFoundException {
+    private double runCommandForOtherTurtles(List<String> commandsToRerun) throws ClassNotFoundException {
+        double returnVal = 0;
         for (int i=0; i<myActiveTurtles.size(); i++) {
-            if (i == 0) {
-                continue;
-            } else {
-                StringBuilder builder = new StringBuilder();
-                for (String c : commandsToRerun) {
-                    builder.append(c);
-                }
-                String s = builder.toString();
-                System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
-                CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
-                repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
-                for (String commandToRerun : commandsToRerun) {
-                    repeatCommandTree.addToCommandTree(commandToRerun);
-                }
+            StringBuilder builder = new StringBuilder();
+            for (String c : commandsToRerun) {
+                builder.append(c);
+            }
+            String s = builder.toString();
+            System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
+
+            CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
+            repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
+            for (String commandToRerun : commandsToRerun) {
+                repeatCommandTree.addToCommandTree(commandToRerun);
+            }
+
+            if (i == myActiveTurtles.size() - 1 && repeatCommandTree.onlyNumberLeft()) {
+                returnVal = repeatCommandTree.getLastDouble();
             }
         }
+        return returnVal;
     }
 
     private List<Object> prepareUserDefinedFunction(String command) {
