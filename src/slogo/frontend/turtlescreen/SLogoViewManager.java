@@ -77,9 +77,7 @@ public class SLogoViewManager {
     }
 
     protected void setLineColor(Color color) {
-        for(TurtleView turtleView : turtleViewList) {
-            myColorAndPenStatus.setLineColor(turtleView, color);
-        }
+        myColorAndPenStatus.setDefaultLineColor(color);
     }
 
     public void setPenSize(double penSize) {

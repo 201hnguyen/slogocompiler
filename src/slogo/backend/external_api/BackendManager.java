@@ -25,6 +25,7 @@ public class BackendManager {
     }
 
     public void setLanguage(String language) {
+        System.out.println(language);
         myCommandParser = new ParserForTest(language);
     }
 

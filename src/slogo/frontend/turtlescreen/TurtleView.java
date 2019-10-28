@@ -31,7 +31,6 @@ public class TurtleView extends ImageView {
     private double speed;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
-    private Paint myLineColor = INITIAL_COLOR;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
         super(image);
@@ -64,9 +63,7 @@ public class TurtleView extends ImageView {
     }
 
     public void addMovement(TurtleMovement turtleMovement) {
-
         myMovements.add(turtleMovement);
-        System.out.println(turtleMovement.getPenStatus().isPenDown() + ", " + turtleMovement.getPenStatus().isPenDownChanged() + "sdfsdf");
     }
 
     public boolean isMoving() {

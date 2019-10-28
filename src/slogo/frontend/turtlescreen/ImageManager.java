@@ -13,7 +13,6 @@ public class ImageManager {
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
 
     public Image getImage(int imageIndex) {
-        System.out.println(resourceBundle.getKeys());
         for(String key : Collections.list(resourceBundle.getKeys())) {
             int index = Integer.parseInt(key);
             if(index == imageIndex) {

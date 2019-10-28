@@ -11,14 +11,8 @@ import java.util.List;
 public class LeftBasicCommand implements BasicCommandInterface {
     private static final double FULL_CYCLE = 360;
 
-    private TurtleHistory turtleHistory;
-
-    public LeftBasicCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
-
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         double angle = (turtle.getOrientation() + parameters.get(0)) % FULL_CYCLE;
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());

@@ -10,14 +10,8 @@ import java.util.List;
 
 public class SetPositionBasicCommand implements BasicCommandInterface {
 
-    private TurtleHistory turtleHistory;
-
-    public SetPositionBasicCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
-
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         Point2D curPos = new Point2D(turtle.getXPos(), turtle.getYPos());
         Point2D newPos = new Point2D(parameters.get(0), parameters.get(1));

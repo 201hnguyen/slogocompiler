@@ -56,13 +56,13 @@ public class DropDownCreator extends HBox implements ChangeableNode{
     }
 
     private void callAction(String comboBoxId, String key) {
-        System.out.println(key);
+        System.out.println(comboBoxId + ", " + key);
         String methodName = resourceBundle.getString(comboBoxId);
+        System.out.println(methodName);
         try {
             Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
             m.invoke(myController, comboBoxId, key);
         } catch (Exception e) {
-
         }
     }
 }
