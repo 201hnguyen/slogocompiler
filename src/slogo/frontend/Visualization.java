@@ -11,7 +11,6 @@ public class Visualization {
     private static final double SCENE_HEIGHT = 600;
     private static final String TITLE = "SLOGO IDLE";
 
-
     private Scene scene;
     private AnchorPane root;
     private Stage stage;
@@ -33,6 +32,10 @@ public class Visualization {
     }
 
     public String getLanguage() {return language;}
+
+    public boolean needNewWindow() {
+        return buttonCreator.isNewButtonClicked();
+    }
 
     public void update() {
         if(!language.equals(dropDownCreator.getLanguage())) {

@@ -46,10 +46,10 @@ public class Connector {
             System.out.println(str);
             myBackEndManager.setCommand(str);
             myVisualization.setHistory(myBackEndManager.getHistory());
-            moveStarted = true;
         }
-        if (moveStarted) {
-            myVisualization.update();
+        myVisualization.update();
+        if(myVisualization.needNewWindow()) {
+            createWorkSpace();
         }
     }
 
@@ -63,5 +63,9 @@ public class Connector {
         BackendManager myBackEndManager = new BackendManager(myVisualization.getLanguage(), new TurtleHistory());
         visualizationMap.put(stage, myVisualization);
         backendManagerMap.put(stage, myBackEndManager);
+        stage.setOnCloseRequest(e -> {
+            visualizationMap.remove(stage);
+            backendManagerMap.remove(stage);
+        });
     }
 }
