@@ -58,8 +58,12 @@ public class SLogoViewManager {
     }
 
     protected void setImage(int imageNum) {
+        System.out.println(imageNum + "selected");
         if(imageManager.getImage(imageNum)!=null) {
             image = imageManager.getImage(imageNum);
+        }
+        for(TurtleView turtleView : turtleViewList) {
+            turtleView.setImage(image);
         }
     }
 

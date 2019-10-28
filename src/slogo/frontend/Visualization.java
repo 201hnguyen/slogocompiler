@@ -1,8 +1,6 @@
 package slogo.frontend;
 
-import javafx.collections.FXCollections;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -11,22 +9,20 @@ import slogo.backend.utils.TurtleHistory;
 public class Visualization {
     private static final double SCENE_WIDTH = 800;
     private static final double SCENE_HEIGHT = 600;
+    private static final String TITLE = "SLOGO IDLE";
 
 
     private Scene scene;
     private AnchorPane root;
     private Stage stage;
     private Text readerText;
+    private String language = "English";
 
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
     private ButtonCreator buttonCreator = new ButtonCreator();
     private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
-    //private String[] languageList;
-    //private String[] imageList;
-    //private DropDownCreator languageDropDown = new DropDownCreator(languageList = new String[]{"1", "2", "3"}, "Language");
-    //private DropDownCreator imageDropDown = new DropDownCreator(imageList = new String[]{"1", "2", "3"}, "Image");
 
     public Visualization(Stage stage) {
         this.stage = stage;
@@ -36,7 +32,12 @@ public class Visualization {
         startStage();
     }
 
+    public String getLanguage() {return language;}
+
     public void update() {
+        if(!language.equals(dropDownCreator.getLanguage())) {
+            language = dropDownCreator.getLanguage();
+        }
         if (buttonCreator.isClearButtonClicked()) {
             commandLine.getCommand().clear();
         }
@@ -51,7 +52,7 @@ public class Visualization {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        stage.setTitle("SLOGO IDLE");
+        stage.setTitle(TITLE);
     }
 
     public String getInput() {
