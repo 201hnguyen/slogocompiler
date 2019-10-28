@@ -37,4 +37,8 @@ public class DisplayScreen extends Pane {
     public void setLineColor(Paint color) {
         myViewManager.setLineColor(color);
     }
+
+    public void setImage(int imageNum) {
+        myViewManager.setImage(imageNum);
+    }
 }

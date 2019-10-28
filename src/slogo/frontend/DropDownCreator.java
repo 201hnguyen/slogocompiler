@@ -57,4 +57,8 @@ public class DropDownCreator extends HBox {
 
         }
     }
+
+    public String getLanguage() {
+        return myController.getLanguage();
+    }
 }

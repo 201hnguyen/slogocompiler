@@ -8,18 +8,22 @@ import slogo.backend.external_api.BackendManager;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Connector {
 
-    private static final double DURATION_MILLIS = 2;
+    private static final double DURATION_MILLIS = 10;
 
-    private Visualization myVisualization;
-    private BackendManager myBackEndManager;
+    private Map<Stage, Visualization> visualizationMap;
+    private Map<Stage, BackendManager> backendManagerMap;
     private boolean moveStarted = false;
     private Timeline myAnimation;
 
     public Connector(Stage stage) {
-        myVisualization = new Visualization(stage);
-        myBackEndManager = new BackendManager("English", new TurtleHistory());
+        visualizationMap = new HashMap<>();
+        backendManagerMap = new HashMap<>();
+        createNewWorkSpace(stage);
     }
 
     public void begin() {
@@ -31,16 +35,33 @@ public class Connector {
     }
 
     private void step() {
+        for(Stage stage : visualizationMap.keySet()) {
+            update(visualizationMap.get(stage), backendManagerMap.get(stage));
+        }
+    }
+
+    private void update(Visualization myVisualization, BackendManager myBackEndManager) {
         String str = myVisualization.getInput();
-        if(!str.equals("")) {
+        if (!str.equals("")) {
+            System.out.println(str);
             myBackEndManager.setCommand(str);
             myVisualization.setHistory(myBackEndManager.getHistory());
             moveStarted = true;
         }
-        if(moveStarted) {
+        if (moveStarted) {
             myVisualization.update();
         }
     }
 
+    private void createWorkSpace() {
+        Stage stage = new Stage();
+        createNewWorkSpace(stage);
+    }
 
+    private void createNewWorkSpace(Stage stage) {
+        Visualization myVisualization = new Visualization(stage);
+        BackendManager myBackEndManager = new BackendManager(myVisualization.getLanguage(), new TurtleHistory());
+        visualizationMap.put(stage, myVisualization);
+        backendManagerMap.put(stage, myBackEndManager);
+    }
 }
