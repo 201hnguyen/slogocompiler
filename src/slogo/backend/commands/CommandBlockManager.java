@@ -16,10 +16,11 @@ import java.util.*;
 
 public class CommandBlockManager {
     private static final String BLOCK_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
-    private static final String USER_DEFINED_RESOURCE_PATH = "resources/UserDefinedVariables";
     private static final String MOVEMENT_COMMANDS_RESOURCE_PATH = "resources/DefinedMovementCommands";
+    private static final String DEFINE_USER_VARIABLE_COMMAND = "MakeVariable";
+    private static final String DEFINE_USER_INSTRUCTION_COMMAND = "MakeUserInstruction";
+    private static final String EXECUTE_USER_DEFINED_COMMAND = "UserDefined";
     private static final ResourceBundle CONTROLS_RESOURCE_BUNDLE = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
-    private static final ResourceBundle USER_DEFINED_RESOURCE_BUNDLE = ResourceBundle.getBundle(USER_DEFINED_RESOURCE_PATH);
     private static final ResourceBundle MOVEMENT_COMMANDS_RESOURCE_BUNDLE = ResourceBundle.getBundle(MOVEMENT_COMMANDS_RESOURCE_PATH);
     private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
     private static final String BLOCK_ARGUMENT_END_SIGNAL = "]";
@@ -35,7 +36,6 @@ public class CommandBlockManager {
     private List<Map<String, Double>> myAccessibleVariables;
     private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
     private List<Integer> myActiveTurtles;
-    private List<String> myCommandsToReRun;
 
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
@@ -50,7 +50,6 @@ public class CommandBlockManager {
         myAccessibleUserDefinedFunctions = new HashMap<>();
         myAccessibleUserDefinedFunctions.putAll(definedFunctions);
         myActiveTurtles = myTurtleHistory.getActiveTurtles();
-        myCommandsToReRun = new ArrayList<>();
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
@@ -60,74 +59,104 @@ public class CommandBlockManager {
             String command = myScanner.next();
             command = checkAndInputUserVariable(command, myAccessibleVariables);
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
-                List<Object> commandArguments;
-                if (USER_DEFINED_RESOURCE_BUNDLE.containsKey(command)) {
-                    commandArguments = new ArrayList<>() {{
-                        add(myScanner);
-                    }};
-                } else if (command.equals("MakeUserInstruction")) {
-                    commandArguments = new ArrayList<>();
-                    String methodName = myScanner.next();
-                    commandArguments.add(methodName);
-                    commandArguments.add(prepareBlockCommand());
-                    commandArguments.add(myAccessibleUserDefinedFunctions);
-                } else {
-                    commandArguments = prepareBlockCommand();
-                }
-                try {
-                    returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
-                }
+                returnValue = buildAndExecuteControlCommand(command);
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
-                List<Object> commandArguments = prepareUserDefinedFunction(command);
-                try {
-                    myControlExecutor.execute("UserDefined", commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
-                }
+                returnValue = buildAndExecuteUserDefinedCommand(command);
             } else {
-                try {
-                    myCommandTree.addToCommandTree(command);
-                    if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
-                        myCommandsToReRun.add(command);
-                        while (!myCommandTree.onlyNumberLeft()) {
-                            command = myScanner.next();
-                            command = checkAndInputUserVariable(command, myAccessibleVariables);
-                            myCommandsToReRun.add(command);
-                            myCommandTree.addToCommandTree(command);
-                        }
-
-                        System.out.println(myActiveTurtles.size());
-                        for (int i=0; i<myActiveTurtles.size(); i++) {
-                            if (i == 0) {
-                                continue;
-                            } else {
-                                StringBuilder builder = new StringBuilder();
-                                for (String c : myCommandsToReRun) {
-                                    builder.append(c);
-                                }
-                                String s = builder.toString();
-                                System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
-                                CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
-                                repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
-                                for (String commandToRerun : myCommandsToReRun) {
-                                    repeatCommandTree.addToCommandTree(commandToRerun);
-                                }
-                            }
-                        }
-                        myCommandsToReRun.clear();
-                    }
-                } catch (ClassNotFoundException e) {
-                    //FIXME
+                returnValue = buildAndExecuteBasicCommand(command);
+                if (myCommandTree.onlyNumberLeft()) {
+                    returnValue = myCommandTree.getLastDouble();
                 }
-            }
-
-            if (myCommandTree.onlyNumberLeft()) {
-                returnValue = myCommandTree.getLastDouble();
             }
         }
         return returnValue;
+    }
+
+    private double buildAndExecuteControlCommand(String command) {
+        double returnValue = 0;
+        List<Object> commandArguments;
+        if (command.equals(DEFINE_USER_VARIABLE_COMMAND)) {
+            commandArguments = new ArrayList<>() {{
+                add(myScanner);
+            }};
+        } else if (command.equals(DEFINE_USER_INSTRUCTION_COMMAND)) {
+            commandArguments = new ArrayList<>();
+            String methodName = myScanner.next();
+            commandArguments.add(methodName);
+            commandArguments.add(prepareBlockCommand());
+            commandArguments.add(myAccessibleUserDefinedFunctions);
+        } else {
+            commandArguments = prepareBlockCommand();
+        }
+        try {
+            returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //FIXME
+        }
+        return returnValue;
+    }
+
+    private double buildAndExecuteUserDefinedCommand(String command) {
+        double returnValue = 0;
+        List<Object> commandArguments = prepareUserDefinedFunction(command);
+        try {
+            returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //FIXME
+        }
+        return returnValue;
+    }
+
+    private double buildAndExecuteBasicCommand(String command) {
+        double returnValue = 0;
+        try {
+            myCommandTree.addToCommandTree(command);
+            if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
+                rerunMovementCommands(command);
+            }
+        } catch (ClassNotFoundException e) {
+            //FIXME
+        }
+        return returnValue;
+    }
+
+    private void rerunMovementCommands(String command) throws ClassNotFoundException {
+        List<String> commandsToRerun = new ArrayList<>();
+        runCommandForFirstTurtle(command, commandsToRerun);
+        System.out.println(myActiveTurtles.size());
+        runCommandForOtherTurtles(commandsToRerun);
+    }
+
+    private void runCommandForFirstTurtle(String command, List<String> commandsToRerun) throws ClassNotFoundException {
+        int firstTurtleID = myActiveTurtles.get(0);
+        myCommandTree.setTurtleID(firstTurtleID);
+        commandsToRerun.add(command);
+        while (!myCommandTree.onlyNumberLeft()) {
+            command = myScanner.next();
+            command = checkAndInputUserVariable(command, myAccessibleVariables);
+            commandsToRerun.add(command);
+            myCommandTree.addToCommandTree(command);
+        }
+    }
+
+    private void runCommandForOtherTurtles(List<String> commandsToRerun) throws ClassNotFoundException {
+        for (int i=0; i<myActiveTurtles.size(); i++) {
+            if (i == 0) {
+                continue;
+            } else {
+                StringBuilder builder = new StringBuilder();
+                for (String c : commandsToRerun) {
+                    builder.append(c);
+                }
+                String s = builder.toString();
+                System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
+                CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
+                repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
+                for (String commandToRerun : commandsToRerun) {
+                    repeatCommandTree.addToCommandTree(commandToRerun);
+                }
+            }
+        }
     }
 
     private List<Object> prepareUserDefinedFunction(String command) {
@@ -181,6 +210,11 @@ public class CommandBlockManager {
     }
 
     private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
+        addFirstArgument(endSignaler, arguments);
+        checkAndAddAdditionalArguments(endSignaler, arguments);
+    }
+
+    private void addFirstArgument(String endSignaler, List<Object> arguments) {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
         int endSignalersNeeded = 1;
@@ -199,14 +233,14 @@ public class CommandBlockManager {
         }
         String argument = builder.toString();
         arguments.add(argument);
-        try {
+    }
+
+    private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) {
+        if (myScanner.hasNext()) {
             if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
                 myScanner.next();
                 buildIndividualControlArgument(endSignaler, arguments);
             }
-        } catch (NullPointerException e) {
-                //fixme
         }
-
     }
 }
