@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.turtlescreen;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

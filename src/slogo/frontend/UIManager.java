@@ -1,5 +1,7 @@
 package slogo.frontend;
 
+import slogo.frontend.creater.ChangeableNode;
+
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -54,5 +56,9 @@ public class UIManager {
             }
             this.language = language;
         }
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }

@@ -1,6 +1,6 @@
 package slogo.frontend.controller;
 
-import slogo.frontend.DisplayScreen;
+import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.reference.ReferenceWindow;
 
 import java.util.HashMap;

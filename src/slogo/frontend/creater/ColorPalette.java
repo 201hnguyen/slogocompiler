@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.creater;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ColorPaletteController;
 
 import java.lang.reflect.Method;

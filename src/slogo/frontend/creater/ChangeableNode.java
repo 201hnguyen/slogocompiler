@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.creater;
 
 import java.util.Map;
 

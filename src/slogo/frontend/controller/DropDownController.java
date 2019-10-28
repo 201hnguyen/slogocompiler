@@ -1,7 +1,7 @@
 package slogo.frontend.controller;
 
 
-import slogo.frontend.DisplayScreen;
+import slogo.frontend.turtlescreen.DisplayScreen;
 
 import java.util.HashMap;
 import java.util.Map;

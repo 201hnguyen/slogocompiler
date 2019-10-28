@@ -1,7 +1,8 @@
-package slogo.frontend;
+package slogo.frontend.turtlescreen;
 
 import javafx.scene.paint.Color;
 import slogo.backend.utils.ColorManager;
+import slogo.frontend.turtlescreen.TurtleView;
 
 import java.util.HashMap;
 import java.util.Map;

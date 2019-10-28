@@ -1,12 +1,15 @@
 package slogo.frontend;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
+import slogo.frontend.creater.ButtonCreator;
+import slogo.frontend.creater.ColorPalette;
+import slogo.frontend.creater.DropDownCreator;
+import slogo.frontend.turtlescreen.DisplayScreen;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Visualization {
@@ -17,9 +20,6 @@ public class Visualization {
     private Scene scene;
     private AnchorPane root;
     private Stage stage;
-    private Text readerText;
-    private String language = "English";
-
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
@@ -37,7 +37,7 @@ public class Visualization {
         startStage();
     }
 
-    public String getLanguage() {return language;}
+    public String getLanguage() {return myUIManager.getLanguage();}
 
     public boolean needNewWindow() {
         return myUIManager.isNewButtonClicked();
@@ -45,12 +45,6 @@ public class Visualization {
 
     public void update() {
         myUIManager.update();
-//        if(!language.equals(dropDownCreator.getLanguage())) {
-//            language = dropDownCreator.getLanguage();
-//        }
-//        if (buttonCreator.isClearButtonClicked()) {
-//            commandLine.getCommand().clear();
-//        }
         displayScreen.update();
     }
 
