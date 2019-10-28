@@ -3,6 +3,7 @@ package slogo.frontend;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class TabMaker extends VBox {
