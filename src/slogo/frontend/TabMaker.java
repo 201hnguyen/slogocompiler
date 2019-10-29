@@ -1,5 +1,6 @@
 package slogo.frontend;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -11,40 +12,39 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TabMaker extends VBox {
-    private TextFlow historyField;
-    private TextFlow variableField;
-    private List<String> myTabs = new ArrayList<String>();
+    private static final double LAYOUT_X = 600;
+    private static final double LAYOUT_Y = 60;
+    private List<String> myTabs = new ArrayList<>();
     private ResourceBundle resourceBundle;
     private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
-    private TabPane tabPane = new TabPane();
-    private VBox vbox = new VBox();
+    private VBox inputHolder = new VBox();
 
     public TabMaker() {
-        setLayoutX(600);
-        setLayoutY(60);
+        setLayoutX(LAYOUT_X);
+        setLayoutY(LAYOUT_Y);
         createTabPane();
     }
 
     public void createTabPane() {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         for (String key : Collections.list(resourceBundle.getKeys())) {
+            VBox vBox = new VBox();
+            Label label = new Label(key);
             ScrollMaker scrollMaker = new ScrollMaker(key);
+            scrollMaker.setContent(label);
             scrollMaker.setId(key);
             myTabs.add(key);
-            scrollMaker.setContent(vbox);
-            getChildren().addAll(scrollMaker);
+            scrollMaker.setContent(inputHolder);
+            vBox.getChildren().addAll(label,scrollMaker);
+            getChildren().addAll(vBox);
         }
     }
 
     public void addHistory(Text command) {
         for (String tab : myTabs) {
             if (tab.equals("History")) {
-                vbox.getChildren().add(command);
+                inputHolder.getChildren().add(command);
             }
         }
-
-
-
-
     }
 }

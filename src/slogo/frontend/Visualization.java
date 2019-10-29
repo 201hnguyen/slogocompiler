@@ -63,10 +63,10 @@ public class Visualization {
         String command = myUIManager.getInput();
         if(!command.equals("")) {
             Text input = new Text(command);
-            input.setOnMouseClicked(event -> commandLine.getCommand().setText(command));
+            input.setOnMouseClicked(event -> commandLine.getCommand().setText(input.getText()));
             tabPane.addHistory(input);
         }
-        return myUIManager.getInput();
+        return command;
     }
 
 }

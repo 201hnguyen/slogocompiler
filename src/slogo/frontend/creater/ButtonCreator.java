@@ -8,10 +8,7 @@ import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
@@ -19,9 +16,14 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double Y_LAYOUT = 430;
     private static final double X_LAYOUT = 20;
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
+    private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
+    private static final String BUTTON_NAMES = "resources.frontend.changingfeature.ButtonNames";
 
     private NodeController myButtonController;
     private ResourceBundle resourceBundle;
+    private String language = "English";
+    private ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
+    private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
 
 
     public ButtonCreator(DisplayScreen displayScreen) {
@@ -47,15 +49,15 @@ public class ButtonCreator extends HBox implements ChangeableNode {
 
     @Override
     public void setLanguage(String language) {
-        /**
-         * TODO: Fill this up
-         */
+        this.language = language;
+        createButtons();
     }
 
 
     private void createButtons() {
+        getChildren().clear();
         for(String key : Collections.list(resourceBundle.getKeys())) {
-            Button button = new Button(key);
+            Button button = new Button(getContentOfButton(key));
             button.setOnAction(e -> callAction(key));
             button.setPrefHeight(getHeight());
             getChildren().add(button);
@@ -72,5 +74,10 @@ public class ButtonCreator extends HBox implements ChangeableNode {
              * TODO: action for exception
              */
         }
+    }
+
+    private String getContentOfButton(String key) {
+        int index = Integer.parseInt(languageBundle.getString(language));
+        return buttonNameBundle.getString(key).split(",")[index];
     }
 }

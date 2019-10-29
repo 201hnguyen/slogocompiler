@@ -48,11 +48,11 @@ public class Connector {
     }
 
     private void update(Visualization myVisualization, BackendManager myBackEndManager) {
-        String str = myVisualization.getInput();
-        if (!str.equals("")) {
-            System.out.println(str);
-            myBackEndManager.setLanguage(myVisualization.getLanguage());
-            myBackEndManager.setCommand(str);
+        String input = myVisualization.getInput();
+        if (!input.equals("")) {
+            System.out.println(input);
+            myBackEndManager.setLanguage(input, myVisualization.getLanguage());
+            myBackEndManager.setCommand(input);
             myVisualization.setHistory(myBackEndManager.getHistory());
         }
         myVisualization.update();
@@ -68,7 +68,7 @@ public class Connector {
 
     private void createNewWorkSpace(Stage stage) {
         Visualization myVisualization = new Visualization(stage);
-        BackendManager myBackEndManager = new BackendManager(myVisualization.getLanguage(), new TurtleHistory());
+        BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(), myVisualization.getLanguage(), new TurtleHistory());
         visualizationMap.put(stage, myVisualization);
         backendManagerMap.put(stage, myBackEndManager);
         stage.setOnCloseRequest(e -> {
