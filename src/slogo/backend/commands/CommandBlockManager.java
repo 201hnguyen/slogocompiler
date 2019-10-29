@@ -149,50 +149,15 @@ public class CommandBlockManager {
         return returnVal;
     }
 
-//    private void runCommandForFirstTurtle(String command) throws ClassNotFoundException {
-//        int firstTurtleID;
-//        if (myActiveTurtles.size()>0) {
-//            firstTurtleID = myActiveTurtles.get(0);
-//        } else {
-//            firstTurtleID = 1;
-//        }
-//        CommandTree testCommandtree = new CommandTree(myTurtleHistory);
-//        testCommandtree.setTurtleID(firstTurtleID);
-//        testCommandtree.addToCommandTree(command);
-//        while (!testCommandtree.onlyNumberLeft()) {
-//            command = myScanner.next();
-//            command = checkAndInputUserVariable(command, myAccessibleVariables);
-//            testCommandtree.addToCommandTree(command);
-//        }
-//    }
-//
-//    private double runCommandForOtherTurtles() throws ClassNotFoundException {
-//        double returnVal = 0;
-//        for (int i=0; i<myActiveTurtles.size(); i++) {
-//            StringBuilder builder = new StringBuilder();
-//            for (String c : commandsToRerun) {
-//                builder.append(c);
-//            }
-//            String s = builder.toString();
-//            System.out.println("This is what the turtle executes: " + "for turtle # " + myActiveTurtles.get(i) + " executing " + s);
-//
-//            CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
-//            repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
-//            for (String commandToRerun : commandsToRerun) {
-//                repeatCommandTree.addToCommandTree(commandToRerun);
-//            }
-//
-//            if (i == myActiveTurtles.size() - 1 && repeatCommandTree.onlyNumberLeft()) {
-//                returnVal = repeatCommandTree.getLastDouble();
-//            }
-//        }
-//        return returnVal;
-//    }
-
     private List<Object> prepareUserDefinedFunction(String command) {
         List<Object> commandArguments = new ArrayList<>();
         List<Double> numericalArgumentForMethod = new ArrayList<>();
-        int parametersNeeded = ((Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0)).size();
+        Map<String, Double> parameters = (Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0);
+        if (parameters.size() == 1 && parameters.keySet().contains("")) {
+            parameters.remove("");
+        }
+        int parametersNeeded = parameters.size();
+        System.out.println(parameters.size() +  " exists");
         System.out.println("test parameters needed: " + parametersNeeded);
 
         for (int i=0; i<parametersNeeded; i++) {
@@ -224,6 +189,9 @@ public class CommandBlockManager {
                     return variableMap.get(command).toString();
                 }
             }
+            Map<String, Double> mostLocalMap = accessibleVariables.get(accessibleVariables.size()-1);
+            mostLocalMap.put(command, 0.0);
+            return mostLocalMap.get(command).toString();
         }
         return command;
     }
@@ -248,16 +216,17 @@ public class CommandBlockManager {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
         int endSignalersNeeded = 1;
-        nextWord = checkAndInputUserVariable(nextWord, myAccessibleVariables);
-        while (endSignalersNeeded != 0) {
-            builder.append(nextWord + " ");
-            if (myScanner.hasNext()) {
-                nextWord = myScanner.next();
-                if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
-                    endSignalersNeeded++;
-                } else if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL) ||
-                        endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
-                    endSignalersNeeded--;
+        if (! nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
+            while (endSignalersNeeded != 0) {
+                builder.append(nextWord + " ");
+                if (myScanner.hasNext()) {
+                    nextWord = myScanner.next();
+                    if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
+                        endSignalersNeeded++;
+                    } else if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL) ||
+                            endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
+                        endSignalersNeeded--;
+                    }
                 }
             }
         }
