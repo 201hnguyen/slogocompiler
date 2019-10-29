@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import slogo.frontend.ErrorShow;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.DropDownController;
 import java.util.ResourceBundle;
@@ -19,10 +20,11 @@ public class DropDownCreator extends HBox implements ChangeableNode{
     private static final String PATH = "resources.frontend.dropdown.";
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String DROP_DOWN_NAMES = "resources.frontend.changingfeature.DropDownNames";
+    private static final String DEFAULT_LANGUAGE = "English";
 
     private ResourceBundle resourceBundle;
     private DropDownController myController;
-    private String language = "English";
+    private String language = DEFAULT_LANGUAGE;
 
     public DropDownCreator(DisplayScreen displayScreen) {
         resourceBundle = ResourceBundle.getBundle(DROPDOWN_RESOURCE);
@@ -68,6 +70,8 @@ public class DropDownCreator extends HBox implements ChangeableNode{
             Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
             m.invoke(myController, comboBoxId, key);
         } catch (Exception e) {
+            ErrorShow errorShow = new ErrorShow(e, comboBoxId + " dropdown not set well.");
+            errorShow.show();
         }
     }
 

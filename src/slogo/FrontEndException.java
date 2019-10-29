@@ -1,10 +1,10 @@
 package slogo;
 
-public class FrontEndException extends RuntimeException{
+public class FrontEndException extends Exception {
     private String message;
     private Throwable ex;
 
-    public FrontEndException(Throwable ex, String message) {
+    public FrontEndException(Exception ex, String message) {
         this.message = message;
         this.ex = ex;
     }

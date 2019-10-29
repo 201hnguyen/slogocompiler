@@ -4,10 +4,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import slogo.FrontEndException;
+import slogo.frontend.ErrorShow;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -62,13 +64,14 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         }
     }
 
-    private void callAction(String key) throws FrontEndException {
+    private void callAction(String key) {
+        String methodName = resourceBundle.getString(key).split(",")[0];
         try {
-            String methodName = resourceBundle.getString(key).split(",")[0];
             Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
             m.invoke(myButtonController, key);
         } catch (Exception e) {
-            throw new FrontEndException(e, getContentOfButton(key) + " button not recognized");
+            ErrorShow errorShow = new ErrorShow(e, e.getMessage());
+            errorShow.show();
         }
     }
 

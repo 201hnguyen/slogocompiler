@@ -3,7 +3,11 @@ package slogo.frontend;
 import slogo.frontend.creater.ChangeableNode;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.HashMap;
 
 public class UIManager {
 
@@ -27,11 +31,10 @@ public class UIManager {
         if(changedValues.size() == 0) {
             return;
         }
-        for(String key : changedValues.keySet()) {
-            System.out.println(key + ", " + changedValues.get(key));
+        for(Map.Entry<String, String> entry : changedValues.entrySet()) {
             try {
-                Method m = myUIController.getClass().getDeclaredMethod(resourceBundle.getString(key), String.class);
-                m.invoke(myUIController, changedValues.get(key));
+                Method m = myUIController.getClass().getDeclaredMethod(resourceBundle.getString(entry.getKey()), String.class);
+                m.invoke(myUIController, entry.getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
