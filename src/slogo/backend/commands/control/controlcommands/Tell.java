@@ -22,9 +22,9 @@ public class Tell implements ControlInterface {
 
     protected List<Integer> setActivatedTurtles(TurtleHistory turtleHistory, List<Map<String,Double>> accessibleVariables, String turtlesToActivateArgument) {
         List<Integer> turtlesToActivate = new ArrayList<>();
-        CommandTree commandTree = new CommandTree(turtleHistory);
         PeekableScanner turtlesScanner = new PeekableScanner(turtlesToActivateArgument);
         while (turtlesScanner.hasNext()) {
+            CommandTree commandTree = new CommandTree(turtleHistory);
             while (!commandTree.onlyNumberLeft()) {
                 String turtleArgument = turtlesScanner.next();
                 turtleArgument = CommandBlockManager.checkAndInputUserVariable(turtleArgument, accessibleVariables);
