@@ -53,6 +53,20 @@ public class ColorPalette extends VBox implements ChangeableNode{
         setLayoutX(PALETTE_X);
         System.out.println(checkBoxes().getChildren().size());
     }
+
+    @Override
+    public Map<String, String> getChangedValues() {
+        return colorPaletteController.getChangedValues();
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        this.language = language;
+        /**
+         * TODO: update language
+         */
+    }
+
     private HBox checkBoxes() {
         HBox checkBoxes = new HBox();
         addColorPalettes(checkBoxes);
@@ -82,18 +96,5 @@ public class ColorPalette extends VBox implements ChangeableNode{
                 }
             }
         }
-    }
-
-    @Override
-    public Map<String, String> getChangedValues() {
-        return colorPaletteController.getChangedValues();
-    }
-
-    @Override
-    public void setLanguage(String language) {
-        this.language = language;
-        /**
-         * TODO: update language
-         */
     }
 }

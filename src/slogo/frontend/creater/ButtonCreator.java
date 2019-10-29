@@ -19,10 +19,11 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String BUTTON_NAMES = "resources.frontend.changingfeature.ButtonNames";
+    private static final String INITIAL_LANGUAGE = "English";
 
     private NodeController myButtonController;
     private ResourceBundle resourceBundle;
-    private String language = "English";
+    private String language = INITIAL_LANGUAGE;
     private ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
     private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
 
