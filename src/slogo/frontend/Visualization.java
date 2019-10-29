@@ -2,9 +2,14 @@ package slogo.frontend;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
+import slogo.frontend.controller.ButtonController;
+import slogo.frontend.controller.ColorPaletteController;
+import slogo.frontend.controller.DropDownController;
+import slogo.frontend.controller.TabController;
 import slogo.frontend.creater.ButtonCreator;
 import slogo.frontend.creater.ColorPalette;
 import slogo.frontend.creater.DropDownCreator;
@@ -21,25 +26,18 @@ public class Visualization {
     private static final String TITLE = "SLOGO IDLE";
 
     private Scene scene;
-    private AnchorPane root;
+    private Pane root;
     private Stage stage;
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
-    private TabMaker tabPane = new TabMaker();
-    private ButtonCreator buttonCreator = new ButtonCreator(displayScreen);
-    private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
-    private ColorPalette colorPalette = new ColorPalette(displayScreen);
     private UIManager myUIManager;
     private int index = 0;
+    private TabMaker tabPane = new TabMaker(new TabController(displayScreen));
     private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {
         this.stage = stage;
-        root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator);
-        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane));
-        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        startStage();
+        initialize();
     }
 
     public String getLanguage() {return myUIManager.getLanguage();}
@@ -77,11 +75,22 @@ public class Visualization {
     public String getInput() {
         String command = myUIManager.getInput();
         if(!command.equals("")) {
-            Text input = new Text(command);
-            input.setOnMouseClicked(event -> commandLine.getCommand().setText(input.getText()));
-            tabPane.addHistory(input);
+//            Text input = new Text(command);
+//            input.setOnMouseClicked(event -> commandLine.getCommand().setText(input.getText()));
+            tabPane.addHistory(command);
         }
         return command;
     }
 
+    private void initialize() {
+        root = new AnchorPane();
+        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(displayScreen));
+        DropDownCreator dropDownCreator = new DropDownCreator(new DropDownController(displayScreen));
+        ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));
+
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator);
+        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane));
+        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+        startStage();
+    }
 }

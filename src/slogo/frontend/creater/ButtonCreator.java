@@ -30,9 +30,9 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
 
 
-    public ButtonCreator(DisplayScreen displayScreen) {
+    public ButtonCreator(NodeController nodeController) {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
-        myButtonController = new ButtonController("English", displayScreen);
+        myButtonController = nodeController;
         GridPane buttons = new GridPane();
         buttons.setPadding(new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING));
         createButtons();

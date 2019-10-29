@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ButtonController implements NodeController {
+
+    private static final String INITIAL_LANGUAGE = "English";
     private String language;
     private Map<String, String> changedValues = new HashMap<>();
     private DisplayScreen displayScreen;
 
-    public ButtonController(String language, DisplayScreen displayScreen) {
+    public ButtonController(DisplayScreen displayScreen) {
+        language = INITIAL_LANGUAGE;
         this.displayScreen = displayScreen;
-        this.language = language;
     }
 
     public void startButtonAction(String key) {

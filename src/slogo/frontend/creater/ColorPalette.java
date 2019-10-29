@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.controller.NodeController;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ColorPaletteController;
 
@@ -30,21 +31,25 @@ public class ColorPalette extends VBox implements ChangeableNode{
     private static final double SPACING = 10;
     private static final String RESOURCE_PATH = "resources.frontend.ColorPalette";
     private static final String INITIAL_LANGUAGE = "English";
+    private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
+    private static final String PALETTE_NAMES = "resources.frontend.changingfeature.ColorPaletteNames";
 
     private ColorPicker colorPicker;
     private Circle colorCircle;
-    private ColorPaletteController colorPaletteController;
+    private NodeController colorPaletteController;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private Map<CheckBox, String> checkBoxMap = new HashMap<>();
     private String language = INITIAL_LANGUAGE;
+    private HBox myCheckBox;
 
-    public ColorPalette(DisplayScreen displayScreen) {
-        colorPaletteController = new ColorPaletteController(displayScreen);
+    public ColorPalette(NodeController nodeController) {
+        colorPaletteController = nodeController;
         colorPicker = new ColorPicker();
         colorPicker.setMaxSize(PICKER_WIDTH,PICKER_HEIGHT);
         colorCircle = new Circle(CIRCLE_RADIUS);
         colorCircle.setFill(colorPicker.getValue());
-        getChildren().addAll(colorCircle, colorPicker, checkBoxes());
+        createCheckBox();
+        getChildren().addAll(colorCircle, colorPicker, myCheckBox);
         colorPicker.setOnAction(event -> {
             colorCircle.setFill(colorPicker.getValue());
             callMethods(colorPicker.getValue());
@@ -53,7 +58,6 @@ public class ColorPalette extends VBox implements ChangeableNode{
         setLayoutY(PALETTE_Y);
         setSpacing(SPACING);
         setLayoutX(PALETTE_X);
-        System.out.println(checkBoxes().getChildren().size());
     }
 
     @Override
@@ -64,25 +68,23 @@ public class ColorPalette extends VBox implements ChangeableNode{
     @Override
     public void setLanguage(String language) {
         this.language = language;
-        /**
-         * TODO: update language
-         */
+        myCheckBox.getChildren().clear();
+        addCheckBoxes();
     }
 
-    private HBox checkBoxes() {
-        HBox checkBoxes = new HBox();
-        addColorPalettes(checkBoxes);
-        checkBoxes.setLayoutY(CHECK_Y);
-        checkBoxes.setLayoutX(CHECK_X);
-        checkBoxes.setSpacing(CHECK_SPACING);
-        return checkBoxes;
+    private void createCheckBox() {
+        myCheckBox = new HBox();
+        addCheckBoxes();
+        myCheckBox.setLayoutY(CHECK_Y);
+        myCheckBox.setLayoutX(CHECK_X);
+        myCheckBox.setSpacing(CHECK_SPACING);
     }
 
-    private void addColorPalettes(HBox hbox) {
+    private void addCheckBoxes() {
         for(String key : Collections.list(resourceBundle.getKeys())) {
-            CheckBox checkBox = new CheckBox(key);
+            CheckBox checkBox = new CheckBox(getContentOfPalette(key));
             checkBoxMap.put(checkBox, key);
-            hbox.getChildren().add(checkBox);
+            myCheckBox.getChildren().add(checkBox);
         }
     }
 
@@ -99,5 +101,12 @@ public class ColorPalette extends VBox implements ChangeableNode{
                 }
             }
         }
+    }
+
+    private String getContentOfPalette(String key) {
+        ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
+        int index = Integer.parseInt(languageBundle.getString(language));
+        ResourceBundle dropDownBundle = ResourceBundle.getBundle(PALETTE_NAMES);
+        return dropDownBundle.getString(key).split(",")[index];
     }
 }
