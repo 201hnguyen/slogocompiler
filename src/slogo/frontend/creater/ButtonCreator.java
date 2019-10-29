@@ -3,6 +3,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import slogo.FrontEndException;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
@@ -37,10 +38,6 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         setLayoutX(X_LAYOUT);
     }
 
-    public void setButtonCreator(NodeController nodeController) {
-        myButtonController = nodeController;
-    }
-
     public Map<String, String> getChangedValues() {
         Map<String, String> map = new HashMap<>();
         map.putAll(myButtonController.getChangedValues());
@@ -63,15 +60,13 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         }
     }
 
-    private void callAction(String key) {
+    private void callAction(String key) throws FrontEndException {
         try {
             String methodName = resourceBundle.getString(key).split(",")[0];
             Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
             m.invoke(myButtonController, key);
         } catch (Exception e) {
-            /**
-             * TODO: action for exception
-             */
+            throw new FrontEndException(e, getContentOfButton(key) + " button not recognized");
         }
     }
 
