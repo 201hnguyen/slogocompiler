@@ -30,6 +30,8 @@ public class UIController {
         this.language = language;
     }
 
+    public void historyAction(String content) { commandLine.getCommand().setText(content);}
+
     public String getInput() {
         String command = commandLine.getCommand().getText();
         if(startButtonClicked && !command.equals("")) {

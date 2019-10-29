@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.controller.NodeController;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ColorPaletteController;
 
@@ -35,14 +36,14 @@ public class ColorPalette extends VBox implements ChangeableNode{
 
     private ColorPicker colorPicker;
     private Circle colorCircle;
-    private ColorPaletteController colorPaletteController;
+    private NodeController colorPaletteController;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private Map<CheckBox, String> checkBoxMap = new HashMap<>();
     private String language = INITIAL_LANGUAGE;
     private HBox myCheckBox;
 
-    public ColorPalette(DisplayScreen displayScreen) {
-        colorPaletteController = new ColorPaletteController(displayScreen);
+    public ColorPalette(NodeController nodeController) {
+        colorPaletteController = nodeController;
         colorPicker = new ColorPicker();
         colorPicker.setMaxSize(PICKER_WIDTH,PICKER_HEIGHT);
         colorCircle = new Circle(CIRCLE_RADIUS);

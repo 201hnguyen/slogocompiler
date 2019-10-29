@@ -32,6 +32,9 @@ public class UIManager {
             return;
         }
         for(Map.Entry<String, String> entry : changedValues.entrySet()) {
+            if(entry.getKey().equals("History")) {
+                System.out.println("FOUND FOUND");
+            }
             try {
                 Method m = myUIController.getClass().getDeclaredMethod(resourceBundle.getString(entry.getKey()), String.class);
                 m.invoke(myUIController, entry.getValue());

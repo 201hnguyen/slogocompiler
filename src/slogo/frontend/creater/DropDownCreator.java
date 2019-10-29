@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.controller.NodeController;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.DropDownController;
 import java.util.ResourceBundle;
@@ -23,12 +24,12 @@ public class DropDownCreator extends HBox implements ChangeableNode{
     private static final String DEFAULT_LANGUAGE = "English";
 
     private ResourceBundle resourceBundle;
-    private DropDownController myController;
+    private NodeController myController;
     private String language = DEFAULT_LANGUAGE;
 
-    public DropDownCreator(DisplayScreen displayScreen) {
+    public DropDownCreator(NodeController nodeController) {
         resourceBundle = ResourceBundle.getBundle(DROPDOWN_RESOURCE);
-        myController = new DropDownController(displayScreen);
+        myController = nodeController;
         setPrefSize(DROP_WIDTH, DROP_HEIGHT);
         createDropDown();
         setSpacing(SPACING);
@@ -63,9 +64,7 @@ public class DropDownCreator extends HBox implements ChangeableNode{
     }
 
     private void callAction(String comboBoxId, String key) {
-        System.out.println(comboBoxId + ", " + key);
         String methodName = resourceBundle.getString(comboBoxId);
-        System.out.println(methodName);
         try {
             Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
             m.invoke(myController, comboBoxId, key);

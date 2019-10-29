@@ -21,7 +21,6 @@ public class DropDownController implements NodeController {
     }
 
     public void chooseImage(String key, String imageNum) {
-        System.out.println(key + "sdfsdfsdf");
         this.imageNum = Integer.parseInt(imageNum);
         displayScreen.setImage(this.imageNum);
     }
@@ -32,7 +31,6 @@ public class DropDownController implements NodeController {
     }
 
     public void chooseLanguage(String key, String language) {
-        System.out.println(language + " sdfsdf");
         changedValues.put(key, language);
     }
 

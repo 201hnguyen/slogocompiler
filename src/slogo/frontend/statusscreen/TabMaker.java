@@ -1,16 +1,13 @@
 package slogo.frontend.statusscreen;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import slogo.frontend.ErrorShow;
+import slogo.frontend.controller.NodeController;
 import slogo.frontend.creater.ChangeableNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.util.*;
 
 
 public class TabMaker extends VBox implements ChangeableNode {
@@ -22,17 +19,23 @@ public class TabMaker extends VBox implements ChangeableNode {
 
     private List<ScrollMaker> myScrolls = new ArrayList<>();
     private String language = "English";
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private NodeController myController;
+    private Map<String, Double> myVariables = new TreeMap<>();
 
-    public TabMaker() {
+    public TabMaker(NodeController nodeController) {
+        myController = nodeController;
         setLayoutX(LAYOUT_X);
         setLayoutY(LAYOUT_Y);
         createTabPane();
     }
 
-    public void addHistory(Text command) {
+    public void addHistory(String command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
-                scrollMaker.addText(command);
+                Text text = new Text(command);
+                text.setOnMouseClicked(e -> callAction(scrollMaker.getKey(), command));
+                scrollMaker.addText(text);
             }
         }
     }
@@ -43,18 +46,18 @@ public class TabMaker extends VBox implements ChangeableNode {
                 continue;
             }
             scrollMaker.clearAll();
-            if(variables.entrySet().isEmpty()) {
-                continue;
-            }
-            for (Map.Entry<String, Double> entry : variables.entrySet()) {
-                scrollMaker.addText(new Text(entry.getKey() + " = " + entry.getValue() + "\n"));
+            myVariables.putAll(variables);
+            for (Map.Entry<String, Double> entry : myVariables.entrySet()) {
+                Text text = new Text(entry.getKey() + " = " + entry.getValue() + "\n");
+                text.setOnMouseClicked(e -> callAction("Variables", text.getText()));
+                scrollMaker.addText(text);
             }
         }
     }
 
     @Override
     public Map<String, String> getChangedValues() {
-        return new HashMap<>();
+        return myController.getChangedValues();
     }
 
     @Override
@@ -65,9 +68,19 @@ public class TabMaker extends VBox implements ChangeableNode {
         }
     }
 
+    private void callAction(String key, String content) {
+        String methodName = resourceBundle.getString(key);
+        try {
+            Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
+            m.invoke(myController, key, content);
+        } catch (Exception e) {
+            ErrorShow errorShow = new ErrorShow(e, key + "  control not set well.");
+            errorShow.show();
+        }
+    }
+
     private void createTabPane() {
         getChildren().clear();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         for (String key : Collections.list(resourceBundle.getKeys())) {
             ScrollMaker myScroll = new ScrollMaker(key);
             getChildren().addAll(myScroll);
