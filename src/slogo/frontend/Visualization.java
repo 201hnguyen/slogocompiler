@@ -32,7 +32,7 @@ public class Visualization {
         this.stage = stage;
         root = new AnchorPane();
         root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator);
-        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator));
+        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }

@@ -1,5 +1,7 @@
 package slogo.frontend.creater;
 
+import slogo.FrontEndException;
+
 import java.util.Map;
 
 public interface ChangeableNode {

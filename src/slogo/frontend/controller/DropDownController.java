@@ -11,14 +11,12 @@ public class DropDownController implements NodeController {
     private static final String INITIAL_LANGUAGE = "English";
     private static final int INITIAL_IMAGE_NUM = 1;
 
-    private String language;
     private int imageNum;
     private DisplayScreen displayScreen;
     private Map<String, String> changedValues = new HashMap<>();
 
     public DropDownController(DisplayScreen displayScreen) {
         this.displayScreen = displayScreen;
-        language = INITIAL_LANGUAGE;
         imageNum = INITIAL_IMAGE_NUM;
     }
 
@@ -48,6 +46,6 @@ public class DropDownController implements NodeController {
 
     @Override
     public void setLanguage(String language) {
-
+        return;
     }
 }

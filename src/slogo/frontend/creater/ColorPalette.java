@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import slogo.frontend.ErrorShow;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ColorPaletteController;
 
@@ -28,13 +29,14 @@ public class ColorPalette extends VBox implements ChangeableNode{
     private static final double CHECK_SPACING = 10;
     private static final double SPACING = 10;
     private static final String RESOURCE_PATH = "resources.frontend.ColorPalette";
+    private static final String INITIAL_LANGUAGE = "English";
 
     private ColorPicker colorPicker;
     private Circle colorCircle;
     private ColorPaletteController colorPaletteController;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private Map<CheckBox, String> checkBoxMap = new HashMap<>();
-    private String language = "English";
+    private String language = INITIAL_LANGUAGE;
 
     public ColorPalette(DisplayScreen displayScreen) {
         colorPaletteController = new ColorPaletteController(displayScreen);
@@ -53,6 +55,20 @@ public class ColorPalette extends VBox implements ChangeableNode{
         setLayoutX(PALETTE_X);
         System.out.println(checkBoxes().getChildren().size());
     }
+
+    @Override
+    public Map<String, String> getChangedValues() {
+        return colorPaletteController.getChangedValues();
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        this.language = language;
+        /**
+         * TODO: update language
+         */
+    }
+
     private HBox checkBoxes() {
         HBox checkBoxes = new HBox();
         addColorPalettes(checkBoxes);
@@ -78,22 +94,10 @@ public class ColorPalette extends VBox implements ChangeableNode{
                     Method m = colorPaletteController.getClass().getDeclaredMethod(methodName, Color.class);
                     m.invoke(colorPaletteController, color);
                 } catch (Exception e) {
-
+                    ErrorShow errorShow = new ErrorShow(e, "ColorPicker Setting Wrong");
+                    errorShow.show();
                 }
             }
         }
-    }
-
-    @Override
-    public Map<String, String> getChangedValues() {
-        return colorPaletteController.getChangedValues();
-    }
-
-    @Override
-    public void setLanguage(String language) {
-        this.language = language;
-        /**
-         * TODO: update language
-         */
     }
 }

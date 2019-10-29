@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import slogo.frontend.ErrorShow;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -85,7 +86,9 @@ public class TableWindow {
             Method m = rowData.getClass().getDeclaredMethod(methodName);
             return m.invoke(rowData).toString();
         } catch (Exception e) {
-            return e.getMessage();
+            ErrorShow errorShow = new ErrorShow(e, str + " not fetched");
+            errorShow.show();
         }
+        return "";
     }
 }

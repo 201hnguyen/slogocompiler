@@ -3,10 +3,13 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import slogo.FrontEndException;
+import slogo.frontend.ErrorShow;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -18,10 +21,11 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE_PATH = "resources.frontend.ButtonResource";
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String BUTTON_NAMES = "resources.frontend.changingfeature.ButtonNames";
+    private static final String INITIAL_LANGUAGE = "English";
 
     private NodeController myButtonController;
     private ResourceBundle resourceBundle;
-    private String language = "English";
+    private String language = INITIAL_LANGUAGE;
     private ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
     private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
 
@@ -35,10 +39,6 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         setSpacing(SPACING);
         setLayoutY(Y_LAYOUT);
         setLayoutX(X_LAYOUT);
-    }
-
-    public void setButtonCreator(NodeController nodeController) {
-        myButtonController = nodeController;
     }
 
     public Map<String, String> getChangedValues() {
@@ -65,14 +65,13 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     }
 
     private void callAction(String key) {
+        String methodName = resourceBundle.getString(key).split(",")[0];
         try {
-            String methodName = resourceBundle.getString(key).split(",")[0];
             Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
             m.invoke(myButtonController, key);
         } catch (Exception e) {
-            /**
-             * TODO: action for exception
-             */
+            ErrorShow errorShow = new ErrorShow(e, e.getMessage());
+            errorShow.show();
         }
     }
 

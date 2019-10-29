@@ -1,8 +1,8 @@
-package slogo.frontend;
-
-public class FrontEndManager {
-
-
-
-
-}
+//package slogo.frontend;
+//
+//public class FrontEndManager {
+//
+//
+//
+//
+//}
