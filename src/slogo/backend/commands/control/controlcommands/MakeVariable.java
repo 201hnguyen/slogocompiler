@@ -14,7 +14,6 @@ public class MakeVariable implements ControlInterface {
     @Override
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
         PeekableScanner scanner = (PeekableScanner) parameters.get(0);
-        Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size() - 1);
         CommandTree commandTree = new CommandTree(turtleHistory);
         double returnValue = 0.0;
 
@@ -37,6 +36,7 @@ public class MakeVariable implements ControlInterface {
             }
         }
 
+        Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size() - 1);
         localVariables.put(variable, returnValue);
         return returnValue;
     }

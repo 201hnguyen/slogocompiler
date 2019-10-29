@@ -2,7 +2,6 @@ package slogo.backend.commands.control.controlcommands;
 
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
-import slogo.backend.exceptions.BackendException;
 import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
