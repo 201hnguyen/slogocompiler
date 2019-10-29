@@ -124,7 +124,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private double rerunMovementCommands(String command) throws ClassNotFoundException {
+    private double rerunMovementCommands(String command) {
         int index = myScanner.getIndex() - 1;
         double returnVal = 0;
         myActiveTurtles.clear();
@@ -135,17 +135,19 @@ public class CommandBlockManager {
 
             CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
             repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
-            System.out.println(command  + "sdfsdf");
 
             while (!repeatCommandTree.onlyNumberLeft() && myScanner.hasNext()) {
                 command = myScanner.next();
-                System.out.println(command + "sdfsdfsdf123");
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
-                System.out.println(command + "sdfsdfsdf");
-                repeatCommandTree.addToCommandTree(command);
+                try {
+                    repeatCommandTree.addToCommandTree(command);
+                } catch (ClassNotFoundException e) {
+                    System.out.println(command + "class not found");
+                }
             }
             returnVal = repeatCommandTree.getLastDouble();
         }
+        myTurtleHistory.toNextTurn(myLocalUserDefinedVariables);
         return returnVal;
     }
 
@@ -194,6 +196,12 @@ public class CommandBlockManager {
             return mostLocalMap.get(command).toString();
         }
         return command;
+    }
+
+    public Map<String, Double> getVariables() {
+        Map<String, Double> variables = new TreeMap<>();
+        variables.putAll(myLocalUserDefinedVariables);
+        return variables;
     }
 
     private List<Object> prepareBlockCommand() {

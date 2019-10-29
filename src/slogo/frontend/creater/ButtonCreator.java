@@ -3,15 +3,15 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import slogo.FrontEndException;
 import slogo.frontend.ErrorShow;
 import slogo.frontend.turtlescreen.DisplayScreen;
 import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;

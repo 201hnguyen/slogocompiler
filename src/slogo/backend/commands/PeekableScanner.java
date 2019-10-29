@@ -59,7 +59,6 @@ import java.util.*;
 
 public class PeekableScanner {
     private int index;
-    private int memoryIndex;
     private List<String> myWords = new ArrayList<>();
 
     public PeekableScanner(String source) {

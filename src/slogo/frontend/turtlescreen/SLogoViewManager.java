@@ -17,7 +17,7 @@ public class SLogoViewManager {
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleView> turtleViewList = new ArrayList<>();
-    private List<TurtleMovement> turtleMovements = new ArrayList<>();
+    private List<List<TurtleMovement>> turtleMovements = new ArrayList<>();
     private ImageManager imageManager;
     private ColorManager colorManager = new ColorManager();
     private ColorAndPenStatus myColorAndPenStatus;
@@ -26,6 +26,8 @@ public class SLogoViewManager {
     private double speed = INITIAL_SPEED;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
+    private int index = 0;
+    private boolean turtleMoving = false;
 
 
     public SLogoViewManager(DisplayScreen displayScreen) {
@@ -40,21 +42,25 @@ public class SLogoViewManager {
 
 
     protected void setHistory(TurtleHistory turtleHistory) {
-        turtleMovements = turtleHistory.getMyTurtleHistory();
-        for(TurtleMovement turtleMovement : turtleMovements) {
-            getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
-        }
+        turtleMovements.clear();
+        index = 0;
+        turtleMovements.addAll(turtleHistory.getMyTurtleHistory());
+        System.out.println(turtleMovements.size() + " is the size");
+        allocateTurtleMovements();
     }
 
     protected void update() {
+        int movingNum = 0;
         for(TurtleView turtleView : turtleViewList) {
-            if(turtleView.isMoving()) {
+            if (turtleView.isMoving()) {
+                movingNum++;
+                turtleMoving=true;
                 Line line = turtleView.updateAndGetLine();
                 updateDrawing(turtleView);
-                if(turtleView.getPenStatus().isPenSizeChanged()) {
+                if (turtleView.getPenStatus().isPenSizeChanged()) {
                     myColorAndPenStatus.setPenSize(turtleView, turtleView.getPenStatus().getPenSize(), false);
                 }
-                if(line != null) {
+                if (line != null) {
                     line.setStroke(myColorAndPenStatus.getLineColor(turtleView));
                     line.setStrokeWidth(myColorAndPenStatus.getPenSize(turtleView));
                     turtlePane.getChildren().add(line);
@@ -63,10 +69,14 @@ public class SLogoViewManager {
                 }
             }
         }
+        if(movingNum == 0 && index < turtleMovements.size()-1) {
+            index++;
+            turtleMoving = false;
+            allocateTurtleMovements();
+        }
     }
 
     protected void setImage(int imageNum) {
-        System.out.println(imageNum + "selected");
         if(imageManager.getImage(imageNum)!=null) {
             image = imageManager.getImage(imageNum);
         }
@@ -98,9 +108,16 @@ public class SLogoViewManager {
 
     }
 
+    protected boolean finishedMoving() {
+        return index >= turtleMovements.size()-1;
+    }
+
+    public int getCurrentInstructionIndex() {
+        return index;
+    }
+
     private void updateDrawing(TurtleView turtleView) {
         DrawStatus drawStatus = turtleView.getDrawStatus();
-        System.out.println(drawStatus.getImageNum());
         if(drawStatus.isVisibleChanged()) {
             turtleView.setVisible(drawStatus.isTurtleVisible());
         }
@@ -150,4 +167,12 @@ public class SLogoViewManager {
         turtleView.setDrawStatus(drawStatus);
     }
 
+    private void allocateTurtleMovements() {
+        if(index >= turtleMovements.size()-1) {
+            return;
+        }
+        for(TurtleMovement turtleMovement : turtleMovements.get(index)) {
+            getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
+        }
+    }
 }

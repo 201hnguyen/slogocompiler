@@ -13,27 +13,28 @@ public class BackendManager {
 
     private CommandBlockManager commandBlockManager;
     //private ParserForTest myCommandParser;
-    private Parser myCommandParser;
+    private ParserForTest myCommandParser;
     private TurtleHistory turtleHistory;
 
 
-    public BackendManager(String input, String language, TurtleHistory turtleHistory) {
-        setLanguage(input, language);
+    public BackendManager(String language, TurtleHistory turtleHistory) {
+        setLanguage(language);
         this.turtleHistory = turtleHistory;
     }
 
-    public void setLanguage(String input, String language) {
+    public void setLanguage(String language) {
         System.out.println(language);
-        //myCommandParser = new ParserForTest(language);
-        myCommandParser = new Parser(input, language);
+        myCommandParser = new ParserForTest(language);
+        //myCommandParser = new Parser(input, language);
     }
 
     public void setCommand(String commands) {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
-        String translatedCommand = myCommandParser.translateCommands();
+        String translatedCommand = myCommandParser.translateMyCommands(commands);
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
         commandBlockManager.executeInstructionBlock();
+        turtleHistory.toNextTurn(commandBlockManager.getVariables());
     }
 
     public Map<String, Double> getMyVariables() {

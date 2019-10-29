@@ -36,7 +36,8 @@ public class UIManager {
                 Method m = myUIController.getClass().getDeclaredMethod(resourceBundle.getString(entry.getKey()), String.class);
                 m.invoke(myUIController, entry.getValue());
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorShow errorShow = new ErrorShow(e, resourceBundle.getString(entry.getKey()) + " method not found");
+                errorShow.show();
             }
         }
         changedValues.clear();
