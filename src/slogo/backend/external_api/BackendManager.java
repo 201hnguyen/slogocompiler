@@ -33,6 +33,9 @@ public class BackendManager {
         String translatedCommand = myCommandParser.translateMyCommands(commands);
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
+        /**
+         * TODO: Fetch functions and variables from frontend and use the collections.
+         */
         commandBlockManager.executeInstructionBlock();
         turtleHistory.toNextTurn(commandBlockManager.getVariables());
     }

@@ -9,8 +9,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
 import slogo.frontend.controller.NodeController;
-import slogo.frontend.turtlescreen.DisplayScreen;
-import slogo.frontend.controller.DropDownController;
 import java.util.ResourceBundle;
 
 public class DropDownCreator extends HBox implements ChangeableNode{

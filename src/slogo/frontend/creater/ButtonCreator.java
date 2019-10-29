@@ -4,8 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
-import slogo.frontend.turtlescreen.DisplayScreen;
-import slogo.frontend.controller.ButtonController;
 import slogo.frontend.controller.NodeController;
 import java.lang.reflect.Method;
 import java.util.Collections;

@@ -3,8 +3,6 @@ package slogo.frontend.turtlescreen;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import slogo.util.DrawStatus;
 import slogo.util.Movement;
@@ -12,9 +10,7 @@ import slogo.util.PenStatus;
 import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class TurtleView extends ImageView {
