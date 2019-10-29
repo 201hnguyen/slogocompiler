@@ -8,6 +8,7 @@ import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.creater.ButtonCreator;
 import slogo.frontend.creater.ColorPalette;
 import slogo.frontend.creater.DropDownCreator;
+import slogo.frontend.statusscreen.TabMaker;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
 import java.util.ArrayList;
@@ -51,8 +52,12 @@ public class Visualization {
         myUIManager.update();
         displayScreen.update();
         if(displayScreen.getCurrentIndex() != index) {
-            tabPane.setVariables(myVariables.get(index));
-            index++;
+            System.out.println(index + ", " + displayScreen.getCurrentIndex());
+            for(Map.Entry<String, Double> entry : myVariables.get(index).entrySet()) {
+                System.out.println(entry.getKey() + ", " + entry.getValue());
+            }
+            //tabPane.setVariables(myVariables.get(index));
+            index = displayScreen.getCurrentIndex();
         }
     }
 

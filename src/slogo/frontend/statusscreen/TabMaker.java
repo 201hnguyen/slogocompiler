@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.statusscreen;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -16,12 +16,11 @@ import java.util.Map;
 public class TabMaker extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
     private static final double LAYOUT_Y = 60;
-    private List<String> myTabs = new ArrayList<>();
     private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String SCROLL_NAME_PATH = "resources.frontend.changingfeature.ScrollPaneNames";
 
-    private VBox inputHolder = new VBox();
+    private List<ScrollMaker> myScrolls = new ArrayList<>();
     private String language = "English";
 
     public TabMaker() {
@@ -34,34 +33,29 @@ public class TabMaker extends VBox implements ChangeableNode {
         getChildren().clear();
         ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         for (String key : Collections.list(resourceBundle.getKeys())) {
-            VBox vBox = new VBox();
-            Label label = new Label(getScrollPaneName(key));
-            ScrollMaker scrollMaker = new ScrollMaker(key);
-            scrollMaker.setContent(label);
-            scrollMaker.setId(key);
-            myTabs.add(key);
-            scrollMaker.setContent(inputHolder);
-            vBox.getChildren().addAll(label,scrollMaker);
-            getChildren().addAll(vBox);
+            ScrollMaker myScroll = new ScrollMaker(key);
+            getChildren().addAll(myScroll);
+            myScroll.setLabelText(getScrollPaneName(key));
+            myScrolls.add(myScroll);
         }
     }
 
     public void addHistory(Text command) {
-        for (String tab : myTabs) {
-            if (tab.equals("History")) {
-                inputHolder.getChildren().add(command);
+        for (ScrollMaker scrollMaker : myScrolls) {
+            if (scrollMaker.getKey().equals("History")) {
+                scrollMaker.addText(command);
             }
         }
     }
 
     public void setVariables(Map<String, Double> variables) {
-        for(String tab : myTabs) {
-            if(!tab.equals("Variables")) {
+        for(ScrollMaker scrollMaker : myScrolls) {
+            if(!scrollMaker.getKey().equals("Variables")) {
                 continue;
             }
+            scrollMaker.clearAll();
             for(Map.Entry<String, Double> entry : variables.entrySet()) {
-                inputHolder.getChildren().clear();
-                inputHolder.getChildren().add(new Text(entry.getKey() + "\n" + entry.getValue()));
+                scrollMaker.addText(new Text(entry.getKey() + " = " + entry.getValue() + "\n"));
             }
         }
     }
@@ -81,6 +75,8 @@ public class TabMaker extends VBox implements ChangeableNode {
     @Override
     public void setLanguage(String language) {
         this.language = language;
-        createTabPane();
+        for(ScrollMaker scroll : myScrolls) {
+            scroll.setLabelText(getScrollPaneName(scroll.getKey()));
+        }
     }
 }

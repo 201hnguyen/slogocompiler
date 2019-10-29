@@ -69,7 +69,7 @@ public class SLogoViewManager {
                 }
             }
         }
-        if(turtleMoving && movingNum == 0 && index < turtleMovements.size()-1) {
+        if(movingNum == 0 && index < turtleMovements.size()-1) {
             index++;
             turtleMoving = false;
             allocateTurtleMovements();
@@ -118,7 +118,6 @@ public class SLogoViewManager {
 
     private void updateDrawing(TurtleView turtleView) {
         DrawStatus drawStatus = turtleView.getDrawStatus();
-        System.out.println(drawStatus.getImageNum());
         if(drawStatus.isVisibleChanged()) {
             turtleView.setVisible(drawStatus.isTurtleVisible());
         }
