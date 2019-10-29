@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.statusscreen;
 
 public class ChangedVariable {
     private String changedVariable = "";
