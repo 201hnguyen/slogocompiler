@@ -17,13 +17,10 @@ public class Parser {
     private static String myFullInput = "";
     private static ResourceBundle myResource;
     private static List<String> mySplitInput = new ArrayList<>(); //used in splitInput()
-    private static String myLanguagePath = ""; //where language resource files are located
-    private static String myExampleFilePath = ""; //where
     private static String myError = "";
     private static List<Map.Entry<String, Pattern>> myLanguageEntries = new ArrayList<>(); // A list of map entries (command : regular expression pattern from Syntax.properties)
     private static List<Map.Entry<String, Pattern>> mySyntaxEntries = new ArrayList<>(); //
-    private static ResourceBundle myLanguageResource; //used in addPattern()
-    private static ResourceBundle myExampleFileResource; //used in constructor 2
+
     private static String myCommandsTranslated = "";
 
     //constructor 1: for use with command-line user-input
@@ -82,17 +79,17 @@ public class Parser {
 
     //called in translateCommands
     private void addToMySplitInput(String s) {
-        System.out.println("entered addToMySplitInput" + " " + s); //testing
+        //System.out.println("entered addToMySplitInput" + " " + s); //testing
         String trimmed = s.trim();
         if(trimmed.equals("")) {
             return;
         }
         String[] arr = trimmed.split(WHITESPACE);
         for(String command : arr) {
-            if(command.equals("#")) {
+            if(command.equals(COMMENT)) {
                 return;
             }
-            System.out.println(command); //testing
+            //System.out.println(command); //testing
             mySplitInput.add(command);
         }
     }

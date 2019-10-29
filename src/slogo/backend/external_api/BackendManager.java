@@ -1,6 +1,7 @@
 package slogo.backend.external_api;
 
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.parser.Parser;
 import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 
@@ -10,27 +11,26 @@ import java.util.Map;
 
 public class BackendManager {
 
-    //for testing only
-    private static final String PRETEND_INPUT = "fd 50";
-
     private CommandBlockManager commandBlockManager;
     //private ParserForTest myCommandParser;
-    private ParserForTest myCommandParser;
+    private Parser myCommandParser;
     private TurtleHistory turtleHistory;
 
 
-    public BackendManager(String language, TurtleHistory turtleHistory) {
-        setLanguage(language);
+    public BackendManager(String input, String language, TurtleHistory turtleHistory) {
+        setLanguage(input, language);
         this.turtleHistory = turtleHistory;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(String input, String language) {
         System.out.println(language);
-        myCommandParser = new ParserForTest(language);
+        //myCommandParser = new ParserForTest(language);
+        myCommandParser = new Parser(input, language);
     }
 
     public void setCommand(String commands) {
-        String translatedCommand = myCommandParser.translateMyCommands(commands);
+        //String translatedCommand = myCommandParser.translateMyCommands(commands);
+        String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
         commandBlockManager.executeInstructionBlock();
