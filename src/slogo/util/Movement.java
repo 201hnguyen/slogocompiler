@@ -1,4 +1,4 @@
-package slogo.backend.utils;
+package slogo.util;
 
 import javafx.geometry.Point2D;
 

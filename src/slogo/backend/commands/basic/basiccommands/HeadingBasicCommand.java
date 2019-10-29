@@ -8,14 +8,8 @@ import java.util.List;
 
 public class HeadingBasicCommand implements BasicCommandInterface {
 
-    private TurtleHistory turtleHistory;
-
-    public HeadingBasicCommand(TurtleHistory turtleHistory) {
-        this.turtleHistory = turtleHistory;
-    }
-
     @Override
-    public double getReturnValue(List<Double> parameters, int turtleID) {
+    public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
         TurtleModel turtle = turtleHistory.getTurtleModel(turtleID);
         return turtle.getOrientation();
     }

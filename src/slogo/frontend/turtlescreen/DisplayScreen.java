@@ -1,9 +1,8 @@
-package slogo.frontend;
+package slogo.frontend.turtlescreen;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import slogo.backend.utils.TurtleHistory;
 
 
@@ -34,7 +33,19 @@ public class DisplayScreen extends Pane {
         myViewManager.setHistory(turtleHistory);
     }
 
-    public void setLineColor(Paint color) {
+    public void setLineColor(Color color) {
         myViewManager.setLineColor(color);
+    }
+
+    public void setImage(int imageNum) {
+        myViewManager.setImage(imageNum);
+    }
+
+    public void setPenSize(int penSize) {
+        myViewManager.setPenSize(penSize);
+    }
+
+    public void setAnimation(String animationString) {
+
     }
 }

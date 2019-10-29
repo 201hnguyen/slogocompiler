@@ -1,7 +1,9 @@
 package slogo.backend.commands.basic;
 
+import slogo.backend.utils.TurtleHistory;
+
 import java.util.List;
 
 public interface BasicCommandInterface {
-    double getReturnValue(List<Double> parameters, int turtleID);
+    double getReturnValue(TurtleHistory turtleManager, List<Double> parameters, int turtleID);
 }

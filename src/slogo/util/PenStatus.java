@@ -1,15 +1,15 @@
-package slogo.backend.utils;
+package slogo.util;
 
 public class PenStatus {
     private boolean penDown;
-    private int penSize;
+    private double penSize;
     private int penColor;
 
     private boolean penDownChanged;
     private boolean penSizeChanged;
     private boolean penColorChanged;
 
-    public PenStatus(boolean penDown, int penSize, int penColor) {
+    public PenStatus(boolean penDown, double penSize, int penColor) {
         this.penDown = penDown;
         this.penSize = penSize;
         this.penColor = penColor;
@@ -27,7 +27,7 @@ public class PenStatus {
         this.penColorChanged = penStatus.isPenColorChanged();
     }
 
-    public int getPenSize() {
+    public double getPenSize() {
         return penSize;
     }
 
@@ -50,6 +50,12 @@ public class PenStatus {
     public boolean isPenColorChanged() {
         return penColorChanged;
     }
+
+    public void setPenDown(boolean penDown) {this.penDown = penDown;}
+
+    public void setPenColor(int penColor) {this.penColor = penColor;}
+
+    public void setPenSize(double penSize) {this.penSize = penSize;}
 
     public void compareAndSetChanged(PenStatus other) {
         penDownChanged = !(other.isPenDown() == penDown);

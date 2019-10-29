@@ -21,8 +21,6 @@ public class ButtonController {
         clearButtonClicked = true;
     }
 
-    public void selectFileButtonAction(){ selectFileButtonClicked = true; }
-
     public void helpButtonAction() {
         ReferenceWindow referenceWindow = new ReferenceWindow("English");
         referenceWindow.createNewWindow();

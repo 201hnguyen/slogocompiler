@@ -1,56 +1,49 @@
 package slogo.frontend;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
+import slogo.frontend.creater.ButtonCreator;
+import slogo.frontend.creater.ColorPalette;
+import slogo.frontend.creater.DropDownCreator;
+import slogo.frontend.turtlescreen.DisplayScreen;
 
-import java.io.File;
+import java.util.List;
 
 public class Visualization {
-    private static final double SCENE_WIDTH = 800;
-    private static final double SCENE_HEIGHT = 600;
-
+    private static final double SCENE_WIDTH = 830;
+    private static final double SCENE_HEIGHT = 630;
+    private static final String TITLE = "SLOGO IDLE";
 
     private Scene scene;
     private AnchorPane root;
     private Stage stage;
-    private Text readerText;
-    private File selectedFile;
-
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
     private TabMaker tabPane = new TabMaker();
-    private ButtonCreator buttonCreator = new ButtonCreator();
+    private ButtonCreator buttonCreator = new ButtonCreator(displayScreen);
     private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
-    private FileChooser fileChooser = new FileChooser();
+    private ColorPalette colorPalette = new ColorPalette(displayScreen);
+    private UIManager myUIManager;
 
     public Visualization(Stage stage) {
         this.stage = stage;
-        Button button = new Button("Select File");
-        button.setOnAction(e -> {
-            File selectedFile = fileChooser.showOpenDialog(stage);
-        });
-        VBox vBox = new VBox(button);
         root = new AnchorPane();
-        root.getChildren().addAll(displayScreen, commandLine, new ColorPalette(displayScreen), tabPane, buttonCreator, dropDownCreator, button);
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator);
+        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        upload();
         startStage();
     }
 
-    private void upload() {
-        if (buttonCreator.isStartButtonClicked()) {
-            File selectedFile = fileChooser.showOpenDialog(stage); }
+    public String getLanguage() {return myUIManager.getLanguage();}
+
+    public boolean needNewWindow() {
+        return myUIManager.isNewButtonClicked();
     }
 
     public void update() {
-        if (buttonCreator.isClearButtonClicked()) {
-            commandLine.getCommand().clear();
-        }
+        myUIManager.update();
         displayScreen.update();
     }
 
@@ -62,17 +55,11 @@ public class Visualization {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        stage.setTitle("SLOGO IDLE");
+        stage.setTitle(TITLE);
     }
 
     public String getInput() {
-        String command = commandLine.getCommand().getText();
-        if(buttonCreator.isStartButtonClicked() && !command.equals("")) {
-            tabPane.getHistory().getChildren().add(readerText);
-         /*   readerText.setOnMouseClicked(event -> commandLine.getCommand().setText();*/
-            return readerText.getText();
-        }
-        return "";
+        return myUIManager.getInput();
     }
 
 }

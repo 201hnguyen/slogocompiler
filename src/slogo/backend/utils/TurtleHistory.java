@@ -1,21 +1,24 @@
 package slogo.backend.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
+import java.util.*;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
-    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
+    private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 2, false);
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
-    private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
+    private List<TurtleMovement> myTurtleHistory = new ArrayList<>();
     private List<Integer> activeTurtles = new ArrayList<>();
+    private List<Map<String, Double>> listOfActiveVariables = new ArrayList<>();
     private int curTurtleID = 1;
-    private int index = 0;
 
     public TurtleHistory() {
         myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
-        myTurtleHistory.add(new ArrayList<>());
+        activeTurtles.add(1);
     }
 
     public TurtleModel getTurtleModel(int turtleID){
@@ -33,11 +36,7 @@ public class TurtleHistory {
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
-        myTurtleHistory.get(myTurtleHistory.size()-1).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
-    }
-
-    public void toNextTurn() {
-        myTurtleHistory.add(new ArrayList<>());
+        myTurtleHistory.add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
     }
 
     public void addTurtleModel(int turtleID) {
@@ -48,15 +47,23 @@ public class TurtleHistory {
         }
     }
 
-    public List<List<TurtleMovement>> getMyTurtleHistory() {
-        List<List<TurtleMovement>> list = new ArrayList<>();
+    /**
+     * TODO: @Ha call this method after each movement command ends (when the rerunCommand~~ method is at its end)
+     */
+    public void toNextTurn(Map<String, Double> myGlobalVariables) {
+        Map<String, Double> map = new TreeMap<>();
+        map.putAll(myGlobalVariables);
+        listOfActiveVariables.add(map);
+    }
+
+    public List<TurtleMovement> getMyTurtleHistory() {
+        List<TurtleMovement> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;
     }
 
     public void clearHistory() {
         myTurtleHistory.clear();
-        myTurtleHistory.add(new ArrayList<>());
     }
 
     public List<Integer> getActiveTurtles() {

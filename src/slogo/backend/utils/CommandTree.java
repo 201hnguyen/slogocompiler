@@ -21,7 +21,6 @@ public class CommandTree {
     }
 
     public void addToCommandTree(String command) throws ClassNotFoundException {
-
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
             commandTreeNode.setCommandWord(command);
         }
@@ -49,6 +48,7 @@ public class CommandTree {
 
     private void interpretTreeFromRight() throws ClassNotFoundException{
         String command = rightMostNode.getCommandWord();
+        System.out.println(command);
         try {
             int parameter = myCommandFactory.getNumParameter(command);
             while(!(parameter > rightMostNode.getChildrenNumber()) && command != "") {
@@ -59,7 +59,7 @@ public class CommandTree {
                 parameter = myCommandFactory.getNumParameter(command);
             }
         }
-        catch (ClassNotFoundException e) {
+        catch (Exception e) {
             if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
                 throw new ClassNotFoundException(command);
             }
@@ -71,9 +71,12 @@ public class CommandTree {
     }
 
     private void addNumberToTree(String command) {
+        System.out.println(command + " is a number");
         if(rightMostNode.getLeftNode() == null) {
+            System.out.println(command + " is going in the left side of " + rightMostNode.getCommandWord());
             rightMostNode.setLeftNode(new CommandTreeNode(command, rightMostNode));
         } else {
+            System.out.println(command + " is going in the right side of " + rightMostNode.getCommandWord());
             rightMostNode.setRightNode(new CommandTreeNode(command, rightMostNode));
         }
     }

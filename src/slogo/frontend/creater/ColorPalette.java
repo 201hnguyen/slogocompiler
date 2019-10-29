@@ -1,4 +1,4 @@
-package slogo.frontend;
+package slogo.frontend.creater;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import slogo.frontend.turtlescreen.DisplayScreen;
+import slogo.frontend.controller.ColorPaletteController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -14,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ColorPalette extends VBox {
+public class ColorPalette extends VBox implements ChangeableNode{
     private static final double PICKER_WIDTH = 100;
     private static final double PICKER_HEIGHT = 40;
     private static final double CIRCLE_RADIUS = 50;
@@ -32,6 +34,7 @@ public class ColorPalette extends VBox {
     private ColorPaletteController colorPaletteController;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private Map<CheckBox, String> checkBoxMap = new HashMap<>();
+    private String language = "English";
 
     public ColorPalette(DisplayScreen displayScreen) {
         colorPaletteController = new ColorPaletteController(displayScreen);
@@ -79,5 +82,18 @@ public class ColorPalette extends VBox {
                 }
             }
         }
+    }
+
+    @Override
+    public Map<String, String> getChangedValues() {
+        return colorPaletteController.getChangedValues();
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        this.language = language;
+        /**
+         * TODO: update language
+         */
     }
 }

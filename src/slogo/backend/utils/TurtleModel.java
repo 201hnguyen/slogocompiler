@@ -1,5 +1,9 @@
 package slogo.backend.utils;
 
+import slogo.util.DrawStatus;
+import slogo.util.Movement;
+import slogo.util.PenStatus;
+
 public class TurtleModel {
     private static final double INITIAL_ORIENTATION = 90d;
     private static final double INITIAL_DISPLACEMENT = 0d;
@@ -37,8 +41,6 @@ public class TurtleModel {
 
         PenStatus newPenStatus = new PenStatus(penStatus);
         newPenStatus.compareAndSetChanged(this.penStatus);
-        System.out.println(newPenStatus.isPenDown() + ", " + penStatus.isPenDown() + " in model");
-        System.out.println(newPenStatus.isPenDownChanged() + " in model");
         this.penStatus = newPenStatus;
     }
 

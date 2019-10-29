@@ -1,10 +1,8 @@
 package slogo.frontend;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.Collections;
@@ -16,42 +14,26 @@ public class TabMaker extends VBox {
     private ScrollMaker historyPane = new ScrollMaker();
     private ScrollMaker variablePane = new ScrollMaker();
     private ResourceBundle resourceBundle;
+    private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
+    private TabPane tabPane = new TabPane();
 
     public TabMaker() {
         setLayoutX(600);
         setLayoutY(200);
-        getChildren().addAll(createTabPane());
+        createTabPane();
     }
 
-    public TabPane createTabPane() {
-        TabPane tabPane = new TabPane();
-
-        historyField = new TextFlow();
-        variableField = new TextFlow();
-        historyPane.setContent(historyField);
-        variablePane.setContent(variableField);
-
-        Tab historyTab = new Tab("History");
-        Tab variableTab = new Tab("Variables");
-
-        historyTab.setContent(historyPane);
-
-        tabPane.getTabs().addAll(historyTab, variableTab);
-        tabPane. setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        return tabPane;
-
-    }
-
-/*    public void createTabs() {
-            for(String key : Collections.list(resourceBundle.getKeys())) {
-                Tab tab = new Tab(key);
-            }
+    public void createTabPane() {
+        resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+        for (String key : Collections.list(resourceBundle.getKeys())) {
+            Tab tab = new Tab(key);
+            TextFlow textFlow = new TextFlow();
+            ScrollMaker scrollMaker = new ScrollMaker();
+            scrollMaker.setContent(textFlow);
+            tab.setContent(scrollMaker);
+            tabPane.getTabs().addAll(tab);
         }
-
-    private void callAction(String key) {
-    }*/
-
-
-    TextFlow getHistory() { return historyField; }
-    TextFlow getVariable() { return variableField; }
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        getChildren().addAll(tabPane);
+    }
 }
