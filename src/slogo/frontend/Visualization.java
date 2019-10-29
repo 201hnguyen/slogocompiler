@@ -55,8 +55,8 @@ public class Visualization {
             System.out.println(index + ", " + displayScreen.getCurrentIndex());
             for(Map.Entry<String, Double> entry : myVariables.get(index).entrySet()) {
                 System.out.println(entry.getKey() + ", " + entry.getValue());
+                tabPane.setVariables(myVariables.get(index));
             }
-            //tabPane.setVariables(myVariables.get(index));
             index = displayScreen.getCurrentIndex();
         }
     }
