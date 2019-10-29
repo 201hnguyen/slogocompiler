@@ -12,7 +12,6 @@ public class MakeUserInstruction implements ControlInterface {
         String methodName = parameters.get(0).toString();
         List<Object> blockArguments = (List<Object>) parameters.get(1);
         Map<String,List<Object>> userFunctionsMap = (Map<String, List<Object>>) parameters.get(2);
-
         String variablesAsString = blockArguments.get(0).toString();
         String commandsAsString = blockArguments.get(1).toString();
 

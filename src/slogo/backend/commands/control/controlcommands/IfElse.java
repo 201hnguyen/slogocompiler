@@ -12,10 +12,13 @@ import java.util.Scanner;
 public class IfElse implements ControlInterface {
 
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+        String ifElseConditionArgument = parameters.get(0).toString();
+        String ifBlockCommandArgument = parameters.get(1).toString();
+        String elseBlockCommandArgument = parameters.get(2).toString();
         CommandTree commandTree = new CommandTree(turtleHistory);
 
         double conditionValue = 0;
-        Scanner conditionScanner = new Scanner(parameters.get(0).toString());
+        Scanner conditionScanner = new Scanner(ifElseConditionArgument);
         while (conditionScanner.hasNext()) {
             try {
                 String command = conditionScanner.next();
@@ -36,10 +39,10 @@ public class IfElse implements ControlInterface {
         }
 
         if (conditionValue != 0) {
-            CommandBlockManager trueBlockManager = new CommandBlockManager(parameters.get(1).toString(), turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager trueBlockManager = new CommandBlockManager(ifBlockCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             return trueBlockManager.executeInstructionBlock();
         } else {
-            CommandBlockManager falseBlockManager = new CommandBlockManager(parameters.get(2).toString(), turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager falseBlockManager = new CommandBlockManager(elseBlockCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             return falseBlockManager.executeInstructionBlock();
         }
     }

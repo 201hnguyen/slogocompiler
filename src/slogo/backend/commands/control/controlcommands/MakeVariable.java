@@ -36,10 +36,8 @@ public class MakeVariable implements ControlInterface {
                 return returnValue;
             }
         }
+
         localVariables.put(variable, returnValue);
-        for (String key : localVariables.keySet()) {
-            System.out.println("User defined:" + key + " : " + localVariables.get(key));
-        }
         return returnValue;
     }
 }

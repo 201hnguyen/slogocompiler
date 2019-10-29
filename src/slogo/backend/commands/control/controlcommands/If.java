@@ -1,6 +1,5 @@
 package slogo.backend.commands.control.controlcommands;
 
-import slogo.backend.exceptions.BackendException;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.CommandTree;
@@ -12,10 +11,14 @@ import java.util.Scanner;
 
 public class If implements ControlInterface {
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+        String ifConditionArgument = parameters.get(0).toString();
+        String trueBlockCommandArgument = parameters.get(1).toString();
+
+
         CommandTree commandTree = new CommandTree(turtleHistory);
 
         double conditionValue = 0;
-        Scanner conditionScanner = new Scanner(parameters.get(0).toString());
+        Scanner conditionScanner = new Scanner(ifConditionArgument);
         while (conditionScanner.hasNext()) {
             try {
                 String command = conditionScanner.next();
@@ -33,7 +36,7 @@ public class If implements ControlInterface {
         }
 
         if (conditionValue != 0) {
-            CommandBlockManager trueBlockManager = new CommandBlockManager(parameters.get(1).toString(), turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager trueBlockManager = new CommandBlockManager(trueBlockCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             return trueBlockManager.executeInstructionBlock();
         } else {
             return 0;
