@@ -10,7 +10,9 @@ import slogo.frontend.creater.ColorPalette;
 import slogo.frontend.creater.DropDownCreator;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Visualization {
     private static final double SCENE_WIDTH = 830;
@@ -27,6 +29,8 @@ public class Visualization {
     private DropDownCreator dropDownCreator = new DropDownCreator(displayScreen);
     private ColorPalette colorPalette = new ColorPalette(displayScreen);
     private UIManager myUIManager;
+    private int index = 0;
+    private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {
         this.stage = stage;
@@ -46,10 +50,16 @@ public class Visualization {
     public void update() {
         myUIManager.update();
         displayScreen.update();
+        if(displayScreen.getCurrentIndex() != index) {
+            tabPane.setVariables(myVariables.get(index));
+            index++;
+        }
     }
 
     public void setHistory(TurtleHistory turtleHistory) {
         displayScreen.setHistory(turtleHistory);
+        myVariables = turtleHistory.getMyVariables();
+        index = 0;
     }
 
     private void startStage() {

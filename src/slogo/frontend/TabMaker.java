@@ -54,6 +54,18 @@ public class TabMaker extends VBox implements ChangeableNode {
         }
     }
 
+    public void setVariables(Map<String, Double> variables) {
+        for(String tab : myTabs) {
+            if(!tab.equals("Variables")) {
+                continue;
+            }
+            for(Map.Entry<String, Double> entry : variables.entrySet()) {
+                inputHolder.getChildren().clear();
+                inputHolder.getChildren().add(new Text(entry.getKey() + "\n" + entry.getValue()));
+            }
+        }
+    }
+
     private String getScrollPaneName(String key) {
         ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
         int index = Integer.parseInt(languageBundle.getString(language));

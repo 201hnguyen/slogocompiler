@@ -37,6 +37,7 @@ public class CommandFactory {
         for (String key : Collections.list(resourceBundle.getKeys())) {
             if (key.equals(command)) {
                 String commandName = resourceBundle.getString(key).split(",")[0];
+                System.out.println(commandName);
                 return Class.forName(CLASS_PATH + commandName);
             }
         }
@@ -46,8 +47,10 @@ public class CommandFactory {
     private double getDoubleFromInstance(Class<?> clazz, int turtleID, List<Double> parameters, String command) throws ClassNotFoundException {
         try {
             Constructor<?> constructor = clazz.getConstructor();
+            System.out.println(parameters.get(0));
             return ((BasicCommandInterface) constructor.newInstance()).getReturnValue(myTurtleHistory, parameters, turtleID);
         } catch (Exception e) {
+            System.out.println(command + " class not found.");
             throw new ClassNotFoundException(command + ERROR_MSSG, e);
         }
     }

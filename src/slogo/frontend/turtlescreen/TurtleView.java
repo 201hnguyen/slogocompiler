@@ -68,7 +68,7 @@ public class TurtleView extends ImageView {
     }
 
     public boolean isMoving() {
-        if(index < myMovements.size()) {
+        if(index >= myMovements.size()) {
             myMovements.clear();
             index = 0;
         }

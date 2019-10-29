@@ -22,6 +22,8 @@ public class CommandTree {
 
     public void addToCommandTree(String command) throws ClassNotFoundException {
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
+            System.out.println("sdfsdfsff");
+            System.out.println(rightMostNode.getCommandWord());
             commandTreeNode.setCommandWord(command);
         }
         else {
@@ -65,6 +67,7 @@ public class CommandTree {
         }
         catch (Exception e) {
             if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
+                System.out.println(command + " wrong");
                 throw new ClassNotFoundException(command);
             }
         }

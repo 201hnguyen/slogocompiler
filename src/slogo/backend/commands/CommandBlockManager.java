@@ -136,7 +136,7 @@ public class CommandBlockManager {
             CommandTree repeatCommandTree = new CommandTree(myTurtleHistory);
             repeatCommandTree.setTurtleID(myActiveTurtles.get(i));
 
-            while (!repeatCommandTree.onlyNumberLeft()  && myScanner.hasNext()) {
+            while (!repeatCommandTree.onlyNumberLeft() && myScanner.hasNext()) {
                 command = myScanner.next();
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
                 try {

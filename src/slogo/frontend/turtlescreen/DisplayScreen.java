@@ -48,4 +48,6 @@ public class DisplayScreen extends Pane {
     public void setAnimation(String animationString) {
 
     }
+
+    public int getCurrentIndex() {return myViewManager.getCurrentInstructionIndex();}
 }

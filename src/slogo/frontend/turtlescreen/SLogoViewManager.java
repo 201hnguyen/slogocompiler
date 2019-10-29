@@ -42,8 +42,10 @@ public class SLogoViewManager {
 
 
     protected void setHistory(TurtleHistory turtleHistory) {
-        turtleMovements = turtleHistory.getMyTurtleHistory();
-        System.out.println(turtleMovements.size());
+        turtleMovements.clear();
+        index = 0;
+        turtleMovements.addAll(turtleHistory.getMyTurtleHistory());
+        System.out.println(turtleMovements.size() + " is the size");
         allocateTurtleMovements();
     }
 
@@ -67,7 +69,7 @@ public class SLogoViewManager {
                 }
             }
         }
-        if(turtleMoving && movingNum == 0) {
+        if(turtleMoving && movingNum == 0 && index < turtleMovements.size()-1) {
             index++;
             turtleMoving = false;
             allocateTurtleMovements();
@@ -75,7 +77,6 @@ public class SLogoViewManager {
     }
 
     protected void setImage(int imageNum) {
-        System.out.println(imageNum + "selected");
         if(imageManager.getImage(imageNum)!=null) {
             image = imageManager.getImage(imageNum);
         }
@@ -105,6 +106,10 @@ public class SLogoViewManager {
 
     public void setAnimation(String animationString) {
 
+    }
+
+    protected boolean finishedMoving() {
+        return index >= turtleMovements.size()-1;
     }
 
     public int getCurrentInstructionIndex() {
@@ -164,14 +169,11 @@ public class SLogoViewManager {
     }
 
     private void allocateTurtleMovements() {
-        if(index >= turtleMovements.size()) {
-            System.out.println(index + ", " + turtleMovements.size());
+        if(index >= turtleMovements.size()-1) {
             return;
         }
         for(TurtleMovement turtleMovement : turtleMovements.get(index)) {
             getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
-            System.out.println(turtleMovement.getMovement().getStartPosition());
-            System.out.println(turtleMovement.getMovement().getEndPosition());
         }
     }
 }

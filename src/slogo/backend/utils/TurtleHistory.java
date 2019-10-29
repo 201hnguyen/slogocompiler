@@ -71,6 +71,8 @@ public class TurtleHistory {
     public void clearHistory() {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
+        listOfActiveVariables = new ArrayList<>();
+        index = 0;
     }
 
     public List<Integer> getActiveTurtles() {
