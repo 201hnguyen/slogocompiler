@@ -27,7 +27,6 @@ public class UIManager {
         if(changedValues.size() == 0) {
             return;
         }
-
         for(String key : changedValues.keySet()) {
             System.out.println(key + ", " + changedValues.get(key));
             try {
