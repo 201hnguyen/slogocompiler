@@ -34,6 +34,7 @@ public class BackendManager {
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
         commandBlockManager.executeInstructionBlock();
+        turtleHistory.toNextTurn(commandBlockManager.getVariables());
     }
 
     public Map<String, Double> getMyVariables() {

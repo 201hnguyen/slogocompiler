@@ -56,6 +56,10 @@ public class CommandTree {
                 double value = myCommandFactory.execute(command, turtleID, getParameters());
                 replaceRightMostCommandWithNumber(value);
                 command = rightMostNode.getCommandWord();
+                if(isThisStringDouble(command)) {
+                    System.out.println(command);
+                    break;
+                }
                 parameter = myCommandFactory.getNumParameter(command);
             }
         }
@@ -71,12 +75,9 @@ public class CommandTree {
     }
 
     private void addNumberToTree(String command) {
-        System.out.println(command + " is a number");
         if(rightMostNode.getLeftNode() == null) {
-            System.out.println(command + " is going in the left side of " + rightMostNode.getCommandWord());
             rightMostNode.setLeftNode(new CommandTreeNode(command, rightMostNode));
         } else {
-            System.out.println(command + " is going in the right side of " + rightMostNode.getCommandWord());
             rightMostNode.setRightNode(new CommandTreeNode(command, rightMostNode));
         }
     }

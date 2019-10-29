@@ -12,7 +12,9 @@ import slogo.util.PenStatus;
 import slogo.backend.utils.TurtleMovement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TurtleView extends ImageView {
@@ -21,7 +23,6 @@ public class TurtleView extends ImageView {
     private static final double ABSOLUTE_SIZE_X = 30;
     private static final double INITIAL_ORIENTATION = 90;
     private static final double FULL_ANGLE = 360;
-    private static final Paint INITIAL_COLOR = Color.BLACK;
 
     private List<TurtleMovement> myMovements = new ArrayList<>();
     private int myID;
@@ -67,6 +68,10 @@ public class TurtleView extends ImageView {
     }
 
     public boolean isMoving() {
+        if(index < myMovements.size()) {
+            myMovements.clear();
+            index = 0;
+        }
         return index < myMovements.size();
     }
 

@@ -17,7 +17,7 @@ public class SLogoViewManager {
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
     private List<TurtleView> turtleViewList = new ArrayList<>();
-    private List<TurtleMovement> turtleMovements = new ArrayList<>();
+    private List<List<TurtleMovement>> turtleMovements = new ArrayList<>();
     private ImageManager imageManager;
     private ColorManager colorManager = new ColorManager();
     private ColorAndPenStatus myColorAndPenStatus;
@@ -26,6 +26,8 @@ public class SLogoViewManager {
     private double speed = INITIAL_SPEED;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
+    private int index = 0;
+    private boolean turtleMoving = false;
 
 
     public SLogoViewManager(DisplayScreen displayScreen) {
@@ -41,20 +43,22 @@ public class SLogoViewManager {
 
     protected void setHistory(TurtleHistory turtleHistory) {
         turtleMovements = turtleHistory.getMyTurtleHistory();
-        for(TurtleMovement turtleMovement : turtleMovements) {
-            getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
-        }
+        System.out.println(turtleMovements.size());
+        allocateTurtleMovements();
     }
 
     protected void update() {
+        int movingNum = 0;
         for(TurtleView turtleView : turtleViewList) {
-            if(turtleView.isMoving()) {
+            if (turtleView.isMoving()) {
+                movingNum++;
+                turtleMoving=true;
                 Line line = turtleView.updateAndGetLine();
                 updateDrawing(turtleView);
-                if(turtleView.getPenStatus().isPenSizeChanged()) {
+                if (turtleView.getPenStatus().isPenSizeChanged()) {
                     myColorAndPenStatus.setPenSize(turtleView, turtleView.getPenStatus().getPenSize(), false);
                 }
-                if(line != null) {
+                if (line != null) {
                     line.setStroke(myColorAndPenStatus.getLineColor(turtleView));
                     line.setStrokeWidth(myColorAndPenStatus.getPenSize(turtleView));
                     turtlePane.getChildren().add(line);
@@ -62,6 +66,11 @@ public class SLogoViewManager {
                     turtlePane.getChildren().add(turtleView);
                 }
             }
+        }
+        if(turtleMoving && movingNum == 0) {
+            index++;
+            turtleMoving = false;
+            allocateTurtleMovements();
         }
     }
 
@@ -96,6 +105,10 @@ public class SLogoViewManager {
 
     public void setAnimation(String animationString) {
 
+    }
+
+    public int getCurrentInstructionIndex() {
+        return index;
     }
 
     private void updateDrawing(TurtleView turtleView) {
@@ -150,4 +163,15 @@ public class SLogoViewManager {
         turtleView.setDrawStatus(drawStatus);
     }
 
+    private void allocateTurtleMovements() {
+        if(index >= turtleMovements.size()) {
+            System.out.println(index + ", " + turtleMovements.size());
+            return;
+        }
+        for(TurtleMovement turtleMovement : turtleMovements.get(index)) {
+            getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
+            System.out.println(turtleMovement.getMovement().getStartPosition());
+            System.out.println(turtleMovement.getMovement().getEndPosition());
+        }
+    }
 }

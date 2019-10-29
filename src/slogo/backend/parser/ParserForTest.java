@@ -16,10 +16,6 @@ public class ParserForTest {
     private static ResourceBundle myResource; //used in addPattern()
 
     private String myCommandsTranslated="";
-
-    //TODO:  what is input is more than one line?
-    //TODO:  put actual symbol not properties file key if from Syntax.properties
-
     //constructor
     public ParserForTest (String language) {
         addPatterns(myLanguageEntries, language);
@@ -91,7 +87,7 @@ public class ParserForTest {
         }
         String[] arr = trimmed.split(WHITESPACE);
         for(String command : arr) {
-            if(command.equals("#")) {
+            if(command.equals(COMMENT)) {
                 return;
             }
             System.out.println(command);
