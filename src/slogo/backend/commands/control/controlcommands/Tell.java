@@ -11,7 +11,9 @@ import java.util.Map;
 public class Tell implements ControlInterface {
     @Override
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
-        List<String> turtlesToActivateStringList = Arrays.asList(parameters.get(0).toString().split(" "));
+        String turtlesToActivateArgument = parameters.get(0).toString();
+
+        List<String> turtlesToActivateStringList = Arrays.asList(turtlesToActivateArgument.split(" "));
         List<Integer> turtlesToActivate = new ArrayList<>();
         for (String turtleID : turtlesToActivateStringList) {
             turtlesToActivate.add(Integer.parseInt(turtleID));

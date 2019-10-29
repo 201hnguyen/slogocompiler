@@ -12,8 +12,12 @@ import java.util.Map;
 public class DoTimes implements ControlInterface {
     @Override
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+
         Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size()-1);
-        PeekableScanner variableScanner = new PeekableScanner(parameters.get(0).toString());
+        String variableLimitArgument = parameters.get(0).toString();
+        String doTimesCommandArgument = parameters.get(1).toString();
+
+        PeekableScanner variableScanner = new PeekableScanner(variableLimitArgument);
         String variable = variableScanner.next();
         CommandTree commandtree = new CommandTree(turtleHistory);
         while (variableScanner.hasNext()) {
@@ -25,15 +29,15 @@ public class DoTimes implements ControlInterface {
                 e.printStackTrace(); //FIXME
             }
         }
-        double value = 0.0;
+        double variableLimit = 0.0;
         if (commandtree.onlyNumberLeft()) {
-            value = commandtree.getLastDouble();
+            variableLimit = commandtree.getLastDouble();
         }
 
         double returnValue = 0;
-        for (int i=0; i<value; i++) {
+        for (int i=0; i<variableLimit; i++) {
             localVariables.put(variable, (double) i);
-            CommandBlockManager commandBlockManager = new CommandBlockManager(parameters.get(1).toString(), turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager commandBlockManager = new CommandBlockManager(doTimesCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             returnValue = commandBlockManager.executeInstructionBlock();
         }
         localVariables.remove(variable);

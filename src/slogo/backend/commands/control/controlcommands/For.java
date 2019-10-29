@@ -11,16 +11,20 @@ import java.util.List;
 import java.util.Map;
 
 public class For implements ControlInterface {
+    public static final int START_END_INCREMENT_ARGUMENT_NUMBERS = 3;
+
     @Override
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+        String startEndIncrementArgument = parameters.get(0).toString();
+        String forCommandArgument = parameters.get(1).toString();
 
-        PeekableScanner scanner = new PeekableScanner(parameters.get(0).toString());
+        PeekableScanner scanner = new PeekableScanner(startEndIncrementArgument);
         Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size()-1);
 
         String variable = scanner.next();
         List<Double> parameterValues = new ArrayList<>();
 
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<START_END_INCREMENT_ARGUMENT_NUMBERS; i++) {
             CommandTree commandTree = new CommandTree(turtleHistory);
             while (!commandTree.onlyNumberLeft()) {
                 String nextVal = scanner.next();
@@ -41,7 +45,7 @@ public class For implements ControlInterface {
         double returnValue = 0;
         for (int i = (int) start; i <= end; i+=increment) {
             localVariables.put(variable, (double) i);
-            CommandBlockManager commandBlockManager = new CommandBlockManager(parameters.get(1).toString(), turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager commandBlockManager = new CommandBlockManager(forCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             returnValue = commandBlockManager.executeInstructionBlock();
         }
         localVariables.remove(variable);
