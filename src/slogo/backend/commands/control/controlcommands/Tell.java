@@ -15,6 +15,12 @@ public class Tell implements ControlInterface {
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
         String turtlesToActivateArgument = parameters.get(0).toString();
 
+        List<Integer> turtlesToActivate = setActivatedTurtles(turtleHistory, accessibleVariables, turtlesToActivateArgument);
+        turtleHistory.setActiveTurtles(turtlesToActivate);
+        return turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
+    }
+
+    protected List<Integer> setActivatedTurtles(TurtleHistory turtleHistory, List<Map<String,Double>> accessibleVariables, String turtlesToActivateArgument) {
         List<Integer> turtlesToActivate = new ArrayList<>();
         CommandTree commandTree = new CommandTree(turtleHistory);
         PeekableScanner turtlesScanner = new PeekableScanner(turtlesToActivateArgument);
@@ -30,11 +36,6 @@ public class Tell implements ControlInterface {
             }
             turtlesToActivate.add((int) commandTree.getLastDouble());
         }
-
-        turtleHistory.setActiveTurtles(turtlesToActivate);
-        for (Integer id : turtleHistory.getActiveTurtles()) {
-            System.out.println("TELL ACTIVATED TURTLE" + id);
-        }
-        return turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
+        return turtlesToActivate;
     }
 }
