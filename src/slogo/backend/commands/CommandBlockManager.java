@@ -248,11 +248,9 @@ public class CommandBlockManager {
     }
 
     private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) {
-        if (myScanner.hasNext()) {
-            if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
+        if (myScanner.hasNext() && endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
                 myScanner.next();
                 buildIndividualControlArgument(endSignaler, arguments);
-            }
         }
     }
 }
