@@ -2,6 +2,7 @@ package slogo.frontend;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.creater.ButtonCreator;
@@ -59,6 +60,12 @@ public class Visualization {
     }
 
     public String getInput() {
+        String command = myUIManager.getInput();
+        if(!command.equals("")) {
+            Text input = new Text(command);
+            input.setOnMouseClicked(event -> commandLine.getCommand().setText(command));
+            tabPane.addHistory(input);
+        }
         return myUIManager.getInput();
     }
 
