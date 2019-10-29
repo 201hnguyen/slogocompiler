@@ -67,4 +67,6 @@ public class UIManager {
     public String getLanguage() {
         return language;
     }
+
+    public Map<String, Double> getChangedVariables() {return myUIController.getChangedVariables();}
 }
