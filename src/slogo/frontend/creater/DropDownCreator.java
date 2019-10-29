@@ -20,7 +20,6 @@ public class DropDownCreator extends HBox implements ChangeableNode{
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String DROP_DOWN_NAMES = "resources.frontend.changingfeature.DropDownNames";
 
-    private List<ComboBox> myComboBoxes = new ArrayList<>();
     private ResourceBundle resourceBundle;
     private DropDownController myController;
     private String language = "English";

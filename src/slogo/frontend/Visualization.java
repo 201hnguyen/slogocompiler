@@ -13,8 +13,8 @@ import slogo.frontend.turtlescreen.DisplayScreen;
 import java.util.List;
 
 public class Visualization {
-    private static final double SCENE_WIDTH = 800;
-    private static final double SCENE_HEIGHT = 600;
+    private static final double SCENE_WIDTH = 830;
+    private static final double SCENE_HEIGHT = 630;
     private static final String TITLE = "SLOGO IDLE";
 
     private Scene scene;
@@ -60,7 +60,13 @@ public class Visualization {
     }
 
     public String getInput() {
-        return myUIManager.getInput();
+        String command = myUIManager.getInput();
+        if(!command.equals("")) {
+            Text input = new Text(command);
+            input.setOnMouseClicked(event -> commandLine.getCommand().setText(input.getText()));
+            tabPane.addHistory(input);
+        }
+        return command;
     }
 
 }

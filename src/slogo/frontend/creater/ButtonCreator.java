@@ -50,6 +50,7 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         createButtons();
     }
 
+
     private void createButtons() {
         getChildren().clear();
         for(String key : Collections.list(resourceBundle.getKeys())) {
