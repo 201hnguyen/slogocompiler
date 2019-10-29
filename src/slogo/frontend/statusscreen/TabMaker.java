@@ -29,17 +29,6 @@ public class TabMaker extends VBox implements ChangeableNode {
         createTabPane();
     }
 
-    public void createTabPane() {
-        getChildren().clear();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
-        for (String key : Collections.list(resourceBundle.getKeys())) {
-            ScrollMaker myScroll = new ScrollMaker(key);
-            getChildren().addAll(myScroll);
-            myScroll.setLabelText(getScrollPaneName(key));
-            myScrolls.add(myScroll);
-        }
-    }
-
     public void addHistory(Text command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
@@ -49,22 +38,15 @@ public class TabMaker extends VBox implements ChangeableNode {
     }
 
     public void setVariables(Map<String, Double> variables) {
-        for(ScrollMaker scrollMaker : myScrolls) {
-            if(!scrollMaker.getKey().equals("Variables")) {
+        for (ScrollMaker scrollMaker : myScrolls) {
+            if (!scrollMaker.getKey().equals("Variables")) {
                 continue;
             }
             scrollMaker.clearAll();
-            for(Map.Entry<String, Double> entry : variables.entrySet()) {
+            for (Map.Entry<String, Double> entry : variables.entrySet()) {
                 scrollMaker.addText(new Text(entry.getKey() + " = " + entry.getValue() + "\n"));
             }
         }
-    }
-
-    private String getScrollPaneName(String key) {
-        ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
-        int index = Integer.parseInt(languageBundle.getString(language));
-        ResourceBundle scrollNameBundle = ResourceBundle.getBundle(SCROLL_NAME_PATH);
-        return scrollNameBundle.getString(key).split(",")[index];
     }
 
     @Override
@@ -78,5 +60,23 @@ public class TabMaker extends VBox implements ChangeableNode {
         for(ScrollMaker scroll : myScrolls) {
             scroll.setLabelText(getScrollPaneName(scroll.getKey()));
         }
+    }
+
+    private void createTabPane() {
+        getChildren().clear();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+        for (String key : Collections.list(resourceBundle.getKeys())) {
+            ScrollMaker myScroll = new ScrollMaker(key);
+            getChildren().addAll(myScroll);
+            myScroll.setLabelText(getScrollPaneName(key));
+            myScrolls.add(myScroll);
+        }
+    }
+    
+    private String getScrollPaneName(String key) {
+        ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
+        int index = Integer.parseInt(languageBundle.getString(language));
+        ResourceBundle scrollNameBundle = ResourceBundle.getBundle(SCROLL_NAME_PATH);
+        return scrollNameBundle.getString(key).split(",")[index];
     }
 }
