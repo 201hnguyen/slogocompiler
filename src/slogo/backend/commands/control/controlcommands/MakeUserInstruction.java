@@ -3,7 +3,11 @@ package slogo.backend.commands.control.controlcommands;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.TurtleHistory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MakeUserInstruction implements ControlInterface {
 

@@ -4,7 +4,12 @@ import slogo.backend.commands.control.ControlExecutor;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * This class executes sequential blocks of instructions (overhead class for entire block of instruction that user enters;
@@ -199,7 +204,7 @@ public class CommandBlockManager {
     }
 
     public Map<String, Double> getVariables() {
-        Map<String, Double> variables = new TreeMap<>();
+        Map<String, Double> variables = new LinkedHashMap<>();
         variables.putAll(myLocalUserDefinedVariables);
         return variables;
     }
