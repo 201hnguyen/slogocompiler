@@ -65,10 +65,10 @@ public class CommandBlockManager {
                 returnValue = buildAndExecuteUserDefinedCommand(command);
             } else {
                 returnValue = buildAndExecuteBasicCommand(command);
-                if (myCommandTree.onlyNumberLeft()) {
-                    returnValue = myCommandTree.getLastDouble();
-                }
             }
+        }
+        if (myCommandTree.onlyNumberLeft()) {
+            returnValue = myCommandTree.getLastDouble();
         }
         return returnValue;
     }
