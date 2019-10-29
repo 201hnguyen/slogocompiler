@@ -29,6 +29,7 @@ public class SLogoViewManager {
     private PenStatus penStatus;
     private DrawStatus drawStatus;
     private int index = 0;
+    private List<Line> lines = new ArrayList<>();
 
 
     public SLogoViewManager(DisplayScreen displayScreen) {
@@ -66,6 +67,13 @@ public class SLogoViewManager {
                     turtlePane.getChildren().add(line);
                     turtlePane.getChildren().remove(turtleView);
                     turtlePane.getChildren().add(turtleView);
+                    lines.add(line);
+                }
+                if(turtleView.getDrawStatus().screenToBeErased()) {
+                    for(Line myLine: lines) {
+                        turtlePane.getChildren().remove(myLine);
+                    }
+                    lines.clear();
                 }
             }
         }
