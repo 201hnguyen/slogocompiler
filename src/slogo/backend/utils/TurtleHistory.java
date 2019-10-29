@@ -4,7 +4,10 @@ import slogo.util.DrawStatus;
 import slogo.util.Movement;
 import slogo.util.PenStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);

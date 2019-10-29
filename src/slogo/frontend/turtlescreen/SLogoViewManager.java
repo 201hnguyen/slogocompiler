@@ -3,7 +3,9 @@ package slogo.frontend.turtlescreen;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import slogo.backend.utils.*;
+import slogo.backend.utils.ColorManager;
+import slogo.backend.utils.TurtleHistory;
+import slogo.backend.utils.TurtleMovement;
 import slogo.util.DrawStatus;
 import slogo.util.PenStatus;
 
@@ -27,7 +29,6 @@ public class SLogoViewManager {
     private PenStatus penStatus;
     private DrawStatus drawStatus;
     private int index = 0;
-    private boolean turtleMoving = false;
 
 
     public SLogoViewManager(DisplayScreen displayScreen) {
@@ -54,7 +55,6 @@ public class SLogoViewManager {
         for(TurtleView turtleView : turtleViewList) {
             if (turtleView.isMoving()) {
                 movingNum++;
-                turtleMoving=true;
                 Line line = turtleView.updateAndGetLine();
                 updateDrawing(turtleView);
                 if (turtleView.getPenStatus().isPenSizeChanged()) {
@@ -71,7 +71,6 @@ public class SLogoViewManager {
         }
         if(movingNum == 0 && index < turtleMovements.size()-1) {
             index++;
-            turtleMoving = false;
             allocateTurtleMovements();
         }
     }
@@ -105,7 +104,9 @@ public class SLogoViewManager {
     }
 
     public void setAnimation(String animationString) {
-
+        /**
+         * TODO: do this
+         */
     }
 
     protected boolean finishedMoving() {

@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class DropDownController implements NodeController {
 
-    private static final String INITIAL_LANGUAGE = "English";
     private static final int INITIAL_IMAGE_NUM = 1;
 
     private int imageNum;

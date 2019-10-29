@@ -25,7 +25,6 @@ public class Visualization {
     private static final String TITLE = "SLOGO IDLE";
 
     private Scene scene;
-    private Pane root;
     private Stage stage;
     private DisplayScreen displayScreen = new DisplayScreen();
     private CommandLine commandLine = new CommandLine();
@@ -82,7 +81,7 @@ public class Visualization {
     }
 
     private void initialize() {
-        root = new AnchorPane();
+        Pane root = new AnchorPane();
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(displayScreen));
         DropDownCreator dropDownCreator = new DropDownCreator(new DropDownController(displayScreen));
         ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));

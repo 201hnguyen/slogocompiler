@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class TabController implements NodeController {
 
-    private DisplayScreen displayScreen;
+    //private DisplayScreen displayScreen;
     private String variableKey;
     private ChangedVariable myChangedVariable = new ChangedVariable();
     private Map<String, String> changedValues = new HashMap<>();
 
     public TabController(DisplayScreen displayScreen) {
-        this.displayScreen = displayScreen;
+        //this.displayScreen = displayScreen;
     }
 
     public void variableAction(String key, String content) {
@@ -30,7 +30,9 @@ public class TabController implements NodeController {
     }
 
     public void functionsAction(String key, String content) {
-
+        /**
+         * TODO: do this
+         */
     }
 
     @Override

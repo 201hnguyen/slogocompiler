@@ -9,9 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import slogo.frontend.ErrorShow;
 import slogo.frontend.controller.NodeController;
-import slogo.frontend.turtlescreen.DisplayScreen;
-import slogo.frontend.controller.ColorPaletteController;
-
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
