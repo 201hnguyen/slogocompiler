@@ -1,6 +1,6 @@
 package slogo.frontend.controller;
 
-import slogo.frontend.ChangedVariable;
+import slogo.frontend.statusscreen.ChangedVariable;
 import slogo.frontend.VariableScreen;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
