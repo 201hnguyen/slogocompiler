@@ -3,7 +3,6 @@ package slogo.frontend;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.controller.ButtonController;
@@ -50,12 +49,14 @@ public class Visualization {
         myUIManager.update();
         displayScreen.update();
         if(displayScreen.getCurrentIndex() != index) {
-            System.out.println(index + ", " + displayScreen.getCurrentIndex());
-            for(Map.Entry<String, Double> entry : myVariables.get(index).entrySet()) {
-                System.out.println(entry.getKey() + ", " + entry.getValue());
-                tabPane.setVariables(myVariables.get(index));
-            }
+            tabPane.setVariables(myVariables.get(index));
             index = displayScreen.getCurrentIndex();
+        }
+        Map<String, Double> changedVariables = myUIManager.getChangedVariables();
+        if(!changedVariables.isEmpty()) {
+            index = index < myVariables.size()? index : myVariables.size()-1;
+            myVariables.get(index).putAll(changedVariables);
+            tabPane.setVariables(myVariables.get(index));
         }
     }
 
@@ -75,8 +76,6 @@ public class Visualization {
     public String getInput() {
         String command = myUIManager.getInput();
         if(!command.equals("")) {
-//            Text input = new Text(command);
-//            input.setOnMouseClicked(event -> commandLine.getCommand().setText(input.getText()));
             tabPane.addHistory(command);
         }
         return command;
