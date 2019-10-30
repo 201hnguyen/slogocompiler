@@ -19,22 +19,29 @@ public class BackendManager {
     private TurtleHistory turtleHistory;
 
     public BackendManager(String input, String language, TurtleHistory turtleHistory) {
-        setLanguage(input, language);
+        setCommands(input, language);
         this.turtleHistory = turtleHistory;
     }
 
-    //TODO: return error message from ParserException
-    // should it return a ParserException object?
-    //public void setLanguage(String input, String language) {
-    public void setLanguage(String input, String language) {
+    /**
+     * Initializes commands by calling Parser.java on user-input
+     *
+     * @param input
+     * @param language
+     */
+    public void setCommands(String input, String language) {
         System.out.println(language);
         //myCommandParser = new ParserForTest(language);
         myCommandParser = new Parser(input, language);
     }
 
-    //TODO: return error message from ParserException
-    // should it return a ParserException object?
-    public void setCommand(String commands) throws BackendException {
+    /**
+     * Begins executing user-input in Connector.java
+     * Assumes all user-input matches SLogo syntax found in resources.languages/
+     *
+     * @param commands
+     */
+    public void executeCommands(String commands) throws BackendException {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
@@ -42,10 +49,19 @@ public class BackendManager {
         commandBlockManager.executeInstructionBlock();
     }
 
+    /**
+     * Empty method
+     *
+     * @return
+     */
     public Map<String, Double> getMyVariables() {
         return null;
     }
 
+    /**
+     * Gets an instance of a TurtleHistory object
+     * @return
+     */
     public TurtleHistory getHistory() {
         return turtleHistory;
     }

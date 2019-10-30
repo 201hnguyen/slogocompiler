@@ -7,11 +7,10 @@ public class BackendException extends Exception{
         this.message = message;
     }
 
-    public BackendException(String message) {
-        super();
-        this.message = message;
-    }
-
+    /**
+     *
+     * @return
+     */
     public String getMessage() {
         return message;
     }
