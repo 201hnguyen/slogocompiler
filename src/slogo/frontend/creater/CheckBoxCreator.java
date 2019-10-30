@@ -4,7 +4,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
-import slogo.frontend.controller.CheckBoxController;
 import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;

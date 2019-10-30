@@ -16,6 +16,12 @@ public class TabController implements NodeController {
     private ChangedString myFunctionString = new ChangedString();
     private Map<String, String> changedValues = new HashMap<>();
 
+    public TabController(DisplayScreen displayScreen) {
+        /**
+         * TODO: displayscreen left for future extensions
+         */
+    }
+
     public void variableAction(String key, String content) {
         variableKey = key;
         myChangedString = new ChangedString();
