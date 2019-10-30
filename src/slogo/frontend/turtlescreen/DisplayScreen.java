@@ -50,9 +50,10 @@ public class DisplayScreen extends Pane {
 
     public void setAnimation(double ratio) {
         myViewManager.setSpeed(ratio);
-        /**
-         * TODO: do this
-         */
+    }
+
+    public void step() {
+        myViewManager.step();
     }
 
     public int getCurrentIndex() {return myViewManager.getCurrentInstructionIndex();}

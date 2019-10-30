@@ -40,7 +40,7 @@ public class ButtonController implements NodeController {
     }
 
     public void stepButtonAction(String key) {
-        //displayScreen.setAnimation(key);
+        displayScreen.step();
     }
 
     public void newButtonAction(String key) {

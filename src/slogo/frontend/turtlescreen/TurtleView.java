@@ -28,6 +28,7 @@ public class TurtleView extends ImageView {
     private double speed;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
+    private boolean active;
 
     public TurtleView(Image image, int turtleID, double screenWidth, double screenHeight) {
         super(image);
@@ -88,6 +89,10 @@ public class TurtleView extends ImageView {
     public PenStatus getPenStatus() {return penStatus;}
 
     public DrawStatus getDrawStatus() {return drawStatus;}
+
+    public void setActive(boolean active) {this.active = active;}
+
+    public boolean isActive() {return active;}
 
     private void moveView(Point2D targetPos, double orientation) {
         setX(targetPos.getX() - getFitWidth()/2);

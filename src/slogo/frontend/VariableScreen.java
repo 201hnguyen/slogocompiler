@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import slogo.frontend.statusscreen.ChangedVariable;
+import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
 
@@ -16,14 +16,14 @@ public class VariableScreen {
     private static final String INTRO_VARIABLE = "Set value of ";
     private static final String DECIMAL_PATTERN = "-?[0-9]+\\.?[0-9]*";
 
-    private ChangedVariable changedVariable;
+    private ChangedString changedString;
     private TextField inputText;
     private String variableName;
     private String value;
     private Stage stage;
 
-    public VariableScreen(ChangedVariable changedVariable, String variable) {
-        this.changedVariable = changedVariable;
+    public VariableScreen(ChangedString changedString, String variable) {
+        this.changedString = changedString;
         String[] variableArr = variable.split(" = ");
         variableName = variableArr[0];
         value = variableArr[1];
@@ -47,7 +47,7 @@ public class VariableScreen {
 
     private void buttonAction() {
         if(isThisStringDouble(inputText.getText())) {
-            changedVariable.setChangedVariable(variableName + " = " + inputText.getText());
+            changedString.setChangedVariable(variableName + " = " + inputText.getText());
             stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
