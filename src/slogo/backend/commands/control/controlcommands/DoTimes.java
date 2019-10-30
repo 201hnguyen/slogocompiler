@@ -37,7 +37,7 @@ public class DoTimes implements ControlInterface {
         return returnValue;
     }
 
-    private double calculateVariableLimit(PeekableScanner variableScanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws ClassNotFoundException {
+    private double calculateVariableLimit(PeekableScanner variableScanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws BackendException {
         CommandTree commandtree = new CommandTree(turtleHistory);
         while (variableScanner.hasNext()) {
             String valueToCalculate = variableScanner.next();

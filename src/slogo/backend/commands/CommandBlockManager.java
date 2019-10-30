@@ -112,7 +112,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private double buildAndExecuteBasicCommand(String command) throws ClassNotFoundException {
+    private double buildAndExecuteBasicCommand(String command) throws BackendException {
         double returnValue = 0;
         System.out.println(command + " is inside the tree now");
         if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
@@ -122,7 +122,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 //do a push
-    private double rerunMovementCommands(String command) throws ClassNotFoundException {
+    private double rerunMovementCommands(String command) throws BackendException {
         int index = myScanner.getIndex() - 1;
         double returnVal = 0;
         myActiveTurtles.clear();
@@ -145,7 +145,7 @@ public class CommandBlockManager {
         return returnVal;
     }
 
-    private List<Object> prepareUserDefinedFunction(String command) throws ClassNotFoundException {
+    private List<Object> prepareUserDefinedFunction(String command) throws BackendException {
         List<Object> commandArguments = new ArrayList<>();
         List<Double> numericalArgumentForMethod = new ArrayList<>();
         Map<String, Double> parameters = (Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0);
