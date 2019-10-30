@@ -3,8 +3,6 @@ package slogo.backend.external_api;
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.exceptions.BackendException;
 import slogo.backend.parser.Parser;
-import slogo.backend.parser.ParserException;
-import slogo.backend.parser.ParserForTest;
 import slogo.backend.utils.TurtleHistory;
 
 import java.util.ArrayList;
@@ -14,27 +12,20 @@ import java.util.Map;
 public class BackendManager {
 
     private CommandBlockManager commandBlockManager;
-    //private ParserForTest myCommandParser;
     private Parser myCommandParser;
     private TurtleHistory turtleHistory;
 
     public BackendManager(String input, String language, TurtleHistory turtleHistory) {
-        setLanguage(input, language);
+        setCommands(input, language);
         this.turtleHistory = turtleHistory;
     }
 
-    //TODO: return error message from ParserException
-    // should it return a ParserException object?
-    //public void setLanguage(String input, String language) {
-    public void setLanguage(String input, String language) {
-        System.out.println(language);
-        //myCommandParser = new ParserForTest(language);
+
+    public void setCommands(String input, String language) {
         myCommandParser = new Parser(input, language);
     }
 
-    //TODO: return error message from ParserException
-    // should it return a ParserException object?
-    public void setCommand(String commands) throws BackendException {
+    public void executeCommands(String commands) throws BackendException {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
