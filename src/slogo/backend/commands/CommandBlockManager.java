@@ -121,7 +121,7 @@ public class CommandBlockManager {
         myCommandTree.addToCommandTree(command);
         return returnValue;
     }
-
+//do a push
     private double rerunMovementCommands(String command) throws ClassNotFoundException {
         int index = myScanner.getIndex() - 1;
         double returnVal = 0;
