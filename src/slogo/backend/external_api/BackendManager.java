@@ -1,6 +1,7 @@
 package slogo.backend.external_api;
 
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.parser.Parser;
 import slogo.backend.parser.ParserException;
 import slogo.backend.parser.ParserForTest;
@@ -33,7 +34,7 @@ public class BackendManager {
 
     //TODO: return error message from ParserException
     // should it return a ParserException object?
-    public void setCommand(String commands) {
+    public void setCommand(String commands) throws BackendException {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();

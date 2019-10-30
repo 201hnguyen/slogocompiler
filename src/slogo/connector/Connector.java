@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.external_api.BackendManager;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
@@ -52,7 +53,11 @@ public class Connector {
         if (!input.equals("")) {
             System.out.println(input);
             myBackEndManager.setLanguage(input, myVisualization.getLanguage());
-            myBackEndManager.setCommand(input);
+            try {
+                myBackEndManager.setCommand(input);
+            } catch (BackendException e) {
+                //TODO: handle this exception by throwing it to the front-end
+            }
             myVisualization.setHistory(myBackEndManager.getHistory());
         }
         myVisualization.update();
