@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.NewScreen;
 import slogo.frontend.controller.NodeController;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -93,7 +94,7 @@ public class ColorPalette extends VBox implements ChangeableNode{
                     Method m = colorPaletteController.getClass().getDeclaredMethod(methodName, Color.class);
                     m.invoke(colorPaletteController, color);
                 } catch (Exception e) {
-                    ErrorShow errorShow = new ErrorShow(e, "ColorPicker Setting Wrong");
+                    NewScreen errorShow = new ErrorShow(e, "ColorPicker Setting Wrong");
                     errorShow.show();
                 }
             }

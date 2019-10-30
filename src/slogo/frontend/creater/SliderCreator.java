@@ -3,6 +3,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.NewScreen;
 import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;
@@ -73,7 +74,7 @@ public class SliderCreator extends HBox implements ChangeableNode {
             Method m = myController.getClass().getDeclaredMethod(methodName, Double.TYPE);
             m.invoke(myController, percentage);
         } catch (Exception e) {
-            ErrorShow errorShow = new ErrorShow(e, e.getMessage());
+            NewScreen errorShow = new ErrorShow(e, e.getMessage());
             errorShow.show();
         }
     }

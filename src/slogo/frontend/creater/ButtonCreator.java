@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.NewScreen;
 import slogo.frontend.controller.NodeController;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class ButtonCreator extends HBox implements ChangeableNode {
             Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
             m.invoke(myButtonController, key);
         } catch (Exception e) {
-            ErrorShow errorShow = new ErrorShow(e, e.getMessage());
+            NewScreen errorShow = new ErrorShow(e, e.getMessage());
             errorShow.show();
         }
     }

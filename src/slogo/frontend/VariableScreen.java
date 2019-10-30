@@ -11,7 +11,7 @@ import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
 
-public class VariableScreen {
+public class VariableScreen implements NewScreen{
 
     private static final String INTRO_VARIABLE = "Set value of ";
     private static final String DECIMAL_PATTERN = "-?[0-9]+\\.?[0-9]*";
@@ -29,7 +29,7 @@ public class VariableScreen {
         value = variableArr[1];
     }
 
-    public void createNewStage() {
+    public void show() {
         stage = new Stage();
         VBox vBox = new VBox();
         stage.setScene(new Scene(vBox));
