@@ -114,4 +114,8 @@ public class Visualization {
         ErrorShow errorShow = new ErrorShow(ex, message);
         errorShow.show();
     }
+
+    public void setUserFunctions(List<String> userFunctions) {
+        tabPane.setFunctions(userFunctions);
+    }
 }
