@@ -50,6 +50,7 @@ public class FunctionScreen {
 
         if(checkRightString(arr)) {
             changedString.setChangedVariable(functionName + " " + str);
+            stage.close();
         }
     }
 
