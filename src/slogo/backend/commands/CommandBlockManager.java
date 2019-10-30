@@ -1,6 +1,7 @@
 package slogo.backend.commands;
 
 import slogo.backend.commands.control.ControlExecutor;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
@@ -58,7 +59,7 @@ public class CommandBlockManager {
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
-    public double executeInstructionBlock() {
+    public double executeInstructionBlock() throws BackendException {
         double returnValue = 0;
         try {
             while (myScanner.hasNext()) {
@@ -82,7 +83,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private double buildAndExecuteControlCommand(String command) throws ClassNotFoundException {
+    private double buildAndExecuteControlCommand(String command) throws ClassNotFoundException, BackendException {
         double returnValue = 0;
         List<Object> commandArguments;
         if (command.equals(DEFINE_USER_VARIABLE_COMMAND)) {
@@ -103,7 +104,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private double buildAndExecuteUserDefinedCommand(String command) throws ClassNotFoundException {
+    private double buildAndExecuteUserDefinedCommand(String command) throws ClassNotFoundException, BackendException {
         double returnValue = 0;
         List<Object> commandArguments = prepareUserDefinedFunction(command);
         returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
@@ -191,7 +192,7 @@ public class CommandBlockManager {
         return variables;
     }
 
-    private List<Object> prepareBlockCommand() {
+    private List<Object> prepareBlockCommand() throws BackendException {
         List<Object> controlCommandArguments = new ArrayList<>();
         if (! myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
             buildIndividualControlArgument(NON_BLOCK_ARGUMENT_END_SIGNAL, controlCommandArguments);
@@ -202,12 +203,12 @@ public class CommandBlockManager {
         return controlCommandArguments;
     }
 
-    private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) {
+    private void buildIndividualControlArgument(String endSignaler, List<Object> arguments) throws BackendException {
         addFirstArgument(endSignaler, arguments);
         checkAndAddAdditionalArguments(endSignaler, arguments);
     }
 
-    private void addFirstArgument(String endSignaler, List<Object> arguments) {
+    private void addFirstArgument(String endSignaler, List<Object> arguments) throws BackendException {
         StringBuilder builder = new StringBuilder();
         String nextWord = myScanner.next();
         int endSignalersNeeded = 1;
@@ -222,6 +223,8 @@ public class CommandBlockManager {
                             endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
                         endSignalersNeeded--;
                     }
+                } else {
+                    throw new BackendException("Unmatched number of brackets");
                 }
             }
         }
@@ -237,7 +240,7 @@ public class CommandBlockManager {
         return mergedMap;
     }
 
-    private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) {
+    private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) throws BackendException {
         if (myScanner.hasNext() && endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
                 myScanner.next();
                 buildIndividualControlArgument(endSignaler, arguments);
