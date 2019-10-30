@@ -83,6 +83,24 @@ public class CommandBlockManager {
         return returnValue;
     }
 
+    public Map<String, List<Object>> getUserDefinedFunctions() {
+        return Map.copyOf(myAccessibleUserDefinedFunctions);
+    }
+
+    public List<String> getUserDefinedFunctionsAsStrings() {
+        List<String> userDefinedFunctionsAsString = new ArrayList<>();
+        for (Map.Entry<String, List<Object>> entry : myAccessibleUserDefinedFunctions.entrySet()) {
+            StringBuilder functionAsString = new StringBuilder();
+            functionAsString.append(entry.getKey() + " ");
+            Map<String, Double> methodParametersMap = (Map<String, Double>) entry.getValue().get(0);
+            for (String key : methodParametersMap.keySet()) {
+                functionAsString.append(key + " ");
+            }
+            userDefinedFunctionsAsString.add(functionAsString.toString());
+        }
+        return userDefinedFunctionsAsString;
+    }
+
     private double buildAndExecuteControlCommand(String command) throws ClassNotFoundException, BackendException {
         double returnValue = 0;
         List<Object> commandArguments;
@@ -121,7 +139,7 @@ public class CommandBlockManager {
         myCommandTree.addToCommandTree(command);
         return returnValue;
     }
-//do a push
+
     private double rerunMovementCommands(String command) throws ClassNotFoundException {
         int index = myScanner.getIndex() - 1;
         double returnVal = 0;
