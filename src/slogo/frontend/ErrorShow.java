@@ -11,6 +11,10 @@ public class ErrorShow {
         this.message = message;
     }
 
+    public ErrorShow(String message) {
+        this.message = message;
+    }
+
     public void show() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText(message);

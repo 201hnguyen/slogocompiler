@@ -1,7 +1,5 @@
 package slogo.backend.parser;
 
-import java.util.ResourceBundle;
-
 public class ParserException extends RuntimeException {
 
     private static final String ERROR_MESSAGE = "The following command is not recognized: ";
