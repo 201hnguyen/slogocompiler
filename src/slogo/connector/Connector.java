@@ -31,7 +31,13 @@ public class Connector {
      *
      */
     public void begin() {
-        var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
+        var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> {
+            try {
+                step();
+            } catch (BackendException ex) {
+                ex.printStackTrace();
+            }
+        });
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
@@ -39,7 +45,7 @@ public class Connector {
     }
 
     //
-    private void step() {
+    private void step() throws BackendException {
         for(Stage stage : visualizationMap.keySet()) {
             update(visualizationMap.get(stage), backendManagerMap.get(stage));
             if(newWindow) {
@@ -53,7 +59,7 @@ public class Connector {
     }
 
     //
-    private void update(Visualization myVisualization, BackendManager myBackEndManager) {
+    private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
             System.out.println(input);

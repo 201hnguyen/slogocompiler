@@ -10,9 +10,9 @@ public class ParserException extends RuntimeException {
 
     //Used in Parser.getResourceKey()
     public ParserException(String command) {
-        System.out.println("entered ParserException");
+        //System.out.println("entered ParserException"); //testing
         this.message = ERROR_MESSAGE + command;
-        System.out.println(message);
+        //System.out.println(message); //testing
     }
 
     /**
