@@ -32,15 +32,15 @@ public class ButtonController implements NodeController {
     }
 
     public void playButtonAction(String key) {
-        displayScreen.setAnimation(key);
+        //displayScreen.setAnimation();
     }
 
     public void stopButtonAction(String key) {
-        displayScreen.setAnimation(key);
+        displayScreen.setAnimation(0);
     }
 
     public void stepButtonAction(String key) {
-        displayScreen.setAnimation(key);
+        //displayScreen.setAnimation(key);
     }
 
     public void newButtonAction(String key) {
