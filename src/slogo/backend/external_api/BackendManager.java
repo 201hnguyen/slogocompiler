@@ -1,6 +1,7 @@
 package slogo.backend.external_api;
 
 import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.parser.Parser;
 import slogo.backend.parser.ParserException;
 import slogo.backend.parser.ParserForTest;

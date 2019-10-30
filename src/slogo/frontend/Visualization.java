@@ -5,14 +5,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
-import slogo.frontend.controller.ButtonController;
-import slogo.frontend.controller.ColorPaletteController;
-import slogo.frontend.controller.DropDownController;
-import slogo.frontend.controller.TabController;
-import slogo.frontend.creater.ButtonCreator;
-import slogo.frontend.creater.ColorPalette;
-import slogo.frontend.creater.DropDownCreator;
-import slogo.frontend.creater.SliderCreator;
+import slogo.frontend.controller.*;
+import slogo.frontend.creater.*;
 import slogo.frontend.statusscreen.TabMaker;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
@@ -33,7 +27,8 @@ public class Visualization {
     private UIManager myUIManager;
     private int index = 0;
     private TabMaker tabPane = new TabMaker(new TabController(displayScreen));
-    private SliderCreator sliderCreator = new SliderCreator();
+    private SliderCreator sliderCreator = new SliderCreator(new SliderController(displayScreen));
+    private CheckBoxCreator checkBoxCreator = new CheckBoxCreator(new CheckBoxController(displayScreen));
     private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {
@@ -95,8 +90,8 @@ public class Visualization {
         DropDownCreator dropDownCreator = new DropDownCreator(new DropDownController(displayScreen));
         ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));
 
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator, sliderCreator);
-        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane));
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
+        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane, checkBoxCreator, sliderCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }

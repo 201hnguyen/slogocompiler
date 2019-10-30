@@ -14,7 +14,8 @@ import java.util.List;
 
 public class SLogoViewManager {
 
-    private static final double INITIAL_SPEED = 2;
+    private static final double INITIAL_SPEED = 5;
+    private static final double FULL_SPEED = 10;
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
@@ -104,8 +105,8 @@ public class SLogoViewManager {
         }
     }
 
-    protected void setSpeed(double speed) {
-        this.speed = speed;
+    protected void setSpeed(double ratio) {
+        this.speed = FULL_SPEED * ratio;
         for (TurtleView turtleView : turtleViewList) {
             turtleView.setSpeed(speed);
         }

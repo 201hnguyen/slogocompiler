@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import slogo.backend.exceptions.BackendException;
 import slogo.backend.external_api.BackendManager;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
