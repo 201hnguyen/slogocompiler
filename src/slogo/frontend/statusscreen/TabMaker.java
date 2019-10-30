@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class TabMaker extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
-    private static final double LAYOUT_Y = 60;
+    private static final double LAYOUT_Y = 70;
     private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String SCROLL_NAME_PATH = "resources.frontend.changingfeature.ScrollPaneNames";
