@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Executes controls such as If/Else, Repeat, user-defined functions, etc.
+ */
 public class ControlExecutor {
 
     public static final String DEFINED_CONTROLS_RESOURCE_PATH = "resources/DefinedControls";
