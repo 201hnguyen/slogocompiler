@@ -7,13 +7,15 @@ import slogo.backend.exceptions.BackendException;
 import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
-import javax.xml.xpath.XPathExpressionException;
 import java.util.List;
 import java.util.Map;
 
 public class DoTimes implements ControlInterface {
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+    public double execute(TurtleHistory turtleHistory,
+                          List<Object> parameters,
+                          List<Map<String, Double>> accessibleVariables,
+                          Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
         Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size()-1);
         String variableLimitArgument = parameters.get(0).toString();
         String doTimesCommandArgument = parameters.get(1).toString();
