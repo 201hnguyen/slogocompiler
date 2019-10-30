@@ -30,7 +30,7 @@ public class Ask extends Tell implements ControlInterface {
     public double execute(TurtleHistory turtleHistory,
                           List<Object> parameters,
                           List<Map<String, Double>> accessibleVariables,
-                          Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+                          Map<String, List<Object>> definedFunctions) throws BackendException {
 
         List<Integer> previousActiveTurtles = turtleHistory.getActiveTurtles();
         String turtlesToActivateArgument = parameters.get(0).toString();

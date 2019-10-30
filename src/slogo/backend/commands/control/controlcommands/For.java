@@ -41,7 +41,7 @@ public class For implements ControlInterface {
         return returnValue;
     }
 
-    private List<Double> calculateParameterValues(PeekableScanner scanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws ClassNotFoundException {
+    private List<Double> calculateParameterValues(PeekableScanner scanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws BackendException {
         List<Double> parameterValues = new ArrayList<>();
 
         for (int i=0; i<START_END_INCREMENT_ARGUMENT_NUMBERS; i++) {
