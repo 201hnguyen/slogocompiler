@@ -15,7 +15,7 @@ public class For implements ControlInterface {
     public static final int START_END_INCREMENT_ARGUMENT_NUMBERS = 3;
 
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws BackendException {
         String startEndIncrementArgument = parameters.get(0).toString();
         String forCommandArgument = parameters.get(1).toString();
 
