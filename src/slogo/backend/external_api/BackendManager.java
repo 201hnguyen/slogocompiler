@@ -41,7 +41,7 @@ public class BackendManager {
      *
      * @param commands
      */
-    public void executeCommands(String commands) {
+    public void executeCommands(String commands) throws BackendException {
         //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
