@@ -60,11 +60,7 @@ public class Connector {
         if (!input.equals("")) {
             System.out.println(input);
             myBackEndManager.setLanguage(input, myVisualization.getLanguage());
-            try {
-                myBackEndManager.setCommand(input);
-            } catch (BackendException e) {
-                //TODO: handle this exception by throwing it to the front-end
-            }
+            myBackEndManager.setCommand(input);
             myVisualization.setHistory(myBackEndManager.getHistory());
         }
         myVisualization.update();
