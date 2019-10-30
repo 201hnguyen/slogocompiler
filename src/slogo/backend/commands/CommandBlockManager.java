@@ -60,25 +60,29 @@ public class CommandBlockManager {
 
     public double executeInstructionBlock() {
         double returnValue = 0;
-        while (myScanner.hasNext()) {
-            String command = myScanner.next();
-            command = checkAndInputUserVariable(command, myAccessibleVariables);
-            System.out.println(command + " will now be put somewhere");
-            if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
-                returnValue = buildAndExecuteControlCommand(command);
-            } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
-                returnValue = buildAndExecuteUserDefinedCommand(command);
-            } else {
-                returnValue = buildAndExecuteBasicCommand(command);
+        try {
+            while (myScanner.hasNext()) {
+                String command = myScanner.next();
+                command = checkAndInputUserVariable(command, myAccessibleVariables);
+                System.out.println(command + " will now be put somewhere");
+                if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
+                    returnValue = buildAndExecuteControlCommand(command);
+                } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
+                    returnValue = buildAndExecuteUserDefinedCommand(command);
+                } else {
+                    returnValue = buildAndExecuteBasicCommand(command);
+                }
             }
-        }
-        if (myCommandTree.onlyNumberLeft()) {
-            returnValue = myCommandTree.getLastDouble();
+            if (myCommandTree.onlyNumberLeft()) {
+                returnValue = myCommandTree.getLastDouble();
+            }
+        } catch (ClassNotFoundException e) {
+            //FIXME
         }
         return returnValue;
     }
 
-    private double buildAndExecuteControlCommand(String command) {
+    private double buildAndExecuteControlCommand(String command) throws ClassNotFoundException {
         double returnValue = 0;
         List<Object> commandArguments;
         if (command.equals(DEFINE_USER_VARIABLE_COMMAND)) {
@@ -94,42 +98,30 @@ public class CommandBlockManager {
         } else {
             commandArguments = prepareBlockCommand();
         }
-        try {
-            returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
-            myCommandTree.addToCommandTree(returnValue+"");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //FIXME
-        }
+        returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+        myCommandTree.addToCommandTree(returnValue+"");
         return returnValue;
     }
 
-    private double buildAndExecuteUserDefinedCommand(String command) {
+    private double buildAndExecuteUserDefinedCommand(String command) throws ClassNotFoundException {
         double returnValue = 0;
         List<Object> commandArguments = prepareUserDefinedFunction(command);
-        try {
-            returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
-            myCommandTree.addToCommandTree(returnValue+"");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //FIXME
-        }
+        returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+        myCommandTree.addToCommandTree(returnValue+"");
         return returnValue;
     }
 
-    private double buildAndExecuteBasicCommand(String command) {
+    private double buildAndExecuteBasicCommand(String command) throws ClassNotFoundException {
         double returnValue = 0;
         System.out.println(command + " is inside the tree now");
-        try {
-            if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
-                command = rerunMovementCommands(command) + "";
-            }
-            myCommandTree.addToCommandTree(command);
-        } catch (ClassNotFoundException e) {
-            //FIXME
+        if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
+            command = rerunMovementCommands(command) + "";
         }
+        myCommandTree.addToCommandTree(command);
         return returnValue;
     }
 
-    private double rerunMovementCommands(String command) {
+    private double rerunMovementCommands(String command) throws ClassNotFoundException {
         int index = myScanner.getIndex() - 1;
         double returnVal = 0;
         myActiveTurtles.clear();
@@ -144,11 +136,7 @@ public class CommandBlockManager {
             while (!repeatCommandTree.onlyNumberLeft() && myScanner.hasNext()) {
                 command = myScanner.next();
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
-                try {
-                    repeatCommandTree.addToCommandTree(command);
-                } catch (ClassNotFoundException e) {
-                    System.out.println(command + "class not found");
-                }
+                repeatCommandTree.addToCommandTree(command);
             }
             returnVal = repeatCommandTree.getLastDouble();
         }
@@ -156,7 +144,7 @@ public class CommandBlockManager {
         return returnVal;
     }
 
-    private List<Object> prepareUserDefinedFunction(String command) {
+    private List<Object> prepareUserDefinedFunction(String command) throws ClassNotFoundException {
         List<Object> commandArguments = new ArrayList<>();
         List<Double> numericalArgumentForMethod = new ArrayList<>();
         Map<String, Double> parameters = (Map<String, Double>) myAccessibleUserDefinedFunctions.get(command).get(0);
@@ -164,24 +152,18 @@ public class CommandBlockManager {
             parameters.remove("");
         }
         int parametersNeeded = parameters.size();
-        System.out.println(parameters.size() +  " exists");
-        System.out.println("test parameters needed: " + parametersNeeded);
 
         for (int i=0; i<parametersNeeded; i++) {
             String argument = myScanner.next();
             argument = checkAndInputUserVariable(argument, myAccessibleVariables);
-            try {
+            myCommandTree.addToCommandTree(argument);
+            while (!myCommandTree.onlyNumberLeft()) {
+                argument = myScanner.next();
+                argument = checkAndInputUserVariable(argument, myAccessibleVariables);
                 myCommandTree.addToCommandTree(argument);
-                while (!myCommandTree.onlyNumberLeft()) {
-                    argument = myScanner.next();
-                    argument = checkAndInputUserVariable(argument, myAccessibleVariables);
-                    myCommandTree.addToCommandTree(argument);
-                }
-                if (myCommandTree.onlyNumberLeft()) {
-                    numericalArgumentForMethod.add(myCommandTree.getLastDouble());
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace(); //FIXME
+            }
+            if (myCommandTree.onlyNumberLeft()) {
+                numericalArgumentForMethod.add(myCommandTree.getLastDouble());
             }
         }
         commandArguments.add(numericalArgumentForMethod);

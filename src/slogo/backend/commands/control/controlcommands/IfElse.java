@@ -2,12 +2,10 @@ package slogo.backend.commands.control.controlcommands;
 
 import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
-import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class IfElse extends If implements ControlInterface {
 
