@@ -1,5 +1,9 @@
 package slogo.backend.parser;
 
+/**
+ *
+ * @author Amber Johnson and Robert C. Duvall
+ */
 public class ParserException extends RuntimeException {
 
     private static final String ERROR_MESSAGE = "The following command is not recognized: ";
@@ -8,13 +12,11 @@ public class ParserException extends RuntimeException {
 
     //Used in Parser.getResourceKey()
     public ParserException(String command) {
-        //System.out.println("entered ParserException"); //testing
         this.message = ERROR_MESSAGE + command;
-        //System.out.println(message); //testing
     }
 
     /**
-     * Returns the error message for a ParserException
+     * Returns the error message for a ParserException object
      * @return
      */
     public String getMessage() {return message;}
