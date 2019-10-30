@@ -59,8 +59,8 @@ public class Connector {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
             System.out.println(input);
-            myBackEndManager.setLanguage(input, myVisualization.getLanguage());
-            myBackEndManager.setCommand(input);
+            myBackEndManager.setCommands(input, myVisualization.getLanguage());
+            myBackEndManager.executeCommands(input);
             myVisualization.setHistory(myBackEndManager.getHistory());
         }
         myVisualization.update();
