@@ -140,7 +140,7 @@ public class CommandBlockManager {
             }
             returnVal = repeatCommandTree.getLastDouble();
         }
-        myTurtleHistory.toNextTurn(myLocalUserDefinedVariables);
+        myTurtleHistory.toNextTurn(mergeAllAccessibleVariables());
         return returnVal;
     }
 
@@ -227,6 +227,14 @@ public class CommandBlockManager {
         }
         String argument = builder.toString();
         arguments.add(argument);
+    }
+
+    private Map<String, Double> mergeAllAccessibleVariables() {
+        Map<String, Double> mergedMap = new LinkedHashMap<>();
+        for (Map<String, Double> variableMap : myAccessibleVariables) {
+            mergedMap.putAll(variableMap);
+        }
+        return mergedMap;
     }
 
     private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) {
