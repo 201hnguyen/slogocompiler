@@ -13,7 +13,7 @@ public class ControlExecutor {
     public double execute(String commandName, List<Object> arguments, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException {
         try {
             ResourceBundle controlCommandsBundle = ResourceBundle.getBundle("resources/DefinedControls");
-            if (arguments.size() != Integer.parseInt(controlCommandsBundle.getString(commandName))) {
+            if (controlCommandsBundle.containsKey(commandName) && arguments.size() != Integer.parseInt(controlCommandsBundle.getString(commandName))) {
                 //TODO: Throw unmatched argument exception.
             }
             Class<?> clazz = Class.forName("slogo.backend.commands.control.controlcommands." + commandName);

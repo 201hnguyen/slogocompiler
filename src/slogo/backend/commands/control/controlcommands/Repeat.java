@@ -16,9 +16,9 @@ public class Repeat implements ControlInterface {
         double returnValue = 0;
 
         CommandBlockManager conditionCommandBlockManager = new CommandBlockManager(repeatCondition, turtleHistory, accessibleVariables, definedFunctions);
-        double conditionValue = conditionCommandBlockManager.executeInstructionBlock();
+        double numTimesRepeated = conditionCommandBlockManager.executeInstructionBlock();
 
-        for (int i=0; i<(int) conditionValue; i++) {
+        for (int i=0; i<(int) numTimesRepeated; i++) {
             CommandBlockManager commandBlockManager = new CommandBlockManager(repeatBlockCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
             returnValue = commandBlockManager.executeInstructionBlock();
         }
