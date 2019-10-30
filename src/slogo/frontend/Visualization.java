@@ -35,7 +35,7 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private UIManager myUIManager;
     private int index = 0;
-    private TabMaker tabPane = new TabMaker(new TabController());
+    private TabMaker tabPane = new TabMaker(new TabController(displayScreen));
     private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {

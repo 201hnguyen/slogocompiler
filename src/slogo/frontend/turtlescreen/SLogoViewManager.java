@@ -17,6 +17,8 @@ public class SLogoViewManager {
     private static final double INITIAL_RATIO = 0.5;
     private static final double FULL_SPEED = 15;
     private static final double MAX_SPEED = 300;
+    private static final double PROTECTION_RATIO=0.00001;
+    private static final double SETMAXSPEED = 10;
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
@@ -58,7 +60,7 @@ public class SLogoViewManager {
     protected void update() {
         int movingNum = 0;
         if(step) {
-            setSpeed(10);
+            setSpeed(SETMAXSPEED);
         }
         for(TurtleView turtleView : turtleViewList) {
             if (turtleView.isMoving()) {
@@ -72,7 +74,7 @@ public class SLogoViewManager {
             allocateTurtleMovements();
         }
         if(step) {
-            setSpeed(10);
+            setSpeed(SETMAXSPEED);
             step = false;
         }
     }
@@ -101,7 +103,7 @@ public class SLogoViewManager {
     protected void setSpeed(double ratio) {
         double inputSpeed = 0;
         if(!maxSpeed) {
-            inputSpeed = ratio <= 1 ? FULL_SPEED * ratio + 0.0001 : MAX_SPEED;
+            inputSpeed = ratio <= 1 ? FULL_SPEED * ratio + PROTECTION_RATIO : MAX_SPEED;
             maxSpeed = ratio > 1;
             this.speed = ratio <= 1 ? inputSpeed : speed;
         } else {
