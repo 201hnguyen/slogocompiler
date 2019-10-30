@@ -9,6 +9,7 @@ public class ColorManager {
 
     private static final Color INITIAL_PEN_COLOR = Color.BLACK;
     private static final Color INITIAL_BACKGROUND_COLOR = Color.WHITE;
+    private static final double MAX_VALUE = 256;
     private static final String RESOURCE_PATH = "resources.frontend.ColorRGBResource";
 
     private Map<Integer, Color> myColorMap = new TreeMap<>();
@@ -25,7 +26,7 @@ public class ColorManager {
     }
 
     public void addColor(int index, int red, int blue, int green) {
-        Color color = new Color(red/256, blue/256, green/256, 1);
+        Color color = new Color(red/MAX_VALUE, blue/MAX_VALUE, green/MAX_VALUE, 1);
         myColorMap.put(index, color);
     }
 
