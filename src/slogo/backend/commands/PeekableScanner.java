@@ -18,24 +18,44 @@ public class PeekableScanner {
         index = 0;
     }
 
+    /**
+     * Checks if the source String has a word/String following it
+     * @return
+     */
     public boolean hasNext() {
         return index < myWords.size();
     }
 
+    /**
+     * Gets the next individual word/String in the source String
+     * @return
+     */
     public String next() {
         String str = myWords.get(index);
         index++;
         return str;
     }
 
+    /**
+     * Gets the index of a certain String in the source
+     * @return
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Goes back to the index of a certain string in the source
+     * @param index
+     */
     public void goToIndex(int index) {
         this.index = index;
     }
 
+    /**
+     * peeks the next element in the source
+     * @return
+     */
     public String peek() {
         return myWords.get(index);
     }
