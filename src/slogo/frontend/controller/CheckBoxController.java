@@ -14,6 +14,10 @@ public class CheckBoxController extends HBox implements NodeController {
         this.displayScreen = displayScreen;
     }
 
+    public void animationAction() {
+        displayScreen.setAnimation(10);
+    }
+
     @Override
     public Map<String, String> getChangedValues() {
         return new HashMap<>();

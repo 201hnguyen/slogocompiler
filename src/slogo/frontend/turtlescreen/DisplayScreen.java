@@ -55,5 +55,9 @@ public class DisplayScreen extends Pane {
          */
     }
 
+    public void step() {
+        myViewManager.step();
+    }
+
     public int getCurrentIndex() {return myViewManager.getCurrentInstructionIndex();}
 }

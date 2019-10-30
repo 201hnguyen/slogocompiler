@@ -14,8 +14,9 @@ import java.util.List;
 
 public class SLogoViewManager {
 
-    private static final double INITIAL_SPEED = 5;
-    private static final double FULL_SPEED = 10;
+    private static final double INITIAL_RATIO = 0.5;
+    private static final double FULL_SPEED = 15;
+    private static final double MAX_SPEED = 300;
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 1, false);
 
@@ -26,10 +27,12 @@ public class SLogoViewManager {
     private ColorAndPenStatus myColorAndPenStatus;
     private DisplayScreen turtlePane;
     private Image image;
-    private double speed = INITIAL_SPEED;
+    private boolean step = false;
+    private double speed = FULL_SPEED * INITIAL_RATIO;
     private PenStatus penStatus;
     private DrawStatus drawStatus;
     private int index = 0;
+    private boolean maxSpeed = false;
     private List<Line> lines = new ArrayList<>();
 
 
@@ -54,33 +57,23 @@ public class SLogoViewManager {
 
     protected void update() {
         int movingNum = 0;
+        if(step) {
+            setSpeed(10);
+        }
         for(TurtleView turtleView : turtleViewList) {
             if (turtleView.isMoving()) {
                 movingNum++;
-                Line line = turtleView.updateAndGetLine();
-                updateDrawing(turtleView);
-                if (turtleView.getPenStatus().isPenSizeChanged()) {
-                    myColorAndPenStatus.setPenSize(turtleView, turtleView.getPenStatus().getPenSize(), false);
-                }
-                if (line != null) {
-                    line.setStroke(myColorAndPenStatus.getLineColor(turtleView));
-                    line.setStrokeWidth(myColorAndPenStatus.getPenSize(turtleView));
-                    turtlePane.getChildren().add(line);
-                    turtlePane.getChildren().remove(turtleView);
-                    turtlePane.getChildren().add(turtleView);
-                    lines.add(line);
-                }
-                if(turtleView.getDrawStatus().screenToBeErased()) {
-                    for(Line myLine: lines) {
-                        turtlePane.getChildren().remove(myLine);
-                    }
-                    lines.clear();
-                }
+                drawLine(turtleView);
+                checkInitialize(turtleView);
             }
         }
         if(movingNum == 0 && index < turtleMovements.size()-1) {
             index++;
             allocateTurtleMovements();
+        }
+        if(step) {
+            setSpeed(10);
+            step = false;
         }
     }
 
@@ -106,16 +99,23 @@ public class SLogoViewManager {
     }
 
     protected void setSpeed(double ratio) {
-        this.speed = FULL_SPEED * ratio;
-        for (TurtleView turtleView : turtleViewList) {
-            turtleView.setSpeed(speed);
+        double inputSpeed = 0;
+        if(!maxSpeed) {
+            inputSpeed = ratio <= 1 ? FULL_SPEED * ratio + 0.0001 : MAX_SPEED;
+            maxSpeed = ratio > 1;
+            this.speed = ratio <= 1 ? inputSpeed : speed;
+        } else {
+            inputSpeed = ratio <= 1 ? MAX_SPEED : speed;
+            maxSpeed = ratio <= 1;
+        }
+        for(TurtleView turtleView : turtleViewList) {
+            turtleView.setSpeed(inputSpeed);
         }
     }
 
-    public void setAnimation(String animationString) {
-        /**
-         * TODO: do this
-         */
+    public void step() {
+        step = true;
+        System.out.println(speed);
     }
 
     protected boolean finishedMoving() {
@@ -183,6 +183,31 @@ public class SLogoViewManager {
         }
         for(TurtleMovement turtleMovement : turtleMovements.get(index)) {
             getTurtleView(turtleMovement.getTurtleID()).addMovement(turtleMovement);
+        }
+    }
+
+    private void drawLine(TurtleView turtleView) {
+        Line line = turtleView.updateAndGetLine();
+        updateDrawing(turtleView);
+        if (turtleView.getPenStatus().isPenSizeChanged()) {
+            myColorAndPenStatus.setPenSize(turtleView, turtleView.getPenStatus().getPenSize(), false);
+        }
+        if (line != null) {
+            line.setStroke(myColorAndPenStatus.getLineColor(turtleView));
+            line.setStrokeWidth(myColorAndPenStatus.getPenSize(turtleView));
+            turtlePane.getChildren().add(line);
+            turtlePane.getChildren().remove(turtleView);
+            turtlePane.getChildren().add(turtleView);
+            lines.add(line);
+        }
+    }
+
+    private void checkInitialize(TurtleView turtleView) {
+        if(turtleView.getDrawStatus().screenToBeErased()) {
+            for(Line myLine: lines) {
+                turtlePane.getChildren().remove(myLine);
+            }
+            lines.clear();
         }
     }
 }
