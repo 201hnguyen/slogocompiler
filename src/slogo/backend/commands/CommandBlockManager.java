@@ -61,24 +61,20 @@ public class CommandBlockManager {
 
     public double executeInstructionBlock() throws BackendException {
         double returnValue = 0;
-        try {
-            while (myScanner.hasNext()) {
-                String command = myScanner.next();
-                command = checkAndInputUserVariable(command, myAccessibleVariables);
-                System.out.println(command + " will now be put somewhere");
-                if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
-                    returnValue = buildAndExecuteControlCommand(command);
-                } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
-                    returnValue = buildAndExecuteUserDefinedCommand(command);
-                } else {
-                    returnValue = buildAndExecuteBasicCommand(command);
-                }
+        while (myScanner.hasNext()) {
+            String command = myScanner.next();
+            command = checkAndInputUserVariable(command, myAccessibleVariables);
+            System.out.println(command + " will now be put somewhere");
+            if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
+                returnValue = buildAndExecuteControlCommand(command);
+            } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
+                returnValue = buildAndExecuteUserDefinedCommand(command);
+            } else {
+                returnValue = buildAndExecuteBasicCommand(command);
             }
-            if (myCommandTree.onlyNumberLeft()) {
-                returnValue = myCommandTree.getLastDouble();
-            }
-        } catch (ClassNotFoundException e) {
-            //FIXME
+        }
+        if (myCommandTree.onlyNumberLeft()) {
+            returnValue = myCommandTree.getLastDouble();
         }
         return returnValue;
     }
@@ -101,7 +97,7 @@ public class CommandBlockManager {
         return userDefinedFunctionsAsString;
     }
 
-    private double buildAndExecuteControlCommand(String command) throws ClassNotFoundException, BackendException {
+    private double buildAndExecuteControlCommand(String command) throws BackendException {
         double returnValue = 0;
         List<Object> commandArguments;
         if (command.equals(DEFINE_USER_VARIABLE_COMMAND)) {
@@ -122,7 +118,7 @@ public class CommandBlockManager {
         return returnValue;
     }
 
-    private double buildAndExecuteUserDefinedCommand(String command) throws ClassNotFoundException, BackendException {
+    private double buildAndExecuteUserDefinedCommand(String command) throws BackendException {
         double returnValue = 0;
         List<Object> commandArguments = prepareUserDefinedFunction(command);
         returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
