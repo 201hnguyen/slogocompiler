@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class If implements ControlInterface {
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws BackendException {
         String ifConditionArgument = parameters.get(0).toString();
         String trueBlockCommandArgument = parameters.get(1).toString();
 
@@ -25,7 +25,7 @@ public class If implements ControlInterface {
         }
     }
 
-    protected double calculateConditionValue(String ifConditionArgument, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws ClassNotFoundException {
+    protected double calculateConditionValue(String ifConditionArgument, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws BackendException {
         CommandTree commandTree = new CommandTree(turtleHistory);
         double conditionValue = 0;
         PeekableScanner conditionScanner = new PeekableScanner(ifConditionArgument);

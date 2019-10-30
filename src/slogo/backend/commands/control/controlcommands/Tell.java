@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Tell implements ControlInterface {
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws BackendException {
         String turtlesToActivateArgument = parameters.get(0).toString();
 
         List<Integer> turtlesToActivate = setActivatedTurtles(turtleHistory, accessibleVariables, turtlesToActivateArgument);
@@ -21,7 +21,7 @@ public class Tell implements ControlInterface {
         return turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
     }
 
-    protected List<Integer> setActivatedTurtles(TurtleHistory turtleHistory, List<Map<String,Double>> accessibleVariables, String turtlesToActivateArgument) throws ClassNotFoundException {
+    protected List<Integer> setActivatedTurtles(TurtleHistory turtleHistory, List<Map<String,Double>> accessibleVariables, String turtlesToActivateArgument) throws BackendException {
         List<Integer> turtlesToActivate = new ArrayList<>();
         PeekableScanner turtlesScanner = new PeekableScanner(turtlesToActivateArgument);
         while (turtlesScanner.hasNext()) {
