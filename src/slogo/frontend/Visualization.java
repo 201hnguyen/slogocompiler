@@ -96,6 +96,11 @@ public class Visualization {
         errorShow.show();
     }
 
+    public void showError(Throwable ex, String message) {
+        ErrorShow errorShow = new ErrorShow(ex, message);
+        errorShow.show();
+    }
+
     private void initialize() {
         Pane root = new AnchorPane();
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(displayScreen));
@@ -108,11 +113,6 @@ public class Visualization {
         myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane, checkBoxCreator, sliderCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
-    }
-
-    public void showError(Throwable ex, String message) {
-        ErrorShow errorShow = new ErrorShow(ex, message);
-        errorShow.show();
     }
 
     public void setUserFunctions(List<String> userFunctions) {

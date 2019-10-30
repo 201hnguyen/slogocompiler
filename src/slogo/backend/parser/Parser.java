@@ -55,7 +55,7 @@ public class Parser {
     /**
      * Calls splitInput method to split global variable into mySplitInput
      * Checks if any of the commands did not match the entries in the resource file
-     * Returns a String of the concactenated commands translated (
+     * Returns a String of the concatenated commands translated (
      *
      * @return
      */
@@ -110,6 +110,5 @@ public class Parser {
     private boolean match(String text, Pattern regex) {
         return regex.matcher(text).matches();
     }
-
 }
 
