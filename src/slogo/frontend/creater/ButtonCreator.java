@@ -11,6 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * This is the ButtonCreator class that extends an HBox. Essentially, this class helps create
+ * any needed button by reading through the resource bundle. After the buttons are created,
+ * they then are added to an HBox which is then displayed in the GUI.
+ */
+
+
 
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
@@ -52,6 +59,8 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         createButtons();
     }
 
+
+    /** * This is is the method that helps create the buttons */
 
     private void createButtons() {
         getChildren().clear();

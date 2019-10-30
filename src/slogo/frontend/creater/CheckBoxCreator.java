@@ -3,15 +3,18 @@ package slogo.frontend.creater;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import slogo.frontend.ErrorShow;
+import slogo.frontend.controller.CheckBoxController;
 import slogo.frontend.controller.NodeController;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CheckBoxCreator extends HBox implements ChangeableNode {
-    private static final String RESOURCE_SLIDER = "resources.frontend.CheckBoxResource";
+    private static final String RESOURCE_PATH = "resources.frontend.CheckBoxResource";
     private static final double LAYOUT_X= 600;
     private static final double LAYOUT_Y= 35;
     private static final double SPACING = 10;
@@ -33,7 +36,7 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
     }
 
     private void createCheckBoxes() {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_SLIDER);
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         for(String key : Collections.list(resourceBundle.getKeys())) {
             createCheckBox(key);
         }
@@ -43,6 +46,7 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
         Label checkLabel = new Label(getContentOfButton(key));
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(isCheckBoxChecked);
+        checkBox.selectedProperty().addListener(e -> callAction(key));
         getChildren().addAll(checkLabel, checkBox);
     }
 
@@ -56,7 +60,18 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
         getChildren().clear();
         this.language = language;
         createCheckBoxes();
+    }
 
+    private void callAction(String key) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+        String methodName = resourceBundle.getString(key);
+        try {
+            Method m = myController.getClass().getDeclaredMethod(methodName);
+            m.invoke(myController);
+        } catch (Exception e) {
+            ErrorShow errorShow = new ErrorShow(e, key + " CheckBox not set well.");
+            errorShow.show();
+        }
     }
 
     private String getContentOfButton(String key) {

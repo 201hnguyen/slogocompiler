@@ -10,6 +10,10 @@ import slogo.backend.utils.TurtleHistory;
 
 
 public class DisplayScreen extends Pane {
+    /**
+     * This  class is the actual "display screen" where the turtle moves.
+     * */
+
     private static final double SCENE_WIDTH = 600;
     private static final double SCENE_HEIGHT = 400;
 
@@ -23,37 +27,71 @@ public class DisplayScreen extends Pane {
         myViewManager = new SLogoViewManager(this);
     }
 
+    /**
+     * This method helps change the background color of the display screen.
+     * */
+
     public void setBackground(Color color) {
         BackgroundFill fill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
         setBackground(new Background(fill));
     }
 
+    /**
+     * This  method helps update the display screen through the view manager.
+     * */
+
     public void update() {
         myViewManager.update();
     }
+
+    /**
+     * This method helps set the turtle history through the view manager.
+     * */
 
     public void setHistory(TurtleHistory turtleHistory) {
         myViewManager.setHistory(turtleHistory);
     }
 
+    /**
+     * This method helps change/update the pen color.
+     * */
+
     public void setLineColor(Color color) {
         myViewManager.setLineColor(color);
     }
+
+    /**
+     * This method helps change/update the turtle image.
+     * */
 
     public void setImage(int imageNum) {
         myViewManager.setImage(imageNum);
     }
 
+    /**
+     * This method helps change/update the size of the pen.
+     * */
+
     public void setPenSize(int penSize) {
         myViewManager.setPenSize(penSize);
     }
 
+    /**
+     * This method helps change/update the animation.
+     * */
+
     public void setAnimation(double ratio) {
         myViewManager.setSpeed(ratio);
-        /**
-         * TODO: do this
-         */
     }
+
+    /**
+     * This method helps "break" the animation step by step.
+     * */
+
+    public void step() {
+        myViewManager.step();
+    }
+
 
     public int getCurrentIndex() {return myViewManager.getCurrentInstructionIndex();}
 }

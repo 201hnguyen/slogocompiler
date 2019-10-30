@@ -1,9 +1,11 @@
 package slogo.backend.exceptions;
 
 public class BackendException extends Exception{
+    private Throwable ex;
     private String message;
-    public BackendException(Exception ex, String message) {
-        super(ex);
+
+    public BackendException(Throwable ex, String message) {
+        this.ex = ex;
         this.message = message;
     }
 

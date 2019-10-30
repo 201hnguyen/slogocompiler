@@ -15,7 +15,7 @@ public class DoTimes implements ControlInterface {
     public double execute(TurtleHistory turtleHistory,
                           List<Object> parameters,
                           List<Map<String, Double>> accessibleVariables,
-                          Map<String, List<Object>> definedFunctions) throws ClassNotFoundException, BackendException {
+                          Map<String, List<Object>> definedFunctions) throws BackendException {
         Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size()-1);
         String variableLimitArgument = parameters.get(0).toString();
         String doTimesCommandArgument = parameters.get(1).toString();
@@ -37,7 +37,7 @@ public class DoTimes implements ControlInterface {
         return returnValue;
     }
 
-    private double calculateVariableLimit(PeekableScanner variableScanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws ClassNotFoundException {
+    private double calculateVariableLimit(PeekableScanner variableScanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws BackendException {
         CommandTree commandtree = new CommandTree(turtleHistory);
         while (variableScanner.hasNext()) {
             String valueToCalculate = variableScanner.next();

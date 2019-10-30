@@ -1,6 +1,7 @@
 package slogo.backend.utils;
 
 import slogo.backend.commands.basic.CommandFactory;
+import slogo.backend.exceptions.BackendException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,8 @@ public class CommandTree {
         myCommandFactory = new CommandFactory(turtleHistory);
     }
 
-    public void addToCommandTree(String command) throws ClassNotFoundException {
+    public void addToCommandTree(String command) throws BackendException {
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
-            System.out.println("sdfsdfsff");
-            System.out.println(rightMostNode.getCommandWord());
             commandTreeNode.setCommandWord(command);
         }
         else {
@@ -48,7 +47,7 @@ public class CommandTree {
         return commandTreeNode.getChildrenNumber() == 0 && isThisStringDouble(commandTreeNode.getCommandWord());
     }
 
-    private void interpretTreeFromRight() throws ClassNotFoundException{
+    private void interpretTreeFromRight() throws BackendException {
         String command = rightMostNode.getCommandWord();
         System.out.println(command);
         try {
@@ -67,8 +66,7 @@ public class CommandTree {
         }
         catch (Exception e) {
             if(!isThisStringDouble(commandTreeNode.getCommandWord())) {
-                System.out.println(command + " wrong");
-                throw new ClassNotFoundException(command);
+                throw new BackendException(e, command + " is not a valid command, nor is it a variable or function");
             }
         }
     }
