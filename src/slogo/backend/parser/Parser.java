@@ -1,8 +1,5 @@
 package slogo.backend.parser;
 
-
-import slogo.frontend.FrontEndException;
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,13 +15,12 @@ public class Parser {
     private static final String COMMENT = "#";
     private static final String RESOURCES_PACKAGE = "resources.languages/";
 
-    private static String myFullInput = "";
-    private static ResourceBundle myResource;
-    private static List<String> mySplitInput = new ArrayList<>();
-    private static List<Map.Entry<String, Pattern>> myLanguageEntries = new ArrayList<>();
-    private static List<Map.Entry<String, Pattern>> mySyntaxEntries = new ArrayList<>();
-    private static String myCommandsTranslated = "";
-
+    private String myFullInput = "";
+    private ResourceBundle myResource;
+    private List<String> mySplitInput = new ArrayList<>();
+    private List<Map.Entry<String, Pattern>> myLanguageEntries = new ArrayList<>();
+    private List<Map.Entry<String, Pattern>> mySyntaxEntries = new ArrayList<>();
+    private String myCommandsTranslated = "";
 
     public Parser(String full_input, String language) {
         myFullInput = full_input;
@@ -35,60 +31,44 @@ public class Parser {
     /**
      * Returns the key of an entry in any language resource file
      * Returns the value of an entry in the syntax resource file
-     * called in translateCommands()
+     * Used in Parser.translateCommands()
+     *
      * @param single_cmd
      * @return
      */
-    public String getResourceKey(String single_cmd) {
-        String str = "";
+    public String getResourceKey(String single_cmd) throws ParserException{
         //for instructions
         for (Map.Entry<String, Pattern> e : myLanguageEntries) {
             if (match(single_cmd, e.getValue())) {
-                str = e.getKey();
+                return e.getKey();
             }
         }
         //for symbols
         for (Map.Entry<String, Pattern> e : mySyntaxEntries) {
             if (match(single_cmd, e.getValue())) {
-                str = single_cmd;
+                return single_cmd;
             }
         }
-        return str;
+        throw new ParserException(single_cmd);
     }
 
-
-//TODO: exception
     /**
+     * Calls splitInput method to split global variable into mySplitInput
+     * Checks if any of the commands did not match the entries in the resource file
+     * Returns a String of the concactenated commands translated (
      *
      * @return
      */
-    public String translateCommands() {
-
+    public String translateCommands() throws ParserException {
         initialize();
         splitInput();
-        int badStr = 0;
-
         for (String s : mySplitInput) {
-            badStr += s.trim().length() > 0 && getResourceKey(s).equals("NO MATCH") ? 1 : 0;
+            myCommandsTranslated = myCommandsTranslated + getResourceKey(s) + " ";
         }
-
-        try {
-            if (badStr == 0) {
-                for (String s : mySplitInput) {
-                    myCommandsTranslated = myCommandsTranslated + getResourceKey(s) + " ";
-                }
-                return myCommandsTranslated;
-            }
-        }
-        catch (Exception ex) {
-            String message = "Not all commands valid given selected language\n";
-            throw new FrontEndException(ex, message);
-        }
-        return "";
+        return myCommandsTranslated;
     }
 
-    //addPatterns for given ArrayList by getting languages resource bundle
-    //called in constructor
+    // Adds key-value entries to a list from resources.languages in the constructor
     private void addPatterns(List resourceEntries, String language) {
         myResource = ResourceBundle.getBundle(RESOURCES_PACKAGE + language);
         for (String key : Collections.list(myResource.getKeys())) {
@@ -97,46 +77,38 @@ public class Parser {
         }
     }
 
-    //called in translateCommands
-    private void initialize() {
+    // Clears variables used in Parser.translateCommands()
+    private void initialize () {
         myCommandsTranslated = "";
         mySplitInput.clear();
     }
 
-    //called in translateCommands
-    private void splitInput() {
+    // Splits myFullInput in Parser.translateCommands()
+    private void splitInput () {
         String[] splitByNewLine = myFullInput.split("[\\r\\n]");
-        for(String split : splitByNewLine) {
+        for (String split : splitByNewLine) {
             addToMySplitInput(split);
         }
     }
 
-    //called in translateCommands
-    private void addToMySplitInput(String s) {
+    // Processes comments in Parser.translateCommands()
+    private void addToMySplitInput (String s){
         String trimmed = s.trim();
-        if(trimmed.equals("")) {
+        if (trimmed.equals("")) {
             return;
         }
         String[] arr = trimmed.split(WHITESPACE);
-        for(String command : arr) {
-            if(command.equals(COMMENT)) {
+        for (String command : arr) {
+            if (command.equals(COMMENT)) {
                 return;
             }
-            //System.out.println(command); //testing
             mySplitInput.add(command);
         }
     }
 
-    //called in getResourceKey()
+    // Returns true if text matches regular expression deliminator in Parser.getResourceKey()
     private boolean match(String text, Pattern regex) {
-        String message = "The following command is not recognized for the given pattern: ";
-        try {
-            return regex.matcher(text).matches();
-        }
-        //catch (IllegalAccessException ex) {
-        catch (Exception ex) {
-            throw new FrontEndException(ex, message, text);
-        }
+        return regex.matcher(text).matches();
     }
 
 }

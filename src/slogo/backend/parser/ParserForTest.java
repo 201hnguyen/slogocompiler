@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class ParserForTest {
 
     private static final String WHITESPACE = "\\s+"; //used in splitInput(String input)
-    private static final String RESOURCES_PACKAGE =  "resources.languages/"; //where the language resource files are located
+    private static final String RESOURCES_PACKAGE =  "resources.languages/.."; //where the language resource files are located
     private static final String SYNTAX = "Syntax";
     private static final String COMMENT = "#";
 
