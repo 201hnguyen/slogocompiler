@@ -22,9 +22,8 @@ public class Ask extends Tell implements ControlInterface {
      *                   the commands and the 1st element is the String of the commands themselves.
      * @param accessibleVariables all the variables that this command has access to
      * @param definedFunctions all the functions that this command has access to
-     * @return
-     * @throws ClassNotFoundException
-     * @throws BackendException
+     * @return the value associated with the commands run by the last turtle
+     * @throws BackendException for problems in initializing the inner classes when executing CommandBlockManager
      */
     @Override
     public double execute(TurtleHistory turtleHistory,
