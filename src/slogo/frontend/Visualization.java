@@ -35,7 +35,7 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private UIManager myUIManager;
     private int index = 0;
-    private TabMaker tabPane = new TabMaker(new TabController(displayScreen));
+    private TabMaker tabPane = new TabMaker(new TabController());
     private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {
@@ -113,5 +113,9 @@ public class Visualization {
     public void showError(Throwable ex, String message) {
         ErrorShow errorShow = new ErrorShow(ex, message);
         errorShow.show();
+    }
+
+    public void setUserFunctions(List<String> userFunctions) {
+        tabPane.setFunctions(userFunctions);
     }
 }

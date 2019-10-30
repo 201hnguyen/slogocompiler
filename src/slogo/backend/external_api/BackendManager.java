@@ -7,6 +7,7 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BackendManager {
@@ -14,6 +15,8 @@ public class BackendManager {
     private CommandBlockManager commandBlockManager;
     private Parser myCommandParser;
     private TurtleHistory turtleHistory;
+    private Map<String, List<Object>> userDefinedFunctions = new HashMap<>();
+    private List<String> userDefinedFunctionsAsString = new ArrayList<>();
 
     public BackendManager(String input, String language, TurtleHistory turtleHistory) {
         setCommands(input, language);
@@ -25,15 +28,21 @@ public class BackendManager {
         myCommandParser = new Parser(input, language);
     }
 
-    public void executeCommands(String commands) throws BackendException {
+    public void executeCommands() throws BackendException {
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
-        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), new HashMap<>());
+        commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, new ArrayList<>(), userDefinedFunctions);
+        userDefinedFunctionsAsString.clear();
+        userDefinedFunctions.clear();
         commandBlockManager.executeInstructionBlock();
+        userDefinedFunctions.putAll(commandBlockManager.getUserDefinedFunctions());
+        userDefinedFunctionsAsString.addAll(commandBlockManager.getUserDefinedFunctionsAsStrings());
     }
 
-    public Map<String, Double> getMyVariables() {
-        return null;
+    public List<String> getUserFunctions() {
+        List<String> list = new ArrayList<>();
+        list.addAll(userDefinedFunctionsAsString);
+        return list;
     }
 
     public TurtleHistory getHistory() {

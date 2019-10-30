@@ -37,9 +37,7 @@ public class TabMaker extends VBox implements ChangeableNode {
     public void addHistory(String command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
-                Text text = new Text(command + "\n------------");
-                text.setOnMouseClicked(e -> callAction(scrollMaker.getKey(), command));
-                scrollMaker.addText(text);
+                scrollMaker.addText(createText(scrollMaker.getKey(), command));
             }
         }
     }
@@ -53,9 +51,19 @@ public class TabMaker extends VBox implements ChangeableNode {
             myVariables.putAll(variables);
             for (Map.Entry<String, Double> entry : myVariables.entrySet()) {
                 String str = entry.getKey() + " = " + entry.getValue();
-                Text text = new Text(str + "\n------------");
-                text.setOnMouseClicked(e -> callAction("Variables", str));
-                scrollMaker.addText(text);
+                scrollMaker.addText(createText("Variables", str));
+            }
+        }
+    }
+
+    public void setFunctions(List<String> myFunctions) {
+        for (ScrollMaker scrollMaker : myScrolls) {
+            if (!scrollMaker.getKey().equals("Functions")) {
+                continue;
+            }
+            scrollMaker.clearAll();
+            for(String function : myFunctions) {
+                scrollMaker.addText(createText("Functions", function));
             }
         }
     }
@@ -99,5 +107,11 @@ public class TabMaker extends VBox implements ChangeableNode {
         int index = Integer.parseInt(languageBundle.getString(language));
         ResourceBundle scrollNameBundle = ResourceBundle.getBundle(SCROLL_NAME_PATH);
         return scrollNameBundle.getString(key).split(",")[index];
+    }
+
+    private Text createText(String key, String content) {
+        Text text = new Text(content + "\n------------");
+        text.setOnMouseClicked(e -> callAction(key, content));
+        return text;
     }
 }

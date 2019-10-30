@@ -40,6 +40,10 @@ public class UIController {
         changedVariables.put(variableArr[0], Double.parseDouble(variableArr[1]));
     }
 
+    public void functionsAction(String function) {
+        commandLine.getCommand().setText(function);
+    }
+
     public String getInput() {
         String command = commandLine.getCommand().getText();
         if(startButtonClicked && !command.equals("")) {
