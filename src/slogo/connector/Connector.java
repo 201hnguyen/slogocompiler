@@ -27,6 +27,9 @@ public class Connector {
         createNewWorkSpace(stage);
     }
 
+    /**
+     *
+     */
     public void begin() {
         var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
         myAnimation = new Timeline();
@@ -35,6 +38,7 @@ public class Connector {
         myAnimation.play();
     }
 
+    //
     private void step() {
         for(Stage stage : visualizationMap.keySet()) {
             update(visualizationMap.get(stage), backendManagerMap.get(stage));
@@ -48,16 +52,13 @@ public class Connector {
         }
     }
 
+    //
     private void update(Visualization myVisualization, BackendManager myBackEndManager) {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
             System.out.println(input);
-            myBackEndManager.setLanguage(input, myVisualization.getLanguage());
-            try {
-                myBackEndManager.setCommand(input);
-            } catch (BackendException e) {
-                //TODO: handle this exception by throwing it to the front-end
-            }
+            myBackEndManager.setCommands(input, myVisualization.getLanguage());
+            myBackEndManager.executeCommands(input);
             myVisualization.setHistory(myBackEndManager.getHistory());
         }
         myVisualization.update();
@@ -66,11 +67,13 @@ public class Connector {
         }
     }
 
+    //
     private void createWorkSpace() {
         Stage stage = new Stage();
         createNewWorkSpace(stage);
     }
 
+    //
     private void createNewWorkSpace(Stage stage) {
         Visualization myVisualization = new Visualization(stage);
         BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(), myVisualization.getLanguage(), new TurtleHistory());
