@@ -95,4 +95,9 @@ public class Visualization {
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
+
+    public void showError(Throwable ex, String message) {
+        ErrorShow errorShow = new ErrorShow(ex, message);
+        errorShow.show();
+    }
 }

@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.backend.exceptions.BackendException;
 import slogo.backend.external_api.BackendManager;
+import slogo.backend.parser.ParserException;
 import slogo.backend.utils.TurtleHistory;
 import slogo.frontend.Visualization;
 
@@ -31,13 +32,7 @@ public class Connector {
      *
      */
     public void begin() {
-        var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> {
-            try {
-                step();
-            } catch (BackendException ex) {
-                ex.printStackTrace();
-            }
-        });
+        var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
@@ -45,9 +40,13 @@ public class Connector {
     }
 
     //
-    private void step() throws BackendException {
+    private void step()  {
         for(Stage stage : visualizationMap.keySet()) {
-            update(visualizationMap.get(stage), backendManagerMap.get(stage));
+            try {
+                update(visualizationMap.get(stage), backendManagerMap.get(stage));
+            } catch (Exception e) {
+                visualizationMap.get(stage).showError(e, e.getMessage());
+            }
             if(newWindow) {
                 break;
             }
@@ -59,7 +58,7 @@ public class Connector {
     }
 
     //
-    private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException {
+    private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException, ParserException {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
             System.out.println(input);
