@@ -3,7 +3,6 @@ package slogo.frontend;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.TilePane;
 
-
 public class CommandLine extends TilePane {
     private static final double WIDTH = 600;
     private static final double HEIGHT = 100;

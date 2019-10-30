@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
     private static final double SPACING = 25;
