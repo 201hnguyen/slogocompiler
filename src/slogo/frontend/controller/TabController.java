@@ -1,6 +1,7 @@
 package slogo.frontend.controller;
 
-import slogo.frontend.statusscreen.ChangedVariable;
+import slogo.frontend.FunctionScreen;
+import slogo.frontend.statusscreen.ChangedString;
 import slogo.frontend.VariableScreen;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
@@ -9,19 +10,16 @@ import java.util.Map;
 
 public class TabController implements NodeController {
 
-    //private DisplayScreen displayScreen;
     private String variableKey;
-    private ChangedVariable myChangedVariable = new ChangedVariable();
+    private String functionKey;
+    private ChangedString myChangedString = new ChangedString();
+    private ChangedString myFunctionString = new ChangedString();
     private Map<String, String> changedValues = new HashMap<>();
-
-    public TabController(DisplayScreen displayScreen) {
-        //this.displayScreen = displayScreen;
-    }
 
     public void variableAction(String key, String content) {
         variableKey = key;
-        myChangedVariable = new ChangedVariable();
-        VariableScreen variableScreen = new VariableScreen(myChangedVariable, content);
+        myChangedString = new ChangedString();
+        VariableScreen variableScreen = new VariableScreen(myChangedString, content);
         variableScreen.createNewStage();
     }
 
@@ -30,9 +28,11 @@ public class TabController implements NodeController {
     }
 
     public void functionsAction(String key, String content) {
-        /**
-         * TODO: do this
-         */
+        functionKey = key;
+        myFunctionString = new ChangedString();
+        FunctionScreen functionScreen = new FunctionScreen(myFunctionString, content);
+        functionScreen.createNewStage();
+
     }
 
     @Override
@@ -50,10 +50,14 @@ public class TabController implements NodeController {
     }
 
     private void checkChangedVariables() {
-        String variable = myChangedVariable.getChangedVariable();
+        String variable = myChangedString.getChangedVariable();
         if(variable!="") {
             changedValues.put(variableKey, variable);
-            System.out.println(variableKey + ", " + variable);
+        }
+        String function = myFunctionString.getChangedVariable();
+        if(function!="") {
+            System.out.println(functionKey);
+            changedValues.put(functionKey, function);
         }
     }
 }

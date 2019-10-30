@@ -32,7 +32,7 @@ public class UIManager {
             return;
         }
         for(Map.Entry<String, String> entry : changedValues.entrySet()) {
-            if(entry.getKey().equals("History")) {
+            if(entry.getKey().equals("Functions")) {
                 System.out.println("FOUND FOUND");
             }
             try {
