@@ -1,5 +1,4 @@
 package slogo.frontend.statusscreen;
-
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import slogo.frontend.ErrorShow;
@@ -38,7 +37,7 @@ public class TabMaker extends VBox implements ChangeableNode {
     public void addHistory(String command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
-                Text text = new Text(command);
+                Text text = new Text(command + "\n------------");
                 text.setOnMouseClicked(e -> callAction(scrollMaker.getKey(), command));
                 scrollMaker.addText(text);
             }
@@ -53,8 +52,9 @@ public class TabMaker extends VBox implements ChangeableNode {
             scrollMaker.clearAll();
             myVariables.putAll(variables);
             for (Map.Entry<String, Double> entry : myVariables.entrySet()) {
-                Text text = new Text(entry.getKey() + " = " + entry.getValue() + "\n");
-                text.setOnMouseClicked(e -> callAction("Variables", text.getText()));
+                String str = entry.getKey() + " = " + entry.getValue();
+                Text text = new Text(str + "\n------------");
+                text.setOnMouseClicked(e -> callAction("Variables", str));
                 scrollMaker.addText(text);
             }
         }

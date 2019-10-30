@@ -48,7 +48,8 @@ public class DisplayScreen extends Pane {
         myViewManager.setPenSize(penSize);
     }
 
-    public void setAnimation(String animationString) {
+    public void setAnimation(double ratio) {
+        myViewManager.setSpeed(ratio);
         /**
          * TODO: do this
          */
