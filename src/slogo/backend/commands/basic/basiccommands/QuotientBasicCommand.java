@@ -9,6 +9,6 @@ public class QuotientBasicCommand implements BasicCommandInterface {
 
     @Override
     public double getReturnValue(TurtleHistory turtleHistory, List<Double> parameters, int turtleID) {
-        return (int) (parameters.get(0) / parameters.get(1));
+        return Math.floor(parameters.get(0) / parameters.get(1));
     }
 }
