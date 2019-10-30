@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import slogo.frontend.statusscreen.ChangedVariable;
 
 import java.util.regex.Pattern;
 

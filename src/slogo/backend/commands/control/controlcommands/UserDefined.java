@@ -17,20 +17,10 @@ public class UserDefined implements ControlInterface {
         List<Map<String, Double>> currentAccessibleVariables = accessibleVariables;
         currentAccessibleVariables.add(methodParameters);
 
-        for (Double number : numericalArguments) {
-            System.out.println("In user defined, testing numerical arguments: " + number);
-        }
-
-        System.out.println("In user defined, testing commandS string arguments: " + userDefinedCommandBlockArgument);
-
         int numericalArgumentsIndex = 0;
         for (String key : methodParameters.keySet()) {
             methodParameters.put(key, numericalArguments.get(numericalArgumentsIndex));
             numericalArgumentsIndex++;
-        }
-
-        for (String key : methodParameters.keySet()) {
-            System.out.println("In user defined, testing parameters arguments: " + key + ":" + methodParameters.get(key));
         }
 
         CommandBlockManager commandBlockManager = new CommandBlockManager(userDefinedCommandBlockArgument, turtleHistory, currentAccessibleVariables, definedFunctions);

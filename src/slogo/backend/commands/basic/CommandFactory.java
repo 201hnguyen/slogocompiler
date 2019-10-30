@@ -14,7 +14,6 @@ public class CommandFactory {
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private TurtleHistory myTurtleHistory;
-    //private boolean wasCommand = false;
 
     public CommandFactory(TurtleHistory turtleHistory) {
         myTurtleHistory = turtleHistory;
@@ -47,7 +46,6 @@ public class CommandFactory {
     private double getDoubleFromInstance(Class<?> clazz, int turtleID, List<Double> parameters, String command) throws ClassNotFoundException {
         try {
             Constructor<?> constructor = clazz.getConstructor();
-            System.out.println(parameters.get(0));
             return ((BasicCommandInterface) constructor.newInstance()).getReturnValue(myTurtleHistory, parameters, turtleID);
         } catch (Exception e) {
             System.out.println(command + " class not found.");

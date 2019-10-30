@@ -1,8 +1,8 @@
-package slogo;
+package slogo.frontend;
 
 public class FrontEndException extends Exception {
-    private String message;
-    private Throwable ex;
+    private final String message;
+    private final Throwable ex;
 
     public FrontEndException(Exception ex, String message) {
         this.message = message;

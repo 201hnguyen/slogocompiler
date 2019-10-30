@@ -4,33 +4,29 @@ import slogo.backend.commands.CommandBlockManager;
 import slogo.backend.commands.control.ControlInterface;
 import slogo.backend.utils.TurtleHistory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class Ask implements ControlInterface {
+public class Ask extends Tell implements ControlInterface {
 
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+    public double execute(TurtleHistory turtleHistory,
+                          List<Object> parameters,
+                          List<Map<String, Double>> accessibleVariables,
+                          Map<String, List<Object>> definedFunctions) throws ClassNotFoundException {
 
-        List<Integer> savedActiveTurtles = turtleHistory.getActiveTurtles();
+        List<Integer> previousActiveTurtles = turtleHistory.getActiveTurtles();
         String turtlesToActivateArgument = parameters.get(0).toString();
         String askCommandsArgument = parameters.get(1).toString();
 
-        List<String> turtlesToActivateStringList = Arrays.asList(turtlesToActivateArgument.split(" "));
+        List<Integer> turtlesToActivate = setActivatedTurtles(turtleHistory, accessibleVariables, turtlesToActivateArgument);
 
-        //TODO: Should use command tree for turtles to activate
-        List<Integer> turtlesToActivate = new ArrayList<>();
-        for (String turtleID : turtlesToActivateStringList) {
-            turtlesToActivate.add(Integer.parseInt(turtleID));
-        }
         turtleHistory.setActiveTurtles(turtlesToActivate);
 
         CommandBlockManager commandBlockManager = new CommandBlockManager(askCommandsArgument, turtleHistory, accessibleVariables, definedFunctions);
         double returnValue = commandBlockManager.executeInstructionBlock();
 
-        turtleHistory.setActiveTurtles(savedActiveTurtles);
+        turtleHistory.setActiveTurtles(previousActiveTurtles);
 
         return returnValue;
     }

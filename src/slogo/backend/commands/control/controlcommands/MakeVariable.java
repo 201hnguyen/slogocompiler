@@ -12,23 +12,20 @@ import java.util.Map;
 public class MakeVariable implements ControlInterface {
 
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException {
         PeekableScanner scanner = (PeekableScanner) parameters.get(0);
         CommandTree commandTree = new CommandTree(turtleHistory);
-        double returnValue = 0.0;
+        double returnValue;
 
         String variable = scanner.next();
-        try {
-            commandTree.addToCommandTree(scanner.next());
-            while (!commandTree.onlyNumberLeft()) {
-                String command = scanner.next();
-                command = CommandBlockManager.checkAndInputUserVariable(command, accessibleVariables);
-                commandTree.addToCommandTree(command);
-            }
-            returnValue = commandTree.getLastDouble();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //FIXME
+        commandTree.addToCommandTree(scanner.next());
+        while (!commandTree.onlyNumberLeft()) {
+            String command = scanner.next();
+            command = CommandBlockManager.checkAndInputUserVariable(command, accessibleVariables);
+            commandTree.addToCommandTree(command);
         }
+        returnValue = commandTree.getLastDouble();
+
         for (Map<String, Double> variableMap : accessibleVariables) {
             if (variableMap.containsKey(variable)) {
                 variableMap.put(variable, returnValue);

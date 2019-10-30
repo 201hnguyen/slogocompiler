@@ -17,6 +17,7 @@ import slogo.frontend.statusscreen.TabMaker;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,12 @@ public class Visualization {
             tabPane.addHistory(command);
         }
         return command;
+    }
+
+    public Map<String, Double> getUpdatedVariables() {
+        Map<String, Double> map = new HashMap<>();
+        map.putAll(myVariables.get(myVariables.size()-1));
+        return map;
     }
 
     private void initialize() {

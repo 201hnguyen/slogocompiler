@@ -1,27 +1,37 @@
 package slogo.backend.commands.control.controlcommands;
 
+import slogo.backend.commands.CommandBlockManager;
+import slogo.backend.commands.PeekableScanner;
 import slogo.backend.commands.control.ControlInterface;
+import slogo.backend.utils.CommandTree;
 import slogo.backend.utils.TurtleHistory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class Tell implements ControlInterface {
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException {
         String turtlesToActivateArgument = parameters.get(0).toString();
 
-        List<String> turtlesToActivateStringList = Arrays.asList(turtlesToActivateArgument.split(" "));
-        List<Integer> turtlesToActivate = new ArrayList<>();
-        for (String turtleID : turtlesToActivateStringList) {
-            turtlesToActivate.add(Integer.parseInt(turtleID));
-        }
+        List<Integer> turtlesToActivate = setActivatedTurtles(turtleHistory, accessibleVariables, turtlesToActivateArgument);
         turtleHistory.setActiveTurtles(turtlesToActivate);
-        for (Integer id : turtleHistory.getActiveTurtles()) {
-            System.out.println("TELL ACTIVATED TURTLE" + id);
-        }
         return turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
+    }
+
+    protected List<Integer> setActivatedTurtles(TurtleHistory turtleHistory, List<Map<String,Double>> accessibleVariables, String turtlesToActivateArgument) throws ClassNotFoundException {
+        List<Integer> turtlesToActivate = new ArrayList<>();
+        PeekableScanner turtlesScanner = new PeekableScanner(turtlesToActivateArgument);
+        while (turtlesScanner.hasNext()) {
+            CommandTree commandTree = new CommandTree(turtleHistory);
+            while (!commandTree.onlyNumberLeft()) {
+                String turtleArgument = turtlesScanner.next();
+                turtleArgument = CommandBlockManager.checkAndInputUserVariable(turtleArgument, accessibleVariables);
+                commandTree.addToCommandTree(turtleArgument);
+            }
+            turtlesToActivate.add((int) commandTree.getLastDouble());
+        }
+        return turtlesToActivate;
     }
 }

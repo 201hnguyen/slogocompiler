@@ -14,7 +14,7 @@ public class For implements ControlInterface {
     public static final int START_END_INCREMENT_ARGUMENT_NUMBERS = 3;
 
     @Override
-    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) {
+    public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws ClassNotFoundException {
         String startEndIncrementArgument = parameters.get(0).toString();
         String forCommandArgument = parameters.get(1).toString();
 
@@ -22,21 +22,8 @@ public class For implements ControlInterface {
         Map<String, Double> localVariables = accessibleVariables.get(accessibleVariables.size()-1);
 
         String variable = scanner.next();
-        List<Double> parameterValues = new ArrayList<>();
 
-        for (int i=0; i<START_END_INCREMENT_ARGUMENT_NUMBERS; i++) {
-            CommandTree commandTree = new CommandTree(turtleHistory);
-            while (!commandTree.onlyNumberLeft()) {
-                String nextVal = scanner.next();
-                nextVal = CommandBlockManager.checkAndInputUserVariable(nextVal, accessibleVariables);
-                try {
-                    commandTree.addToCommandTree(nextVal);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
-                }
-            }
-            parameterValues.add(commandTree.getLastDouble());
-        }
+        List<Double> parameterValues = calculateParameterValues(scanner, turtleHistory, accessibleVariables);
 
         double start = parameterValues.get(0);
         double end = parameterValues.get(1);
@@ -51,5 +38,21 @@ public class For implements ControlInterface {
         localVariables.remove(variable);
 
         return returnValue;
+    }
+
+    private List<Double> calculateParameterValues(PeekableScanner scanner, TurtleHistory turtleHistory, List<Map<String, Double>> accessibleVariables) throws ClassNotFoundException {
+        List<Double> parameterValues = new ArrayList<>();
+
+        for (int i=0; i<START_END_INCREMENT_ARGUMENT_NUMBERS; i++) {
+            CommandTree commandTree = new CommandTree(turtleHistory);
+            while (!commandTree.onlyNumberLeft()) {
+                String nextVal = scanner.next();
+                nextVal = CommandBlockManager.checkAndInputUserVariable(nextVal, accessibleVariables);
+                commandTree.addToCommandTree(nextVal);
+            }
+            parameterValues.add(commandTree.getLastDouble());
+        }
+
+        return parameterValues;
     }
 }
