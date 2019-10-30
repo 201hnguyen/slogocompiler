@@ -1,6 +1,6 @@
 package slogo.frontend.statusscreen;
 
-public class ChangedVariable {
+public class ChangedString {
     private String changedVariable = "";
 
     public String getChangedVariable() {
