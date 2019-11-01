@@ -30,15 +30,15 @@ public class ColorManager {
         myColorMap.put(index, color);
     }
 
-    private void addColor(String s) {
+    private void addColor(int index, String s) {
         String[] arr = s.split(",");
-        addColor(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]), 100);
+        addColor(index, Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
     }
 
     private void initialize() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         for(String key : resourceBundle.keySet()) {
-            addColor(resourceBundle.getString(key));
+            addColor(Integer.parseInt(key), resourceBundle.getString(key));
         }
     }
 }

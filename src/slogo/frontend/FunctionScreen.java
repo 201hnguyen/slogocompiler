@@ -11,7 +11,7 @@ import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
 
-public class FunctionScreen {
+public class FunctionScreen implements NewScreen{
 
     private static final String INTRO_FUNCTION = "Set parameters of ";
     private static final String DECIMAL_PATTERN = "-?[0-9]+\\.?[0-9]*";
@@ -28,7 +28,7 @@ public class FunctionScreen {
         requiredLength = function.split(" ").length-1;
     }
 
-    public void createNewStage() {
+    public void show() {
         stage = new Stage();
         VBox vBox = new VBox();
         stage.setScene(new Scene(vBox));

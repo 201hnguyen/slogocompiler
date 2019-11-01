@@ -92,7 +92,7 @@ public class Visualization {
     }
 
     public void showError(String message) {
-        ErrorShow errorShow = new ErrorShow(message);
+        NewScreen errorShow = new ErrorShow(message);
         errorShow.show();
     }
 

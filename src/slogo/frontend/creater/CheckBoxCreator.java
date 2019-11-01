@@ -4,6 +4,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.NewScreen;
 import slogo.frontend.controller.NodeController;
 
 import java.lang.reflect.Method;
@@ -68,7 +69,7 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
             Method m = myController.getClass().getDeclaredMethod(methodName);
             m.invoke(myController);
         } catch (Exception e) {
-            ErrorShow errorShow = new ErrorShow(e, key + " CheckBox not set well.");
+            NewScreen errorShow = new ErrorShow(e, key + " CheckBox not set well.");
             errorShow.show();
         }
     }

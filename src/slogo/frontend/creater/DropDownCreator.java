@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import slogo.frontend.ErrorShow;
+import slogo.frontend.NewScreen;
 import slogo.frontend.controller.NodeController;
 import java.util.ResourceBundle;
 
@@ -67,7 +68,7 @@ public class DropDownCreator extends HBox implements ChangeableNode{
             Method m = myController.getClass().getDeclaredMethod(methodName, String.class, String.class);
             m.invoke(myController, comboBoxId, key);
         } catch (Exception e) {
-            ErrorShow errorShow = new ErrorShow(e, comboBoxId + " dropdown not set well.");
+            NewScreen errorShow = new ErrorShow(e, comboBoxId + " dropdown not set well.");
             errorShow.show();
         }
     }
