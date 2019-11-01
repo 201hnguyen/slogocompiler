@@ -25,7 +25,6 @@ public class Connector {
 
     private Map<Stage, Visualization> visualizationMap;
     private Map<Stage, BackendManager> backendManagerMap;
-    private Timeline myAnimation;
     private boolean newWindow = false;
 
     public Connector(Stage stage) {
@@ -39,7 +38,7 @@ public class Connector {
      */
     public void begin() {
         var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
-        myAnimation = new Timeline();
+        Timeline myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();

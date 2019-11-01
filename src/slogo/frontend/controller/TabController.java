@@ -1,6 +1,7 @@
 package slogo.frontend.controller;
 
 import slogo.frontend.FunctionScreen;
+import slogo.frontend.NewScreen;
 import slogo.frontend.statusscreen.ChangedString;
 import slogo.frontend.VariableScreen;
 import slogo.frontend.turtlescreen.DisplayScreen;
@@ -25,8 +26,8 @@ public class TabController implements NodeController {
     public void variableAction(String key, String content) {
         variableKey = key;
         myChangedString = new ChangedString();
-        VariableScreen variableScreen = new VariableScreen(myChangedString, content);
-        variableScreen.createNewStage();
+        NewScreen variableScreen = new VariableScreen(myChangedString, content);
+        variableScreen.show();
     }
 
     public void historyAction(String key, String content) {
@@ -36,8 +37,8 @@ public class TabController implements NodeController {
     public void functionsAction(String key, String content) {
         functionKey = key;
         myFunctionString = new ChangedString();
-        FunctionScreen functionScreen = new FunctionScreen(myFunctionString, content);
-        functionScreen.createNewStage();
+        NewScreen functionScreen = new FunctionScreen(myFunctionString, content);
+        functionScreen.show();
 
     }
 
