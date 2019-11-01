@@ -8,6 +8,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/**
+ * Takes in a String of SLogo commands and checks if they 
+ *
+ * @author Amber Johnson, Eric Han, and Robert C. Duvall
+ */
 public class Parser {
 
     private static final String SYNTAX = "Syntax";
