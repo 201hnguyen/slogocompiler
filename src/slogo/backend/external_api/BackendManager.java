@@ -27,7 +27,6 @@ public class BackendManager {
     }
 
     public void executeCommands() throws BackendException {
-        //String translatedCommand = myCommandParser.translateMyCommands(commands);
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
         commandBlockManager = new CommandBlockManager(translatedCommand, turtleHistory, variables, userDefinedFunctions);

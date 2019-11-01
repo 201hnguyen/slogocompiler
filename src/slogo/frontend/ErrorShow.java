@@ -2,6 +2,10 @@ package slogo.frontend;
 
 import javafx.scene.control.Alert;
 
+/**
+ * The class is used to help display errors in the front end by using alert.
+ */
+
 public class ErrorShow implements NewScreen{
     private Throwable ex;
     private String message;

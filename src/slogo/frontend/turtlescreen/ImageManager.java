@@ -12,6 +12,10 @@ public class ImageManager {
 
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
 
+    /**
+     * This method helps "manage the image" by getting the needed images from the resources
+     * */
+
     public Image getImage(int imageIndex) {
         for(String key : Collections.list(resourceBundle.getKeys())) {
             int index = Integer.parseInt(key);

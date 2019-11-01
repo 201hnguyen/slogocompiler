@@ -44,6 +44,13 @@ public class CommandBlockManager {
     private Map<String,List<Object>> myAccessibleUserDefinedFunctions;
     private List<Integer> myActiveTurtles;
 
+    /**
+     * Executes sequential block of instructions and manage user-defined variables plus functions
+     * @param commandBlock
+     * @param turtleHistory
+     * @param higherScopeVariables
+     * @param definedFunctions
+     */
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
         myTurtleHistory = turtleHistory;
@@ -60,22 +67,24 @@ public class CommandBlockManager {
         System.out.println("Full command string of this block: " + myCommandBlockString);
     }
 
+    /**
+     * Executes a specific block of instruction
+     * @return
+     * @throws BackendException
+     */
     public double executeInstructionBlock() throws BackendException {
         double returnValue = 0;
         while (myScanner.hasNext()) {
             String command = myScanner.next();
             command = checkAndInputUserVariable(command, myAccessibleVariables);
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
-                System.out.println(command + " is control");
                 returnValue = buildAndExecuteControlCommand(command);
                 if(command.equals(EXECUTE_MULTIPLE_TURTLE_COMMAND)) {
                     myCommandTree.setTurtleID((int) (returnValue + 0.01));
                 }
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
-                System.out.println(command + " is function");
                 returnValue = buildAndExecuteUserDefinedCommand(command);
             } else {
-                System.out.println(command + " is neither");
                 returnValue = buildAndExecuteBasicCommand(command);
             }
         }
@@ -85,10 +94,18 @@ public class CommandBlockManager {
         return returnValue;
     }
 
+    /**
+     * Gets the map of the user-defined functions for saving them in the Backend manager.
+     * @return
+     */
     public Map<String, List<Object>> getUserDefinedFunctions() {
         return Map.copyOf(myAccessibleUserDefinedFunctions);
     }
 
+    /**
+     * Gets the string representation of user-defined functions for display on the front-end
+     * @return
+     */
     public List<String> getUserDefinedFunctionsAsStrings() {
         List<String> userDefinedFunctionsAsString = new ArrayList<>();
         for (Map.Entry<String, List<Object>> entry : myAccessibleUserDefinedFunctions.entrySet()) {
@@ -101,6 +118,36 @@ public class CommandBlockManager {
             userDefinedFunctionsAsString.add(functionAsString.toString());
         }
         return userDefinedFunctionsAsString;
+    }
+
+    /**
+     * Given a user-defined variable, replace the user-defined variable with its value when it is called
+     * @param command
+     * @param accessibleVariables
+     * @return
+     */
+    public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {
+        if (command.charAt(0) == USER_DEFINED_SIGNAL) {
+            for (Map<String, Double> variableMap : accessibleVariables) {
+                if (variableMap.containsKey(command)) {
+                    return variableMap.get(command).toString();
+                }
+            }
+            Map<String, Double> mostLocalMap = accessibleVariables.get(accessibleVariables.size()-1);
+            mostLocalMap.put(command, 0.0);
+            return mostLocalMap.get(command).toString();
+        }
+        return command;
+    }
+
+    /**
+     * Returns a map of the variables for saving and displaying on the front-end
+     * @return
+     */
+    public Map<String, Double> getVariables() {
+        Map<String, Double> variables = new LinkedHashMap<>();
+        variables.putAll(myLocalUserDefinedVariables);
+        return variables;
     }
 
     private double buildAndExecuteControlCommand(String command) throws BackendException {
@@ -182,42 +229,18 @@ public class CommandBlockManager {
             String argument = myScanner.next();
             argument = checkAndInputUserVariable(argument, myAccessibleVariables);
             myCommandTree.addToCommandTree(argument);
-            System.out.println(argument + " to make function");
             while (!myCommandTree.onlyNumberLeft()) {
                 argument = myScanner.next();
-                System.out.println(argument + " added");
                 argument = checkAndInputUserVariable(argument, myAccessibleVariables);
-                System.out.println(argument + " added");
                 myCommandTree.addToCommandTree(argument);
             }
             if (myCommandTree.onlyNumberLeft()) {
-                System.out.println(myCommandTree.getLastDouble() + " will be added");
                 numericalArgumentForMethod.add(myCommandTree.getLastDouble());
             }
         }
         commandArguments.add(numericalArgumentForMethod);
         commandArguments.addAll(myAccessibleUserDefinedFunctions.get(command));
         return commandArguments;
-    }
-
-    public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {
-        if (command.charAt(0) == USER_DEFINED_SIGNAL) {
-            for (Map<String, Double> variableMap : accessibleVariables) {
-                if (variableMap.containsKey(command)) {
-                    return variableMap.get(command).toString();
-                }
-            }
-            Map<String, Double> mostLocalMap = accessibleVariables.get(accessibleVariables.size()-1);
-            mostLocalMap.put(command, 0.0);
-            return mostLocalMap.get(command).toString();
-        }
-        return command;
-    }
-
-    public List<Map<String, Double>> getVariables() {
-        List<Map<String, Double>> variables = new ArrayList<>();
-        variables.addAll(myAccessibleVariables);
-        return variables;
     }
 
     private List<Object> prepareBlockCommand() throws BackendException {
@@ -243,16 +266,15 @@ public class CommandBlockManager {
         if (! nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL)) {
             while (endSignalersNeeded != 0) {
                 builder.append(nextWord + " ");
-                if (myScanner.hasNext()) {
-                    nextWord = myScanner.next();
-                    if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
-                        endSignalersNeeded++;
-                    } else if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL) ||
-                            endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
-                        endSignalersNeeded--;
-                    }
-                } else {
+                if(!myScanner.hasNext()) {
                     throw new BackendException("Unmatched number of brackets");
+                }
+                nextWord = myScanner.next();
+                if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
+                    endSignalersNeeded++;
+                } else if (endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(BLOCK_ARGUMENT_END_SIGNAL) ||
+                        endSignaler.equals(NON_BLOCK_ARGUMENT_END_SIGNAL) && nextWord.equals(NON_BLOCK_ARGUMENT_END_SIGNAL)) {
+                    endSignalersNeeded--;
                 }
             }
         }
@@ -271,8 +293,8 @@ public class CommandBlockManager {
 
     private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) throws BackendException {
         if (myScanner.hasNext() && endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
-            myScanner.next();
-            buildIndividualControlArgument(endSignaler, arguments);
+                myScanner.next();
+                buildIndividualControlArgument(endSignaler, arguments);
         }
     }
 
