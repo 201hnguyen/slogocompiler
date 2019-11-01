@@ -96,6 +96,11 @@ public class Visualization {
         errorShow.show();
     }
 
+    public void showError(Throwable ex, String message) {
+        ErrorShow errorShow = new ErrorShow(ex, message);
+        errorShow.show();
+    }
+
     private void initialize() {
         Pane root = new AnchorPane();
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(displayScreen));
@@ -110,8 +115,7 @@ public class Visualization {
         startStage();
     }
 
-    public void showError(Throwable ex, String message) {
-        ErrorShow errorShow = new ErrorShow(ex, message);
-        errorShow.show();
+    public void setUserFunctions(List<String> userFunctions) {
+        tabPane.setFunctions(userFunctions);
     }
 }

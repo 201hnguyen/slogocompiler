@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class CheckBoxController extends HBox implements NodeController {
 
+    private static final double SETMAXSPEED = 10;
+
     private DisplayScreen displayScreen;
 
     public CheckBoxController(DisplayScreen displayScreen) {
@@ -15,7 +17,7 @@ public class CheckBoxController extends HBox implements NodeController {
     }
 
     public void animationAction() {
-        displayScreen.setAnimation(10);
+        displayScreen.setAnimation(SETMAXSPEED);
     }
 
     @Override
