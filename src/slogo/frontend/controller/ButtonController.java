@@ -6,6 +6,14 @@ import slogo.frontend.reference.ReferenceWindow;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * purpose (why would anyone use it)
+ * assumptions (what situations or values might cause it to fail)
+ * dependencies (what other classes or packages it depends on)
+ * an example of how to use it
+ * any other details users should know
+ */
+
 public class ButtonController implements NodeController {
 
     private static final String INITIAL_LANGUAGE = "English";

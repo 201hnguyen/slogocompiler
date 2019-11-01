@@ -12,9 +12,17 @@ import slogo.frontend.Visualization;
 
 import java.util.HashMap;
 import java.util.Map;
+/**
+ * purpose (why would anyone use it)
+ * assumptions (what situations or values might cause it to fail)
+ * dependencies (what other classes or packages it depends on)
+ * an example of how to use it
+ * any other details users should know
+ */
+
 
 /**
- * A class to connect the backend and the frontend
+ * Connects the backend and the frontend
  * Gets user input from Visualizaton.java and creates a new BackendManager object
  *
  * @author Eric Han
@@ -63,6 +71,7 @@ public class Connector {
     }
 
     //
+    // Throws a BackendException or a ParserException if
     private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException, ParserException {
         String input = myVisualization.getInput();
         if (!input.equals("")) {

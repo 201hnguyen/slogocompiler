@@ -2,7 +2,13 @@ package slogo.backend.parser;
 
 /**
  *
- * @author Amber Johnson and Robert C. Duvall
+ * purpose (why would anyone use it)
+ * assumptions (what situations or values might cause it to fail)
+ * dependencies (what other classes or packages it depends on)
+ * an example of how to use it
+ * any other details users should know
+ *
+ * @author Amber Johnson
  */
 public class ParserException extends RuntimeException {
 
@@ -15,7 +21,8 @@ public class ParserException extends RuntimeException {
 
     /**
      * Gets the error message for a ParserException object
-     * @return
+     *
+     * @return a String of the error message
      */
     public String getMessage() {return message;}
 }

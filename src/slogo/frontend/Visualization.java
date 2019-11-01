@@ -24,6 +24,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * purpose (why would anyone use it)
+ * assumptions (what situations or values might cause it to fail)
+ * dependencies (what other classes or packages it depends on)
+ * an example of how to use it
+ * any other details users should know
+ */
+
 public class Visualization {
     private static final double SCENE_WIDTH = 830;
     private static final double SCENE_HEIGHT = 630;

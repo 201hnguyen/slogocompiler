@@ -9,7 +9,10 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 /**
- * Takes in a String of SLogo commands and checks if they 
+ * Takes in a String of SLogo commands and checks if all the commands are valid
+ * Used in BackendManager.java
+ * Ex:  Parser p = new Parser("fd 50", "Urdu");
+ *      String commands = p.translateCommands();
  *
  * @author Amber Johnson, Eric Han, and Robert C. Duvall
  */
