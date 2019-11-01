@@ -51,12 +51,33 @@ public class Visualization {
         initialize();
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public String getLanguage() {return myUIManager.getLanguage();}
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public boolean needNewWindow() {
         return myUIManager.isNewButtonClicked();
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public void update() {
         myUIManager.update();
         displayScreen.update();
@@ -72,6 +93,13 @@ public class Visualization {
         }
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public void setHistory(TurtleHistory turtleHistory) {
         displayScreen.setHistory(turtleHistory);
         myVariables = turtleHistory.getMyVariables();
@@ -85,6 +113,13 @@ public class Visualization {
         stage.show();
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public String getInput() {
         String command = myUIManager.getInput();
         if(!command.equals("")) {
@@ -93,17 +128,38 @@ public class Visualization {
         return command;
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public Map<String, Double> getUpdatedVariables() {
         Map<String, Double> map = new HashMap<>();
         map.putAll(myVariables.get(myVariables.size()-1));
         return map;
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public void showError(String message) {
         NewScreen errorShow = new ErrorShow(message);
         errorShow.show();
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public void showError(Throwable ex, String message) {
         ErrorShow errorShow = new ErrorShow(ex, message);
         errorShow.show();
@@ -123,6 +179,13 @@ public class Visualization {
         startStage();
     }
 
+    /**
+     * purpose (why would anyone use it)
+     * assumptions (what situations or values might cause it to fail)
+     * parameters (purpose beyond their name if necessary)
+     * return value
+     * @return
+     */
     public void setUserFunctions(List<String> userFunctions) {
         tabPane.setFunctions(userFunctions);
     }
