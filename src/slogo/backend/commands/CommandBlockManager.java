@@ -144,9 +144,9 @@ public class CommandBlockManager {
      * Returns a map of the variables for saving and displaying on the front-end
      * @return
      */
-    public Map<String, Double> getVariables() {
-        Map<String, Double> variables = new LinkedHashMap<>();
-        variables.putAll(myLocalUserDefinedVariables);
+    public List<Map<String, Double>> getVariables() {
+        List<Map<String, Double>> variables = new ArrayList<>();
+        variables.addAll(myAccessibleVariables);
         return variables;
     }
 

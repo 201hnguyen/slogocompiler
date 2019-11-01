@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Collections;
 
 
-public class TabMaker extends VBox implements ChangeableNode {
+public class ScrollCreater extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
     private static final double LAYOUT_Y = 70;
     private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
@@ -27,7 +27,7 @@ public class TabMaker extends VBox implements ChangeableNode {
     private NodeController myController;
     private Map<String, Double> myVariables = new TreeMap<>();
 
-    public TabMaker(NodeController nodeController) {
+    public ScrollCreater(NodeController nodeController) {
         myController = nodeController;
         setLayoutX(LAYOUT_X);
         setLayoutY(LAYOUT_Y);
