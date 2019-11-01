@@ -15,10 +15,11 @@ public class CommandTree {
     CommandTreeNode rightMostNode = commandTreeNode;
 
     private CommandFactory myCommandFactory;
-    private int turtleID = 1;
+    private int turtleID ;
 
     public CommandTree(TurtleHistory turtleHistory) {
         myCommandFactory = new CommandFactory(turtleHistory);
+        turtleID = turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
     }
 
     public void addToCommandTree(String command) throws BackendException {
@@ -54,6 +55,7 @@ public class CommandTree {
             int parameter = myCommandFactory.getNumParameter(command);
             while(!(parameter > rightMostNode.getChildrenNumber()) && command != "") {
                 printFullCommand();
+                System.out.println(turtleID + " is the ID");
                 double value = myCommandFactory.execute(command, turtleID, getParameters());
                 replaceRightMostCommandWithNumber(value);
                 command = rightMostNode.getCommandWord();

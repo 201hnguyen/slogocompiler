@@ -26,6 +26,7 @@ public class CommandBlockManager {
     private static final String DEFINE_USER_VARIABLE_COMMAND = "MakeVariable";
     private static final String DEFINE_USER_INSTRUCTION_COMMAND = "MakeUserInstruction";
     private static final String EXECUTE_USER_DEFINED_COMMAND = "UserDefined";
+    private static final String EXECUTE_MULTIPLE_TURTLE_COMMAND = "Tell";
     private static final ResourceBundle CONTROLS_RESOURCE_BUNDLE = ResourceBundle.getBundle(BLOCK_CONTROLS_RESOURCE_PATH);
     private static final ResourceBundle MOVEMENT_COMMANDS_RESOURCE_BUNDLE = ResourceBundle.getBundle(MOVEMENT_COMMANDS_RESOURCE_PATH);
     private static final String NON_BLOCK_ARGUMENT_END_SIGNAL = "[";
@@ -64,12 +65,17 @@ public class CommandBlockManager {
         while (myScanner.hasNext()) {
             String command = myScanner.next();
             command = checkAndInputUserVariable(command, myAccessibleVariables);
-            System.out.println(command + " will now be put somewhere");
             if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
+                System.out.println(command + " is control");
                 returnValue = buildAndExecuteControlCommand(command);
+                if(command.equals(EXECUTE_MULTIPLE_TURTLE_COMMAND)) {
+                    myCommandTree.setTurtleID((int) (returnValue + 0.01));
+                }
             } else if (myAccessibleUserDefinedFunctions.containsKey(command)) {
+                System.out.println(command + " is function");
                 returnValue = buildAndExecuteUserDefinedCommand(command);
             } else {
+                System.out.println(command + " is neither");
                 returnValue = buildAndExecuteBasicCommand(command);
             }
         }
@@ -113,6 +119,7 @@ public class CommandBlockManager {
         } else {
             commandArguments = prepareBlockCommand();
         }
+
         returnValue = myControlExecutor.execute(command, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
         myCommandTree.addToCommandTree(returnValue+"");
         return returnValue;
@@ -121,14 +128,13 @@ public class CommandBlockManager {
     private double buildAndExecuteUserDefinedCommand(String command) throws BackendException {
         double returnValue = 0;
         List<Object> commandArguments = prepareUserDefinedFunction(command);
-        returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, myAccessibleVariables, myAccessibleUserDefinedFunctions);
+        returnValue = myControlExecutor.execute(EXECUTE_USER_DEFINED_COMMAND, commandArguments, myTurtleHistory, copyOfVariables(), myAccessibleUserDefinedFunctions);
         myCommandTree.addToCommandTree(returnValue+"");
         return returnValue;
     }
 
     private double buildAndExecuteBasicCommand(String command) throws BackendException {
         double returnValue = 0;
-        System.out.println(command + " is inside the tree now");
         if (MOVEMENT_COMMANDS_RESOURCE_BUNDLE.containsKey(command)) {
             command = rerunMovementCommands(command) + "";
         }
@@ -151,6 +157,10 @@ public class CommandBlockManager {
             while (!repeatCommandTree.onlyNumberLeft() && myScanner.hasNext()) {
                 command = myScanner.next();
                 command = checkAndInputUserVariable(command, myAccessibleVariables);
+                if (CONTROLS_RESOURCE_BUNDLE.containsKey(command)) {
+                    returnVal = buildAndExecuteControlCommand(command);
+                    command = returnVal + "";
+                }
                 repeatCommandTree.addToCommandTree(command);
             }
             returnVal = repeatCommandTree.getLastDouble();
@@ -172,12 +182,16 @@ public class CommandBlockManager {
             String argument = myScanner.next();
             argument = checkAndInputUserVariable(argument, myAccessibleVariables);
             myCommandTree.addToCommandTree(argument);
+            System.out.println(argument + " to make function");
             while (!myCommandTree.onlyNumberLeft()) {
                 argument = myScanner.next();
+                System.out.println(argument + " added");
                 argument = checkAndInputUserVariable(argument, myAccessibleVariables);
+                System.out.println(argument + " added");
                 myCommandTree.addToCommandTree(argument);
             }
             if (myCommandTree.onlyNumberLeft()) {
+                System.out.println(myCommandTree.getLastDouble() + " will be added");
                 numericalArgumentForMethod.add(myCommandTree.getLastDouble());
             }
         }
@@ -200,9 +214,9 @@ public class CommandBlockManager {
         return command;
     }
 
-    public Map<String, Double> getVariables() {
-        Map<String, Double> variables = new LinkedHashMap<>();
-        variables.putAll(myLocalUserDefinedVariables);
+    public List<Map<String, Double>> getVariables() {
+        List<Map<String, Double>> variables = new ArrayList<>();
+        variables.addAll(myAccessibleVariables);
         return variables;
     }
 
@@ -243,6 +257,7 @@ public class CommandBlockManager {
             }
         }
         String argument = builder.toString();
+        System.out.println(argument);
         arguments.add(argument);
     }
 
@@ -256,8 +271,18 @@ public class CommandBlockManager {
 
     private void checkAndAddAdditionalArguments(String endSignaler, List<Object> arguments) throws BackendException {
         if (myScanner.hasNext() && endSignaler.equals(BLOCK_ARGUMENT_END_SIGNAL) && myScanner.peek().equals(BLOCK_ARGUMENT_BEGIN_SIGNAL)) {
-                myScanner.next();
-                buildIndividualControlArgument(endSignaler, arguments);
+            myScanner.next();
+            buildIndividualControlArgument(endSignaler, arguments);
         }
+    }
+
+    private List<Map<String, Double>> copyOfVariables() {
+        List<Map<String, Double>> list = new ArrayList<>();
+        for(Map<String, Double> map : myAccessibleVariables) {
+            Map<String, Double> copy = new HashMap<>();
+            copy.putAll(map);
+            list.add(map);
+        }
+        return list;
     }
 }

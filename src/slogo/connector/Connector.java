@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Connector {
 
-    private static final double DURATION_MILLIS = 10;
+    private static final double DURATION_MILLIS = 4;
 
     private Map<Stage, Visualization> visualizationMap;
     private Map<Stage, BackendManager> backendManagerMap;
@@ -58,6 +58,9 @@ public class Connector {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
             System.out.println(input);
+            if(!myVisualization.getUpdatedVariables().isEmpty()) {
+                myBackEndManager.setVariables(myVisualization.getUpdatedVariables());
+            }
             myBackEndManager.setCommands(input, myVisualization.getLanguage());
             myBackEndManager.executeCommands();
             myVisualization.setHistory(myBackEndManager.getHistory());

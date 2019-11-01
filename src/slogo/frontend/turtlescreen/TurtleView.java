@@ -46,8 +46,8 @@ public class TurtleView extends ImageView {
         updateDrawStatus(myMovements.get(index).getDrawStatus());
         updatePenStatus(myMovements.get(index).getPenStatus());
         double angle = getAngle(movement.getStartPosition(), movement.getEndPosition());
-        Point2D endPos = new Point2D(movement.getEndPosition().getX() + getScreenCenter().getX(),
-                getScreenCenter().getY() - movement.getEndPosition().getY());
+        Point2D endPos = new Point2D(movement.getEndPosition().getX()/2 + getScreenCenter().getX(),
+                getScreenCenter().getY() - movement.getEndPosition().getY()/2);
         if(initialPos.distance(endPos) < speed) {
             moveView(endPos, movement.getOrientation());
             index++;

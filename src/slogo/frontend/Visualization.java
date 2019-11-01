@@ -58,8 +58,12 @@ public class Visualization {
         }
         Map<String, Double> changedVariables = myUIManager.getChangedVariables();
         if(!changedVariables.isEmpty()) {
-            index = index < myVariables.size()? index : myVariables.size()-1;
-            myVariables.get(index).putAll(changedVariables);
+            index = index < myVariables.size()? index : myVariables.size() - 1;
+            myVariables.get(myVariables.size()-1).putAll(changedVariables);
+            for(String key : changedVariables.keySet()) {
+                System.out.println(myVariables.size());
+                System.out.println(key + ", " + changedVariables.get(key));
+            }
             tabPane.setVariables(myVariables.get(index));
         }
     }
@@ -67,6 +71,7 @@ public class Visualization {
     public void setHistory(TurtleHistory turtleHistory) {
         displayScreen.setHistory(turtleHistory);
         myVariables = turtleHistory.getMyVariables();
+        System.out.println(myVariables.size());
         index = 0;
     }
 
@@ -86,8 +91,12 @@ public class Visualization {
     }
 
     public Map<String, Double> getUpdatedVariables() {
+        if(myVariables.isEmpty()) {
+            return new HashMap<>();
+        }
         Map<String, Double> map = new HashMap<>();
         map.putAll(myVariables.get(myVariables.size()-1));
+        System.out.println(map.size() + "is the size of mep");
         return map;
     }
 

@@ -28,6 +28,13 @@ public class Tell implements ControlInterface {
             CommandTree commandTree = new CommandTree(turtleHistory);
             while (!commandTree.onlyNumberLeft()) {
                 String turtleArgument = turtlesScanner.next();
+                if(turtleArgument.charAt(0) == ':') {
+                    for (Map<String, Double> variableMap : accessibleVariables) {
+                        if (variableMap.containsKey(turtleArgument)) {
+                            turtleArgument = variableMap.get(turtleArgument).toString();
+                        }
+                    }
+                }
                 turtleArgument = CommandBlockManager.checkAndInputUserVariable(turtleArgument, accessibleVariables);
                 commandTree.addToCommandTree(turtleArgument);
             }

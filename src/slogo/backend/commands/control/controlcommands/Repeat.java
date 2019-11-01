@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Repeat implements ControlInterface {
+    private List<Map<String, Double>> variables;
 
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws BackendException {
 
@@ -18,9 +19,11 @@ public class Repeat implements ControlInterface {
 
         CommandBlockManager conditionCommandBlockManager = new CommandBlockManager(repeatCondition, turtleHistory, accessibleVariables, definedFunctions);
         double numTimesRepeated = conditionCommandBlockManager.executeInstructionBlock();
+        variables = conditionCommandBlockManager.getVariables();
 
         for (int i=0; i<(int) numTimesRepeated; i++) {
-            CommandBlockManager commandBlockManager = new CommandBlockManager(repeatBlockCommandArgument, turtleHistory, accessibleVariables, definedFunctions);
+            CommandBlockManager commandBlockManager = new CommandBlockManager(repeatBlockCommandArgument, turtleHistory, variables, definedFunctions);
+            variables = commandBlockManager.getVariables();
             returnValue = commandBlockManager.executeInstructionBlock();
         }
         return returnValue;
