@@ -10,6 +10,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UserDefined implements ControlInterface {
+    /**
+     * Executes user-defined functions given the variables in the first parameter and commands in the second parameter
+     * @param turtleHistory
+     * @param parameters
+     * @param accessibleVariables
+     * @param definedFunctions
+     * @return
+     * @throws BackendException
+     */
     @Override
     public double execute(TurtleHistory turtleHistory, List<Object> parameters, List<Map<String, Double>> accessibleVariables, Map<String, List<Object>> definedFunctions) throws BackendException {
         List<Double> numericalArguments = (List<Double>) parameters.get(0);

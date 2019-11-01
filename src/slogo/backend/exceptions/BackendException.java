@@ -1,19 +1,25 @@
 package slogo.backend.exceptions;
 
-public class BackendException extends Exception{
-    private Throwable ex;
-    private String message;
+/**
+ * @author  Eric Han, Amber Johnson, Ha Nguyen
+ */
 
-    public BackendException(Throwable ex, String message) {
-        this.ex = ex;
-        this.message = message;
-    }
+public class BackendException extends Exception{
+    private final Throwable ex = new Exception();
+    private final String message;
 
     public BackendException(String message) {
-        super();
         this.message = message;
     }
 
+    public BackendException(Throwable ex, String message) {
+        this.message = message;
+    }
+
+    /**
+     * Gets the error message for a BackendException object
+     * @return
+     */
     public String getMessage() {
         return message;
     }
