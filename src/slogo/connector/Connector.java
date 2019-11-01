@@ -13,6 +13,12 @@ import slogo.frontend.Visualization;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class to connect the backend and the frontend
+ * Gets user input from Visualizaton.java and creates a new BackendManager object
+ *
+ * @author Eric Han
+ */
 public class Connector {
 
     private static final double DURATION_MILLIS = 10;
@@ -28,6 +34,9 @@ public class Connector {
         createNewWorkSpace(stage);
     }
 
+    /**
+     *
+     */
     public void begin() {
         var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
         myAnimation = new Timeline();
@@ -70,11 +79,13 @@ public class Connector {
         }
     }
 
+    //
     private void createWorkSpace() {
         Stage stage = new Stage();
         createNewWorkSpace(stage);
     }
 
+    //
     private void createNewWorkSpace(Stage stage) {
         Visualization myVisualization = new Visualization(stage);
         BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(), myVisualization.getLanguage(), new TurtleHistory());
