@@ -13,8 +13,14 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.Collections;
 
-
-public class ScrollCreater extends VBox implements ChangeableNode {
+/**
+ * This is the ScrollCreator class that extends an VBox. Essentially, this class helps create
+ * any needed ScrollPanes by reading through the resource bundle. After the scrollPanes are created,
+ * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michael Castro
+ */
+public class TabMaker extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
     private static final double LAYOUT_Y = 70;
     private static final String RESOURCE_PATH = "resources.frontend.TabsResource";
@@ -27,13 +33,16 @@ public class ScrollCreater extends VBox implements ChangeableNode {
     private NodeController myController;
     private Map<String, Double> myVariables = new TreeMap<>();
 
-    public ScrollCreater(NodeController nodeController) {
+    public TabMaker(NodeController nodeController) {
         myController = nodeController;
         setLayoutX(LAYOUT_X);
         setLayoutY(LAYOUT_Y);
         createTabPane();
     }
 
+    /**
+     * adds the executed command to the history scrollpane
+     */
     public void addHistory(String command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
@@ -42,6 +51,9 @@ public class ScrollCreater extends VBox implements ChangeableNode {
         }
     }
 
+    /**
+     * sets the text on the variable scrollpane
+     */
     public void setVariables(Map<String, Double> variables) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (!scrollMaker.getKey().equals("Variables")) {
@@ -56,6 +68,9 @@ public class ScrollCreater extends VBox implements ChangeableNode {
         }
     }
 
+    /**
+     * sets the text on the function scrollpane
+     */
     public void setFunctions(List<String> myFunctions) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (!scrollMaker.getKey().equals("Functions")) {

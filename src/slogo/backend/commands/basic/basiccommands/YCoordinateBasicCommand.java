@@ -6,6 +6,10 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements YCoordinate command
+ */
 public class YCoordinateBasicCommand implements BasicCommandInterface {
 
     @Override

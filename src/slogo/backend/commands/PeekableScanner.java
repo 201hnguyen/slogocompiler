@@ -4,8 +4,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Given an input string, scans through it like a scanner but maintains indices to be returned to.
+ * Purpose: The CommandBlockManager executes a String of commands and manages the control flow and all the variables, functions,
+ * and active turtles defined for this String block of commands.
+ * Assumptions: This class assumes the existence of everything in its constructor parameters. As such, when an accessibleVariables list or
+ * definedFunction map has not yet been created, the user should pass in a new instance of these classes which the
+ * CommandBlockManager can build off of. This class also depends on the TurtleHistory class, as its commands
+ * directly execute commands that make changes to this class.
+ * Example of usage: CommandBlockManager commandBlockManager = new CommandBlockManager(arguments, turtleHistory, accessibleVariables, definedFunctions);
+ *                   double returnValue = commandBlockManager.executeInstructionBlock();
+ * Additional details: none
+ * @author Ha Nguyen, Eric Han
  */
+
 public class PeekableScanner {
     private int index;
     private List<String> myWords = new ArrayList<>();

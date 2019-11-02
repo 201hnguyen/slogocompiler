@@ -13,6 +13,17 @@ import slogo.frontend.Visualization;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Connects the backend and the frontend;
+ * Gets user input from Visualizaton.java; and,
+ * Creates a new BackendManager object with the user input.
+ * Throws either a BackendException or ParserException if either of these exceptions are thrown from BackendManager.
+ * Used in Main.java
+ * Ex:  Connector c = new Connector(stage);
+ *      c.begin();
+ *
+ * @author Eric Han and Amber Johnson
+ */
 public class Connector {
 
     private static final double DURATION_MILLIS = 4;
@@ -27,6 +38,11 @@ public class Connector {
         createNewWorkSpace(stage);
     }
 
+    /**
+     * Starts a new Timeline for user display;
+     * Calls the step() method; and,
+     * Initializes the animation.
+     */
     public void begin() {
         var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
         Timeline myAnimation = new Timeline();
@@ -35,7 +51,6 @@ public class Connector {
         myAnimation.play();
     }
 
-    //
     private void step()  {
         for(Stage stage : visualizationMap.keySet()) {
             try {
@@ -53,7 +68,6 @@ public class Connector {
         }
     }
 
-    //
     private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException, ParserException {
         String input = myVisualization.getInput();
         if (!input.equals("")) {

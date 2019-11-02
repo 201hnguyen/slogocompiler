@@ -7,10 +7,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import slogo.backend.parser.ParserException;
 import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
 
+/**
+ * Implementation of NewScreen that is called when a text in the variables scrollpane is clicked.
+ * User can type the new value for the variable.
+ *
+ * @author Eric Han
+ */
 public class VariableScreen implements NewScreen{
 
     private static final String INTRO_VARIABLE = "Set value of ";
@@ -28,6 +35,10 @@ public class VariableScreen implements NewScreen{
         variableName = variableArr[0];
         value = variableArr[1];
     }
+    /**
+     *
+     *
+     */
 
     public void show() {
         stage = new Stage();

@@ -5,6 +5,11 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements greater? command
+ */
+
 public class GreaterThanBasicCommand implements BasicCommandInterface {
 
     @Override

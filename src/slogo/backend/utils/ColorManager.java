@@ -5,6 +5,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+/**
+ * Purpose: ColorManager holds all the Colors that correspond to the index
+ * Example of usage: ColorManager cm = new ColorManager();
+ *                   cm.addColor(3, 90, 180, 100);
+ *                   Color c = cm.getColor(3, false)
+ * Additional details: none
+ * @author Eric Han
+ */
 public class ColorManager {
 
     private static final Color INITIAL_PEN_COLOR = Color.BLACK;
@@ -18,6 +26,12 @@ public class ColorManager {
         initialize();
     }
 
+    /**
+     * gets the color corresponding to that index
+     *
+     * @param index: the index
+     * @param background: is this called for choosing background color
+     */
     public Color getColor(int index, boolean background) {
         if(myColorMap.containsKey(index)) {
             return myColorMap.get(index);
@@ -25,6 +39,14 @@ public class ColorManager {
         return background? INITIAL_BACKGROUND_COLOR : INITIAL_PEN_COLOR;
     }
 
+    /**
+     * sets the color corresponding to that index
+     *
+     * @param index: the index
+     * @param red: Value of red for making color
+     * @param blue: Value of blue for making color
+     * @param green: Value of green for making color
+     */
     public void addColor(int index, int red, int blue, int green) {
         Color color = new Color(red/MAX_VALUE, blue/MAX_VALUE, green/MAX_VALUE, 1);
         myColorMap.put(index, color);

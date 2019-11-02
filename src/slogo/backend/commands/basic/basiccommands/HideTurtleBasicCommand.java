@@ -9,6 +9,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements HideTurtle command
+ */
+
 public class HideTurtleBasicCommand implements BasicCommandInterface {
 
     @Override

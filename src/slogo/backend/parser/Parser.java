@@ -8,6 +8,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/**
+ * Takes in a String of SLogo commands and checks if all the commands are valid
+ * Used in BackendManager.java
+ * Ex:  Parser p = new Parser("fd 50", "Urdu");
+ *      String commands = p.translateCommands();
+ *
+ * @author Amber Johnson, Eric Han, and Robert C. Duvall
+ */
 public class Parser {
 
     private static final String SYNTAX = "Syntax";
@@ -29,12 +37,13 @@ public class Parser {
     }
 
     /**
-     * Returns the key of an entry in any language resource file
-     * Returns the value of an entry in the syntax resource file
+     *
      * Used in Parser.translateCommands()
      *
      * @param single_cmd
-     * @return
+     * @return the key of an entry in any language resource file
+     * or the value of an entry in the syntax resource file
+     * @throws ParserException
      */
     public String getResourceKey(String single_cmd) throws ParserException{
         //for instructions
@@ -53,11 +62,12 @@ public class Parser {
     }
 
     /**
-     * Calls splitInput method to split global variable into mySplitInput
-     * Checks if any of the commands did not match the entries in the resource file
-     * Returns a String of the concatenated commands translated (
+     * Initializes myCommandsTranslated and mySplitInput;
+     * Calls splitInput() to create the populate the list mySplitInput; and,
+     * Adds the desired key or value from a resource bundle.
      *
-     * @return
+     * @return a String of the concatenated commands "translated" per the resource bundle
+     * @throws ParserException
      */
     public String translateCommands() throws ParserException {
         initialize();

@@ -6,6 +6,14 @@ import slogo.frontend.turtlescreen.DisplayScreen;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * purpose: Controller used in CheckBoxCreater
+ * assumptions: This is only assigned to CheckBoxCreater
+ *
+ * This will only be used within the CheckBoxCreater class. No other places should this be used.
+ *
+ * @author Eric Han
+ */
 public class CheckBoxController extends HBox implements NodeController {
 
     private static final double SETMAXSPEED = 10;
@@ -16,6 +24,9 @@ public class CheckBoxController extends HBox implements NodeController {
         this.displayScreen = displayScreen;
     }
 
+    /**
+     * action for animation checkbox
+     */
     public void animationAction() {
         displayScreen.setAnimation(SETMAXSPEED);
     }

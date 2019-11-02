@@ -7,6 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Manages the tree structure that is used to correctly execute the commands in the
+ * right order.
+ *
+ * Ex:  CommandTree commandTree = new CommandTree(myTurtleHistory);
+ * commandTree.addToCommandTree("Forward");
+ * command.addToCommandTree("50");
+ *
+ * Additional Usage: none
+ * @author Eric Han
+ */
 public class CommandTree {
 
     private static final String DECIMAL_PATTERN = "-?[0-9]+\\.?[0-9]*";
@@ -22,6 +33,12 @@ public class CommandTree {
         turtleID = turtleHistory.getActiveTurtles().get(turtleHistory.getActiveTurtles().size()-1);
     }
 
+    /**
+     * Puts the command to the tree and execute some commands if possible
+     * Assumption: command is one word, and is not user-defined function or user-defined variable
+     * @param command : the word to be put
+     * @throws BackendException if command is neither a command nor a number
+     */
     public void addToCommandTree(String command) throws BackendException {
         if(isThisStringDouble(commandTreeNode.getCommandWord()) || commandTreeNode.getCommandWord().equals("")) {
             commandTreeNode.setCommandWord(command);
@@ -35,8 +52,11 @@ public class CommandTree {
         }
         interpretTreeFromRight();
     }
-    
 
+    /**
+     * returns the only number remaining in the tree
+     * Assumption: this is called if onlyNumberLeft() is called prior and it returned true
+     */
     public double getLastDouble() {
         if(commandTreeNode.getCommandWord().equals("")) {
             return 0d;
@@ -44,6 +64,9 @@ public class CommandTree {
         return Double.parseDouble(commandTreeNode.getCommandWord());
     }
 
+    /**
+     * returns true if there is only one node left in the tree and its value is a number
+     */
     public boolean onlyNumberLeft() {
         return commandTreeNode.getChildrenNumber() == 0 && isThisStringDouble(commandTreeNode.getCommandWord());
     }

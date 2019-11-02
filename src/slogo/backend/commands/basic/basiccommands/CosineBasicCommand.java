@@ -5,6 +5,11 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements cosine command
+ */
+
 public class CosineBasicCommand implements BasicCommandInterface {
 
     @Override

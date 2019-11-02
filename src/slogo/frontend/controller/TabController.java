@@ -9,6 +9,14 @@ import slogo.frontend.turtlescreen.DisplayScreen;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * purpose: Controller used in TabMaker
+ * assumptions: This is only assigned to TabMaker
+ *
+ * This will only be used within the TabMaker class. No other places should this be used.
+ *
+ * @author  Eric Han, Michael Castro
+ */
 public class TabController implements NodeController {
 
     private String variableKey;
@@ -23,6 +31,11 @@ public class TabController implements NodeController {
          */
     }
 
+    /**
+     * action for variable scrollPane
+     * @param key = "Variables"
+     * @param content = content selected
+     */
     public void variableAction(String key, String content) {
         variableKey = key;
         myChangedString = new ChangedString();
@@ -30,10 +43,20 @@ public class TabController implements NodeController {
         variableScreen.show();
     }
 
+    /**
+     * action for history scrollPane
+     * @param key = "History"
+     * @param content = content selected
+     */
     public void historyAction(String key, String content) {
         changedValues.put(key, content);
     }
 
+    /**
+     * action for functions scrollPane
+     * @param key = "Functions"
+     * @param content = content selected
+     */
     public void functionsAction(String key, String content) {
         functionKey = key;
         myFunctionString = new ChangedString();

@@ -1,8 +1,12 @@
 package slogo.backend.parser;
 
 /**
+ * Creates a new type of exception that occurs when the user input is not valid.
+ * Assumes the user does not need to know from where the exception was thrown.
+ * Used in Parser.java
+ * Ex: throw new ParserException(single_cmd);
  *
- * @author Amber Johnson and Robert C. Duvall
+ * @author Amber Johnson and Eric Han
  */
 public class ParserException extends RuntimeException {
 
@@ -14,8 +18,9 @@ public class ParserException extends RuntimeException {
     }
 
     /**
-     * Gets the error message for a ParserException object
-     * @return
+     * Gets the error message to display to the user for a ParserException object
+     *
+     * @return a String of the error message set in Parser.java
      */
     public String getMessage() {return message;}
 }

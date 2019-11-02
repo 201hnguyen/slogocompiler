@@ -8,11 +8,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import slogo.backend.utils.TurtleHistory;
 
-
+/**
+ * This class is the actual "display screen" where the turtle moves.
+ *
+ * @author Eric Han, Michael Castro
+ * */
 public class DisplayScreen extends Pane {
-    /**
-     * This  class is the actual "display screen" where the turtle moves.
-     * */
 
     private static final double SCENE_WIDTH = 600;
     private static final double SCENE_HEIGHT = 400;

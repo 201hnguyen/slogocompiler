@@ -9,6 +9,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements SetPenSize command
+ */
 public class SetPenSizeCommand implements BasicCommandInterface {
     private static final double ACCURACY = 0.001;
 

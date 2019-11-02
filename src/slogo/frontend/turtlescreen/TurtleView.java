@@ -12,7 +12,12 @@ import slogo.backend.utils.TurtleMovement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * TurtleView extends ImageView, and according to the turtleMovement objects stored in
+ * myMovements, it moves its position and changes its penStatus, drawStatus values
+ *
+ * @author Eric Han
+ */
 public class TurtleView extends ImageView {
 
     private static final double CONSTANT_SCREEN_WIDTH = 3000;
@@ -40,6 +45,11 @@ public class TurtleView extends ImageView {
         setFitHeight(getFitWidth() * ABSOLUTE_SIZE_Y / ABSOLUTE_SIZE_X);
     }
 
+    /**
+     * Calling this method will make the turtleView automatically update its position, and return a Line
+     * object, which is equivalent to the path it moved through
+     * @return Path of the turtleView's movement
+     */
     public Line updateAndGetLine() {
         Point2D initialPos = new Point2D(getCentralX(), getCentralY());
         Movement movement = myMovements.get(index).getMovement();
@@ -60,10 +70,16 @@ public class TurtleView extends ImageView {
         }
     }
 
+    /**
+     * Adds TurtleMovemet object to myMovements
+     */
     public void addMovement(TurtleMovement turtleMovement) {
         myMovements.add(turtleMovement);
     }
 
+    /**
+     * returns true if the turtleView is still moving
+     */
     public boolean isMoving() {
         if(index >= myMovements.size()) {
             myMovements.clear();
@@ -72,22 +88,40 @@ public class TurtleView extends ImageView {
         return index < myMovements.size();
     }
 
+    /**
+     * Sets the speed of the turtleView's movement
+     */
     public void setSpeed(double speed) {
         this.speed = speed;
     }
 
+    /**
+     * Returns the id of the turtleView
+     */
     public int getMyID() {
         return myID;
     }
 
+    /**
+     * Sets the penStatus of the TurtleView
+     */
     public void setPenStatus(PenStatus penStatus) {
         this.penStatus = penStatus;
     }
 
+    /**
+     * Sets the DrawStatus of the TurtleView
+     */
     public void setDrawStatus(DrawStatus drawStatus) {this.drawStatus = drawStatus;}
 
+    /**
+     * Returns the penStatus of the TurtleView
+     */
     public PenStatus getPenStatus() {return penStatus;}
 
+    /**
+     * Returns the DrawStatus of the TurtleView
+     */
     public DrawStatus getDrawStatus() {return drawStatus;}
 
     public void setActive(boolean active) {this.active = active;}
