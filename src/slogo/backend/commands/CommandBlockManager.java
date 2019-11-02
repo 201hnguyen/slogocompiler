@@ -13,11 +13,16 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This class executes sequential blocks of instructions (overhead class for entire block of instruction that user enters;
- * also used in control instructions to break them down); should manage stacks of instructions and parameters, etc.;
- * should have a factory object to make instructions, etc.
- * This class should now do a lot of the work that interpreter was doing before in terms of keeping charge of stacks,
- * user functions and variables, etc.
+ * Purpose: The CommandBlockManager executes a String of commands and manages the control flow and all the variables, functions,
+ * and active turtles defined for this String block of commands.
+ * Assumptions: This class assumes the existence of everything in its constructor parameters. As such, when an accessibleVariables list or
+ * definedFunction map has not yet been created, the user should pass in a new instance of these classes which the
+ * CommandBlockManager can build off of. This class also depends on the TurtleHistory class, as its commands
+ * directly execute commands that make changes to this class.
+ * Example of usage: CommandBlockManager commandBlockManager = new CommandBlockManager(arguments, turtleHistory, accessibleVariables, definedFunctions);
+ *                   double returnValue = commandBlockManager.executeInstructionBlock();
+ * Additional details: none
+ * @author Ha Nguyen, Eric Han
  */
 
 public class CommandBlockManager {
@@ -44,11 +49,14 @@ public class CommandBlockManager {
     private List<Integer> myActiveTurtles;
 
     /**
-     * Executes sequential block of instructions and manage user-defined variables plus functions
-     * @param commandBlock
-     * @param turtleHistory
-     * @param higherScopeVariables
-     * @param definedFunctions
+     * Purpose: Initializes a CommandBlockManager object given a String, the turtle history, and all the higher-scope variables and functions
+     * Assumptions: assumes the existence of everything in its constructor parameters. As such, when an accessibleVariables list or
+     * definedFunction map has not yet been created, the user should pass in a new instance of these classes which the
+     * CommandBlockManager can build off of. This class also depends on the TurtleHistory class for which its commands can make changes to.
+     * @param commandBlock the String of commands to be executed
+     * @param turtleHistory the TurtleHistory of which commands can act upon
+     * @param higherScopeVariables the higher-scope variables that this specific CommandBlockManager has access to
+     * @param definedFunctions the higher-scope functions that this specific CommandBlockManager has access to
      */
     public CommandBlockManager(String commandBlock, TurtleHistory turtleHistory, List<Map<String,Double>> higherScopeVariables, Map<String, List<Object>> definedFunctions) {
         myCommandBlockString = commandBlock;
@@ -67,9 +75,11 @@ public class CommandBlockManager {
     }
 
     /**
-     * Executes a specific block of instruction
-     * @return
-     * @throws BackendException
+     * Purpose: executes the instruction block that is in this CommandBlock.
+     * Assumptions: none
+     * @return the double value that results from the execution process
+     * @throws BackendException that occurs as a result exceptions happening in the execution of lower-level classes and methods
+     * (e.g., lower-level blocks, commands, ControlExecutor, unmatched brackets, etc.)
      */
     public double executeInstructionBlock() throws BackendException {
         double returnValue = 0;
@@ -92,16 +102,18 @@ public class CommandBlockManager {
     }
 
     /**
-     * Gets the map of the user-defined functions for saving them in the Backend manager.
-     * @return
+     * Purpose: Gets a copy of the map of the user-defined functions for saving in the BackendManager.
+     * Assumptions: that the client calling this method is looking to read but not modify the values of the object itself.
+     * @return the copy of the map of accessible user defined function.
      */
     public Map<String, List<Object>> getUserDefinedFunctions() {
         return Map.copyOf(myAccessibleUserDefinedFunctions);
     }
 
     /**
-     * Gets the string representation of user-defined functions for display on the front-end
-     * @return
+     * Purpose: Gets the list of string representation of user-defined functions for display on the front-end
+     * Assumptions: none
+     * @return the list of String representations of the method in the form of "methodName :variable1 :variable2".
      */
     public List<String> getUserDefinedFunctionsAsStrings() {
         List<String> userDefinedFunctionsAsString = new ArrayList<>();
@@ -118,10 +130,11 @@ public class CommandBlockManager {
     }
 
     /**
-     * Given a user-defined variable, replace the user-defined variable with its value when it is called
-     * @param command
-     * @param accessibleVariables
-     * @return
+     * Purpose: Given a user-defined variable, replace the user-defined variable with its value when it is called
+     * Assumptions: none
+     * @param command the command to check and replace with a variable
+     * @param accessibleVariables the map of variables to of which to check the map against
+     * @return the replacement String for the command that is its value in the variables map
      */
     public static String checkAndInputUserVariable(String command, List<Map<String, Double>> accessibleVariables) {
         if (command.charAt(0) == USER_DEFINED_SIGNAL) {
@@ -138,8 +151,9 @@ public class CommandBlockManager {
     }
 
     /**
-     * Returns a map of the variables for saving and displaying on the front-end
-     * @return
+     * Purpose: Returns a copy of the map of the variables for this specific scope for saving and displaying on the front-end
+     * Assumptions: the client calling this method is only looking to read the variables, not modify it
+     * @return the copy of the current map of variables for the current scope
      */
     public Map<String, Double> getVariables() {
         Map<String, Double> variables = new LinkedHashMap<>();
