@@ -13,6 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * This is the CheckBoxCreator class that extends an HBox. Essentially, this class helps create
+ * any needed CheckBoz by reading through the resource bundle. After the buttons are created,
+ * they then are added to an HBox which is then displayed in the GUI.
+ * @author Michael Castro
+ * */
+
 public class CheckBoxCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE_PATH = "resources.frontend.CheckBoxResource";
     private static final double LAYOUT_X= 600;
@@ -26,6 +33,10 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
     private NodeController myController;
     private boolean isCheckBoxChecked = CHECKBOX_DEFAULT_CHECKED;
     private String language = INITIAL_LANGUAGE;
+
+    /**
+     * The constructor for this class that allows us call and create the buttons.
+     * */
 
     public CheckBoxCreator(NodeController nodeController) {
         myController = nodeController;
@@ -49,6 +60,10 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
         checkBox.selectedProperty().addListener(e -> callAction(key));
         getChildren().addAll(checkLabel, checkBox);
     }
+
+    /**
+     * Method that maps the checkboxes and lets us know when a their action has been called.
+     * */
 
     @Override
     public Map<String, String> getChangedValues() {

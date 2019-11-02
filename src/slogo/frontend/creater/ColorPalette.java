@@ -16,6 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Class that helps us create the ColorPalette where the user can change either the color of the
+ * background or the pen.
+ * Example - > Some clicks red and changes the background to red.
+ * @author Michael Castro
+ * */
+
 public class ColorPalette extends VBox implements ChangeableNode{
     private static final double PICKER_WIDTH = 100;
     private static final double PICKER_HEIGHT = 40;
@@ -40,6 +47,13 @@ public class ColorPalette extends VBox implements ChangeableNode{
     private String language = INITIAL_LANGUAGE;
     private HBox myCheckBox;
 
+    /**
+     * Constructor for the class that helps create the color picker and the circle. It
+     * also helps with setting action.
+     * @author Michael Castro
+     * */
+
+
     public ColorPalette(NodeController nodeController) {
         colorPaletteController = nodeController;
         colorPicker = new ColorPicker();
@@ -57,6 +71,10 @@ public class ColorPalette extends VBox implements ChangeableNode{
         setSpacing(SPACING);
         setLayoutX(PALETTE_X);
     }
+
+    /**
+     * Get the value of the color when wanted to be changed.
+     * */
 
     @Override
     public Map<String, String> getChangedValues() {

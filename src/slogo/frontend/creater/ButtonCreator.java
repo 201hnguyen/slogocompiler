@@ -16,10 +16,8 @@ import java.util.ResourceBundle;
  * This is the ButtonCreator class that extends an HBox. Essentially, this class helps create
  * any needed button by reading through the resource bundle. After the buttons are created,
  * they then are added to an HBox which is then displayed in the GUI.
- */
-
-
-
+ * @author Michael Castro and Eric Han
+ * */
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
     private static final double SPACING = 25;
@@ -37,6 +35,10 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
 
 
+    /**
+     * The constructor for this class that allows us call and create the buttons.
+     * */
+
     public ButtonCreator(NodeController nodeController) {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         myButtonController = nodeController;
@@ -48,11 +50,21 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         setLayoutX(X_LAYOUT);
     }
 
+    /**
+     * Method that maps the buttons and lets us know when a button's action has been called.
+     * */
+
+
     public Map<String, String> getChangedValues() {
         Map<String, String> map = new HashMap<>();
         map.putAll(myButtonController.getChangedValues());
         return map;
     }
+
+    /**
+     * Method that helps know the language.
+     * */
+
 
     @Override
     public void setLanguage(String language) {
