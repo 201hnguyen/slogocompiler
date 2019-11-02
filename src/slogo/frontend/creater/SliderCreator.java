@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * This is the SlideCreator class that extends an HBox. Essentially, this class helps create
+ * any needed sliders by reading through the resource bundle. After the sliders are created,
+ * they then are added to an HBox which is then displayed in the GUI.
+ */
 public class SliderCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE = "resources.frontend.SliderResource";
     private static final double LAYOUT_X= 600;

@@ -14,6 +14,9 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+/**
+ * Creates a new window that shows a tableView that shows instruction on how to write logo codes
+ */
 public class TableWindow {
 
     private static final String RESOURCE_PATH = "resources.frontend.commandreference.";
@@ -39,6 +42,9 @@ public class TableWindow {
         this.language = language;
     }
 
+    /**
+     * Creates the new window and returns the stage
+     */
     public Stage createNewWindow() {
         Stage newStage = createNewStage();
         newStage.show();

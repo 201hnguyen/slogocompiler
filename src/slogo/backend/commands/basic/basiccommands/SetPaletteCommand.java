@@ -5,6 +5,7 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 
+
 public class SetPaletteCommand implements BasicCommandInterface {
     private static final double ACCURACY = 0.001;
 

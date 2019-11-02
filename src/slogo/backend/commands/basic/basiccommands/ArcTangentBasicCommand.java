@@ -5,6 +5,11 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements atan command
+ */
+
 public class ArcTangentBasicCommand implements BasicCommandInterface {
 
     private static final double FULL_CYCLE = 360;

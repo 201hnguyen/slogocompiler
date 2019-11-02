@@ -6,6 +6,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements shape command
+ */
+
 public class GetShapeCommand implements BasicCommandInterface {
 
     @Override

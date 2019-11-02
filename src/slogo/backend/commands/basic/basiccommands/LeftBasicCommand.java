@@ -8,6 +8,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements Left command
+ */
+
 public class LeftBasicCommand implements BasicCommandInterface {
     private static final double FULL_CYCLE = 360;
 

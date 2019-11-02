@@ -5,6 +5,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Used to make ScrollPane that constructs the TabMaker.
+ */
 public class ScrollMaker extends VBox {
     private static final double WIDTH = 200;
     private static final double HEIGHT = 100;

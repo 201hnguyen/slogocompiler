@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * purpose (why would anyone use it)
- * assumptions (what situations or values might cause it to fail)
- * dependencies (what other classes or packages it depends on)
- * an example of how to use it
- * any other details users should know
+ * purpose: Controller used in ButtonCreater
+ * assumptions: This is only assigned to ButtonCreater
+ *
+ * This will only be used within the ButtonCreater class. No other places should this be used.
  */
 
 public class ButtonController implements NodeController {
@@ -26,35 +25,59 @@ public class ButtonController implements NodeController {
         this.displayScreen = displayScreen;
     }
 
+    /**
+     * action for start Button
+     */
     public void startButtonAction(String key) {
         changedValues.put(key, key);
     }
 
+    /**
+     * action for clear Button
+     */
     public void clearButtonAction(String key) {
         changedValues.put(key, key);
     }
 
+    /**
+     * action for help Button
+     */
     public void helpButtonAction(String key) {
         ReferenceWindow referenceWindow = new ReferenceWindow(language);
         referenceWindow.createNewWindow();
     }
 
+    /**
+     * action for play Button
+     */
     public void playButtonAction(String key) {
         //displayScreen.setAnimation();
     }
 
+    /**
+     * action for stop Button
+     */
     public void stopButtonAction(String key) {
         displayScreen.setAnimation(0);
     }
 
+    /**
+     * action for step Button
+     */
     public void stepButtonAction(String key) {
         displayScreen.step();
     }
 
+    /**
+     * action for new Button
+     */
     public void newButtonAction(String key) {
         changedValues.put(key, key);
     }
 
+    /**
+     * returns the map that means the changes the UI should make
+     */
     @Override
     public Map<String, String> getChangedValues() {
         Map<String, String> map = new HashMap<>();
@@ -63,6 +86,9 @@ public class ButtonController implements NodeController {
         return map;
     }
 
+    /**
+     * Sets the language of the controller
+     */
     @Override
     public void setLanguage(String language) {
         this.language = language;

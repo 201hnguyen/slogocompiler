@@ -5,6 +5,11 @@ import slogo.backend.utils.ColorManager;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores the color values for the pen for each turtleView by using
+ * the Colormanager object. Also used by SLogoManager to get the color
+ * value according to the index
+ */
 public class ColorAndPenStatus {
     private Map<TurtleView, Color> myLineColors = new HashMap<>();
     private ColorManager colorManager;
@@ -17,6 +22,10 @@ public class ColorAndPenStatus {
         this.colorManager = colorManager;
     }
 
+    /**
+     * Set the default color that will be used when new turtleView is added
+     * @param color
+     */
     protected void setDefaultLineColor(Color color) {
         for(TurtleView turtleView : myLineColors.keySet()) {
             myLineColors.put(turtleView, color);
@@ -24,10 +33,18 @@ public class ColorAndPenStatus {
         currentLineColor = color;
     }
 
+    /**
+     * Sets the line color index of a turtle
+     * @param turtle
+     * @param index
+     */
     public void setLineColor(TurtleView turtle, int index) {
         myLineColors.put(turtle, colorManager.getColor(index, false));
     }
 
+    /**
+     * Gets the line color of a turtleview object
+     */
     protected Color getLineColor(TurtleView turtleView) {
         return myLineColors.get(turtleView);
     }
@@ -38,14 +55,24 @@ public class ColorAndPenStatus {
 
     protected void setColorManager(ColorManager colorManager) {this.colorManager = colorManager;}
 
+    /**
+     * Sets background color with the index
+     * @param index
+     */
     protected void setBackgroundColor(int index) {
         currentBackgroundColor = colorManager.getColor(index, true);
     }
 
+    /**
+     * Sets background color
+     */
     protected void setBackgroundColor(Color color) {
         currentBackgroundColor = color;
     }
 
+    /**
+     * get the current backrounground color
+     */
     protected Color getBackgroundColor() {
         return currentBackgroundColor;
     }

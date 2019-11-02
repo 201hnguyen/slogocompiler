@@ -9,6 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Manages the history of the movements of the turtles, and the history of all variables.
+ *
+ * Ex:  TurtleHistory TH = new TurtleHistory();
+ * TH.updateTurtle(1, Movement object, DrawStatus object, PenStatus object);
+ * return getMyTurtleHistory()
+ *
+ * Additional Usage: none
+ * @author Eric Han
+ */
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 2, false);
@@ -25,6 +35,11 @@ public class TurtleHistory {
         activeTurtles.add(1);
     }
 
+    /**
+     * Returns the TurtleModel object corresponding to the ID
+     *
+     * @param turtleID : ID of the TurtleModel
+     */
     public TurtleModel getTurtleModel(int turtleID){
         for(TurtleModel turtle : myTurtles) {
             if((turtle.getMyID()==turtleID)) {
@@ -37,13 +52,21 @@ public class TurtleHistory {
         return getTurtleModel(turtleID);
     }
 
+    /**
+     * Update the TurtleModel object corresponding to the ID, and saves the path.
+     *
+     * @param turtleID : ID of the TurtleModel
+     *  @param movement : Movement object to be stored
+     * @param drawStatus : DrawStatus to be stored
+     * @param penStatus : PenStatus to be stored
+     */
     public void updateTurtle(int turtleID, Movement movement, DrawStatus drawStatus, PenStatus penStatus) {
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
         myTurtleHistory.get(index).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
     }
 
-    public void addTurtleModel(int turtleID) {
+    private void addTurtleModel(int turtleID) {
         if(!hasTurtle(turtleID)) {
             TurtleModel curTurtle = getTurtleModel(curTurtleID);
             curTurtleID = turtleID;
@@ -51,12 +74,21 @@ public class TurtleHistory {
         }
     }
 
+    /**
+     * Returns the history of variables
+     */
     public List<Map<String, Double>> getMyVariables() {
         ArrayList<Map<String, Double>> list = new ArrayList<>();
         list.addAll(listOfActiveVariables);
         return list;
     }
 
+    /**
+     * Assumption : this is called every time that a movement command ends (at the end of rerunMovement method in CommandBlockManager)
+     *
+     * Purpose: Called to save and match the map of variables to the corresponding movements of the turtles.
+     * @param myGlobalVariables : current collection of all variables
+     */
     public void toNextTurn(Map<String, Double> myGlobalVariables) {
         Map<String, Double> map = new TreeMap<>();
         map.putAll(myGlobalVariables);
@@ -65,12 +97,18 @@ public class TurtleHistory {
         index++;
     }
 
+    /**
+     * Returns the history of turtleMovements
+     */
     public List<List<TurtleMovement>> getMyTurtleHistory() {
         List<List<TurtleMovement>> list = new ArrayList<>();
         list.addAll(myTurtleHistory);
         return list;
     }
 
+    /**
+     * Clear the history of turtle movements and variables
+     */
     public void clearHistory() {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
@@ -78,16 +116,23 @@ public class TurtleHistory {
         index = 0;
     }
 
+    /**
+     * Returns the list of all active turtles
+     */
     public List<Integer> getActiveTurtles() {
         List<Integer> list = new ArrayList<>();
         list.addAll(activeTurtles);
         return list;
     }
 
+    /**
+     * Sets the list of all active turtles
+     */
     public void setActiveTurtles(List<Integer> activeTurtles) {
         this.activeTurtles.clear();
         this.activeTurtles.addAll(activeTurtles);
     }
+
 
     private boolean hasTurtle(int turtleID) {
         for(TurtleModel turtle : myTurtles) {
