@@ -11,11 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * purpose (why would anyone use it)
- * assumptions (what situations or values might cause it to fail)
- * dependencies (what other classes or packages it depends on)
  * Instantiates backend classes needed to translate and execute the turtle commands,
- * including Parser.java and CommandBlockManagaer.java.
+ * including Parser.java and CommandBlockManager.java.
  * Used in Connector.java
  *
  * Ex:  BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(),
