@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import slogo.backend.parser.ParserException;
 import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
@@ -28,6 +29,10 @@ public class VariableScreen implements NewScreen{
         variableName = variableArr[0];
         value = variableArr[1];
     }
+    /**
+     *
+     *
+     */
 
     public void show() {
         stage = new Stage();
