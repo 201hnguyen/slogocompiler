@@ -15,8 +15,8 @@ import slogo.frontend.creater.ButtonCreator;
 import slogo.frontend.creater.CheckBoxCreator;
 import slogo.frontend.creater.DropDownCreator;
 import slogo.frontend.creater.SliderCreator;
-import slogo.frontend.statusscreen.ScrollCreater;
 import slogo.frontend.creater.ColorPalette;
+import slogo.frontend.statusscreen.TabMaker;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class Visualization {
     private CommandLine commandLine = new CommandLine();
     private UIManager myUIManager;
     private int index = 0;
-    private ScrollCreater scrollCreater = new ScrollCreater(new TabController(displayScreen));
+    private TabMaker tabMaker = new TabMaker(new TabController(displayScreen));
     private List<Map<String, Double>> myVariables = new ArrayList<>();
 
     public Visualization(Stage stage) {
@@ -75,7 +75,7 @@ public class Visualization {
         myUIManager.update();
         displayScreen.update();
         if(displayScreen.getCurrentIndex() != index) {
-            scrollCreater.setVariables(myVariables.get(index));
+            tabMaker.setVariables(myVariables.get(index));
             index = displayScreen.getCurrentIndex();
         }
         Map<String, Double> changedVariables = myUIManager.getChangedVariables();
@@ -86,7 +86,7 @@ public class Visualization {
                 System.out.println(myVariables.size());
                 System.out.println(key + ", " + changedVariables.get(key));
             }
-            scrollCreater.setVariables(myVariables.get(index));
+            tabMaker.setVariables(myVariables.get(index));
         }
     }
 
@@ -118,7 +118,7 @@ public class Visualization {
     public String getInput() {
         String command = myUIManager.getInput();
         if(!command.equals("")) {
-            scrollCreater.addHistory(command);
+            tabMaker.addHistory(command);
         }
         return command;
     }
@@ -153,8 +153,8 @@ public class Visualization {
         ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));
         CheckBoxCreator checkBoxCreator = new CheckBoxCreator(new CheckBoxController(displayScreen));
 
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, scrollCreater, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
-        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, scrollCreater, checkBoxCreator, sliderCreator));
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabMaker, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
+        myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabMaker, checkBoxCreator, sliderCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
@@ -163,6 +163,6 @@ public class Visualization {
      * sets the functions defined by user, which will show up on the screen.
      */
     public void setUserFunctions(List<String> userFunctions) {
-        scrollCreater.setFunctions(userFunctions);
+        tabMaker.setFunctions(userFunctions);
     }
 }

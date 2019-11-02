@@ -19,9 +19,6 @@ import java.util.ResourceBundle;
  *
  * @author Eric Han, Michael Castro
  */
-
-
-
 public class ButtonCreator extends HBox implements ChangeableNode {
     private static final double INSET_PADDING = 10;
     private static final double SPACING = 25;
@@ -31,13 +28,11 @@ public class ButtonCreator extends HBox implements ChangeableNode {
     private static final String LANGUAGE_INDEX_PATH = "resources.frontend.changingfeature.LanguageIndex";
     private static final String BUTTON_NAMES = "resources.frontend.changingfeature.ButtonNames";
     private static final String INITIAL_LANGUAGE = "English";
+    private static final String BUTTON_ERROR = " Button not set well.";
 
     private NodeController myButtonController;
     private ResourceBundle resourceBundle;
     private String language = INITIAL_LANGUAGE;
-    private ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
-    private ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
-
 
     public ButtonCreator(NodeController nodeController) {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
@@ -62,9 +57,7 @@ public class ButtonCreator extends HBox implements ChangeableNode {
         createButtons();
     }
 
-
     /** * This is is the method that helps create the buttons */
-
     private void createButtons() {
         getChildren().clear();
         for(String key : Collections.list(resourceBundle.getKeys())) {
@@ -81,13 +74,15 @@ public class ButtonCreator extends HBox implements ChangeableNode {
             Method m = myButtonController.getClass().getDeclaredMethod(methodName, String.class);
             m.invoke(myButtonController, key);
         } catch (Exception e) {
-            NewScreen errorShow = new ErrorShow(e, e.getMessage());
+            NewScreen errorShow = new ErrorShow(e, key + BUTTON_ERROR);
             errorShow.show();
         }
     }
 
     private String getContentOfButton(String key) {
+        ResourceBundle languageBundle = ResourceBundle.getBundle(LANGUAGE_INDEX_PATH);
         int index = Integer.parseInt(languageBundle.getString(language));
+        ResourceBundle buttonNameBundle = ResourceBundle.getBundle(BUTTON_NAMES);
         return buttonNameBundle.getString(key).split(",")[index];
     }
 }

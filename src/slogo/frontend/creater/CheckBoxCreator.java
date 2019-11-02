@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
  */
 public class CheckBoxCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE_PATH = "resources.frontend.CheckBoxResource";
+    private static final String CHECKBOX_ERROR = " CheckBox not set well.";
     private static final double LAYOUT_X= 600;
     private static final double LAYOUT_Y= 35;
     private static final double SPACING = 10;
@@ -76,7 +77,7 @@ public class CheckBoxCreator extends HBox implements ChangeableNode {
             Method m = myController.getClass().getDeclaredMethod(methodName);
             m.invoke(myController);
         } catch (Exception e) {
-            NewScreen errorShow = new ErrorShow(e, key + " CheckBox not set well.");
+            NewScreen errorShow = new ErrorShow(e, key + CHECKBOX_ERROR);
             errorShow.show();
         }
     }
