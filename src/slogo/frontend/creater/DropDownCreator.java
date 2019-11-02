@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
  * This is the DropDownCreator class that extends an HBox. Essentially, this class helps create
  * any needed dropdowns by reading through the resource bundle. After the dropdowns are created,
  * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michale Castro
  */
 public class DropDownCreator extends HBox implements ChangeableNode{
     private static final double DROP_WIDTH = 330;

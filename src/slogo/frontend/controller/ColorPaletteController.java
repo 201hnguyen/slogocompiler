@@ -11,6 +11,8 @@ import java.util.Map;
  * assumptions: This is only assigned to ColorPalette
  *
  * This will only be used within the ColorPalette class. No other places should this be used.
+ *
+ * @author Eric Han, Michael Castro
  */
 public class ColorPaletteController implements NodeController {
     private DisplayScreen displayScreen;

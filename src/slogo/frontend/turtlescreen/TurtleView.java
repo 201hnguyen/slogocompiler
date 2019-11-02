@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * TurtleView extends ImageView, and according to the turtleMovement objects stored in
  * myMovements, it moves its position and changes its penStatus, drawStatus values
+ *
+ * @author Eric Han
  */
 public class TurtleView extends ImageView {
 

@@ -3,6 +3,8 @@ package slogo.frontend.statusscreen;
 /**
  * Object used so that Controller class can extract the changed string when
  * the user types on a different screen.
+ *
+ * @author Eric Han
  */
 public class ChangedString {
     private String changedVariable = "";

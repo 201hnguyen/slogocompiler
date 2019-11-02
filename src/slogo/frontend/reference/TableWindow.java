@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 
 /**
  * Creates a new window that shows a tableView that shows instruction on how to write logo codes
+ *
+ * @author Eric Han
  */
 public class TableWindow {
 

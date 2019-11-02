@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 /**
  * Implementation of NewScreen that is called when a text in the functions scrollpane is clicked.
  * User can type the values for the parameters, and the result will show up in the commandLine
+ *
+ * @author Eric Han
  */
 public class FunctionScreen implements NewScreen{
 

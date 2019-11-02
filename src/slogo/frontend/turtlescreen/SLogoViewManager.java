@@ -16,6 +16,8 @@ import java.util.List;
  * Stores a collection of TurtleViews, iterates through the list of turtlemovements
  * given by the displayScreen, assigns them to the individual turtleview, make the turtleviews
  * move and draw lines according to the penStatus, drawStatus value of the turtleView
+ *
+ * @author Eric Han
  */
 public class SLogoViewManager {
 

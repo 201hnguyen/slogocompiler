@@ -9,6 +9,8 @@ import java.util.Map;
  * Stores the color values for the pen for each turtleView by using
  * the Colormanager object. Also used by SLogoManager to get the color
  * value according to the index
+ *
+ * @author Eric Han
  */
 public class ColorAndPenStatus {
     private Map<TurtleView, Color> myLineColors = new HashMap<>();

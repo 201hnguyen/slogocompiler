@@ -4,6 +4,8 @@ import javafx.geometry.Point2D;
 
 /**
  * Class that holds information about the path that the turtle moved through and the turtle's orientation
+ *
+ * @author Eric Han
  */
 public class Movement {
     private Point2D startPosition;

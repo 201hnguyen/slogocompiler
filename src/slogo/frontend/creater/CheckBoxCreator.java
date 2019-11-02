@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
  * This is the CheckBoxCreater class that extends an HBox. Essentially, this class helps create
  * any needed CheckBoxes by reading through the resource bundle. After the checkboxes are created,
  * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han
  */
 public class CheckBoxCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE_PATH = "resources.frontend.CheckBoxResource";

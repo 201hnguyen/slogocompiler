@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
  * This is the ColorPalette class that extends an VBox. Essentially, this class helps create
  * any needed componets for the ColorPalette by reading through the resource bundle. After the checkboxes are created,
  * they then are added to an VBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michale Castro
  */
 public class ColorPalette extends VBox implements ChangeableNode{
     private static final double PICKER_WIDTH = 100;

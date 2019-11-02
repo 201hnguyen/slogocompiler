@@ -11,6 +11,8 @@ import java.util.Map;
  * assumptions: This is only assigned to CheckBoxCreater
  *
  * This will only be used within the CheckBoxCreater class. No other places should this be used.
+ *
+ * @author Eric Han
  */
 public class CheckBoxController extends HBox implements NodeController {
 

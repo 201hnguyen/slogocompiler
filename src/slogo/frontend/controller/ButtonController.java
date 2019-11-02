@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * purpose: Controller used in ButtonCreater
- * assumptions: This is only assigned to ButtonCreater
- *
- * This will only be used within the ButtonCreater class. No other places should this be used.
- */
+ * Class that contains all the action and events of all buttons.
+ * Example - > When user clicks the start button, the startButtonAction is called
+ * from the resource bundle. When that method is called, the respective steps needed are taken.
+ * @author Michael Castro and Eric Han
+ *  */
 
 public class ButtonController implements NodeController {
 
@@ -20,64 +20,75 @@ public class ButtonController implements NodeController {
     private Map<String, String> changedValues = new HashMap<>();
     private DisplayScreen displayScreen;
 
+    /**
+     * Constructor that takes in the DisPlayScreen parameter. This allows for proper call
+     * of this class in the GUI.
+     *  */
+
     public ButtonController(DisplayScreen displayScreen) {
         language = INITIAL_LANGUAGE;
         this.displayScreen = displayScreen;
     }
 
     /**
-     * action for start Button
-     */
+     * Method that give the start button its functionality.
+     *  */
+
     public void startButtonAction(String key) {
         changedValues.put(key, key);
     }
 
     /**
-     * action for clear Button
-     */
+     * Method that give the clear button its functionality.
+     *  */
+
     public void clearButtonAction(String key) {
         changedValues.put(key, key);
     }
 
     /**
-     * action for help Button
-     */
+     * Method that give the help button its functionality.
+     *  */
+
     public void helpButtonAction(String key) {
         ReferenceWindow referenceWindow = new ReferenceWindow(language);
         referenceWindow.createNewWindow();
     }
-
     /**
-     * action for play Button
-     */
+     * Method that give the paly button its functionality.
+     *  */
+
+
     public void playButtonAction(String key) {
         //displayScreen.setAnimation();
     }
-
     /**
-     * action for stop Button
-     */
+     * Method that give the stop button its functionality.
+     *  */
+
     public void stopButtonAction(String key) {
         displayScreen.setAnimation(0);
     }
 
     /**
-     * action for step Button
-     */
+     * Method that give the step button its functionality.
+     *  */
+
     public void stepButtonAction(String key) {
         displayScreen.step();
     }
-
     /**
-     * action for new Button
-     */
+     * Method that give the new button its functionality.
+     *  */
+
     public void newButtonAction(String key) {
         changedValues.put(key, key);
     }
 
     /**
-     * returns the map that means the changes the UI should make
-     */
+     * Returns a map with with changed values, letting us track the changes.
+     *  */
+
     @Override
     public Map<String, String> getChangedValues() {
         Map<String, String> map = new HashMap<>();
@@ -87,8 +98,9 @@ public class ButtonController implements NodeController {
     }
 
     /**
-     * Sets the language of the controller
-     */
+     * Method that gives us the ability to set the language to what the user chose. 
+     *  */
+
     @Override
     public void setLanguage(String language) {
         this.language = language;

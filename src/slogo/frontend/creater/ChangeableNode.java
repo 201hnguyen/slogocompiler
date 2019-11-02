@@ -8,6 +8,8 @@ import java.util.Map;
  * Ex.
  * ChangeableNode node = new ButtnoCreater(new ButtonController(displayScreen));
  * node.setLanguage("Chinese");
+ *
+ * @author Eric Han
  */
 public interface ChangeableNode {
 

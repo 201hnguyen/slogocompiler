@@ -14,6 +14,8 @@ import java.util.Map;
  * assumptions: This is only assigned to TabMaker
  *
  * This will only be used within the TabMaker class. No other places should this be used.
+ *
+ * @author  Eric Han, Michael Castro
  */
 public class TabController implements NodeController {
 

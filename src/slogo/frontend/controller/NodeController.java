@@ -6,6 +6,8 @@ import java.util.Map;
  * purpose: Controller used in ChangeableNode
  * assumptions: This is only assigned to its corresponding ChangeableNode
  *
+ * @author Eric Han
+ *
  */
 public interface NodeController {
     /**

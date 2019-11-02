@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 /**
  * This is the ReferenceWindow class that extends is going to be called when
  * the help button is clicked. It is used to open a new window that shows the types of commands
+ *
+ * @author Eric Han
  */
 public class ReferenceWindow {
     private static final String RESOURCE_PATH = "resources.frontend.commandreference.CommandTypes";

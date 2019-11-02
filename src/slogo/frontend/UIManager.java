@@ -12,6 +12,8 @@ import java.util.HashMap;
 /**
  * Holds all the ChangeableNode instances in the Visualization, extracts the changed data by user action on the
  * UI elements, and makes UI update language.
+ *
+ * @author Eric Han
  */
 public class UIManager {
 

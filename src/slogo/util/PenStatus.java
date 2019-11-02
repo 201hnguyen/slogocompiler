@@ -2,6 +2,8 @@ package slogo.util;
 
 /**
  * Class to hold all the information that frontend will need when drawing the lines.
+ *
+ * @author Eric Han
  */
 public class PenStatus {
     private boolean penDown;

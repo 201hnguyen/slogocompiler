@@ -8,6 +8,8 @@ import java.util.Map;
 /**
  * Controller class for the UIManager class. Has public methods that makes the commandLine information to change,
  * or update changedVariables/language, which the visualization class will use to update the UI
+ *
+ * @author Eric Han
  */
 public class UIController {
 

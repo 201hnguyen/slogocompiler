@@ -17,6 +17,8 @@ import java.util.Collections;
  * This is the Tabmaker class that extends an VBox. Essentially, this class helps create
  * any needed ScrollPanes by reading through the resource bundle. After the scrollPanes are created,
  * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michael Castro
  */
 public class TabMaker extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
