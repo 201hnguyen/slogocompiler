@@ -11,6 +11,10 @@ import slogo.frontend.statusscreen.ChangedString;
 
 import java.util.regex.Pattern;
 
+/**
+ * Implementation of NewScreen that is called when a text in the functions scrollpane is clicked.
+ * User can type the values for the parameters, and the result will show up in the commandLine
+ */
 public class FunctionScreen implements NewScreen{
 
     private static final String INTRO_FUNCTION = "Set parameters of ";
@@ -28,6 +32,7 @@ public class FunctionScreen implements NewScreen{
         requiredLength = function.split(" ").length-1;
     }
 
+    @Override
     public void show() {
         stage = new Stage();
         VBox vBox = new VBox();

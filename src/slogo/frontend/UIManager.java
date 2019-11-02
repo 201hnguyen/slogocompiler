@@ -9,6 +9,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.HashMap;
 
+/**
+ * Holds all the ChangeableNode instances in the Visualization, extracts the changed data by user action on the
+ * UI elements, and makes UI update language.
+ */
 public class UIManager {
 
     private static final String RESOURCE_PATH = "resources.frontend.UIControllerResource";
@@ -24,6 +28,9 @@ public class UIManager {
         this.changeableNodes.addAll(changeableNodes);
     }
 
+    /**
+     * Makes the UIManager update the UI if anything has to be changed.
+     */
     public void update() {
         for(ChangeableNode changeableNode : changeableNodes) {
             changedValues.putAll(changeableNode.getChangedValues());
@@ -47,10 +54,16 @@ public class UIManager {
         updateLanguage(myUIController.getLanguage());
     }
 
+    /**
+     * Called by Visualization to get data from commandline
+     */
     public String getInput() {
         return myUIController.getInput();
     }
 
+    /**
+     * true if new button is clicked.
+     */
     public boolean isNewButtonClicked() {
         return myUIController.isNewButtonClicked();
     }
@@ -64,9 +77,15 @@ public class UIManager {
         }
     }
 
+    /**
+     * returns the chosen language
+     */
     public String getLanguage() {
         return language;
     }
 
+    /**
+     * returns the information that the visualization will use to change the UI
+     */
     public Map<String, Double> getChangedVariables() {return myUIController.getChangedVariables();}
 }

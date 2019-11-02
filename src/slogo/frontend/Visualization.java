@@ -25,10 +25,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * purpose (why would anyone use it)
- * assumptions (what situations or values might cause it to fail)
- * dependencies (what other classes or packages it depends on)
- * an example of how to use it
+ * purpose: Sets the UI on the given stage, and make it show. Lets connector extract
+ * assumptions: expects connector to pass the right values by using the setter methods.
+ * ex.
+ * Visualization myVisualization = new Visualization();
+ * myVisualization.update();
+ * String command = myVisualization.getInput();
  * any other details users should know
  */
 
@@ -52,31 +54,21 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * returns the language of the UI
      */
     public String getLanguage() {return myUIManager.getLanguage();}
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * returns true if new Button is clicked.
      */
     public boolean needNewWindow() {
         return myUIManager.isNewButtonClicked();
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * Makes the UIManager object iterate through the ChangeableNode and update UI.
+     * Calls the update() method of displayScreen, which will eventually update the turtles on the screen.
+     * Changes UI according to the information in UIManager
      */
     public void update() {
         myUIManager.update();
@@ -94,11 +86,8 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * Called by connector after Backend finished its job.
+     * Lets the frontend be able to access the history of the turtles' movements
      */
     public void setHistory(TurtleHistory turtleHistory) {
         displayScreen.setHistory(turtleHistory);
@@ -114,11 +103,8 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * returns the input in the commandLine if start button is clicked.
+     * otherwise, returns "";
      */
     public String getInput() {
         String command = myUIManager.getInput();
@@ -129,11 +115,7 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * returns the updated variables
      */
     public Map<String, Double> getUpdatedVariables() {
         Map<String, Double> map = new HashMap<>();
@@ -142,23 +124,8 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
-     */
-    public void showError(String message) {
-        NewScreen errorShow = new ErrorShow(message);
-        errorShow.show();
-    }
-
-    /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * Makes the UI show an error screen with the message
+     * @param message = message that will be in the error screen.
      */
     public void showError(Throwable ex, String message) {
         ErrorShow errorShow = new ErrorShow(ex, message);
@@ -180,11 +147,7 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * sets the functions defined by user, which will show up on the screen.
      */
     public void setUserFunctions(List<String> userFunctions) {
         tabPane.setFunctions(userFunctions);

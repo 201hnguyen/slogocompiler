@@ -2,6 +2,9 @@ package slogo.util;
 
 import javafx.geometry.Point2D;
 
+/**
+ * Class that holds information about the path that the turtle moved through and the turtle's orientation
+ */
 public class Movement {
     private Point2D startPosition;
     private Point2D endPosition;
@@ -20,12 +23,23 @@ public class Movement {
                 startPosition.getY() + length * Math.sin(Math.toRadians(orientation)));
     }
 
+    /**
+     * returns the starting position
+     */
     public Point2D getStartPosition() {
         return startPosition;
     }
+
+    /**
+     * returns the ending position
+     */
     public Point2D getEndPosition() {
         return endPosition;
     }
+
+    /**
+     * returns the orientation
+     */
     public double getOrientation() {
         return orientation;
     }
