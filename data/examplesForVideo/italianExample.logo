@@ -1,0 +1,13 @@
+ripitere 6
+[
+  ripitere 2
+  [
+    ripitere 60
+    [
+      ava 1
+      sin 2
+    ]
+    sin 120
+  ]
+  sin 60
+]

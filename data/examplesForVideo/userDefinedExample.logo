@@ -1,0 +1,18 @@
+to triangle [ ]
+[
+  fd 50
+  rt 120
+  fd 100
+  rt 120
+  fd 100
+  rt 120
+  fd 50
+]
+
+
+to zinnia [ ]
+[
+  repeat 24 [ triangle rt 15 ]
+]
+
+zinnia
