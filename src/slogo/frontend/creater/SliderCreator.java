@@ -16,8 +16,10 @@ import java.util.ResourceBundle;
  * This is the SlideCreator class that extends an HBox. Essentially, this class helps create
  * any needed sliders by reading through the resource bundle. After the sliders are created,
  * they then are added to an HBox which is then displayed in the GUI.
- *
  * @author Eric Han, Michale Castro
+ *
+ * Why I chose this class: I chose this class as it is an exmaple of how ChangeableNode is implemented by using reflection
+ * pattern to initialize this class and update the language setting when setLanguage(String language) is called.
  */
 public class SliderCreator extends HBox implements ChangeableNode {
     private static final String RESOURCE = "resources.frontend.SliderResource";
@@ -31,18 +33,16 @@ public class SliderCreator extends HBox implements ChangeableNode {
     private static final String SLIDER_NAMES = "resources.frontend.changingfeature.SliderNames";
     private static final String INITIAL_LANGUAGE = "English";
 
-    private ResourceBundle resourceBundle;
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE);
     private NodeController myController;
     private String language = INITIAL_LANGUAGE;
 
     public SliderCreator(NodeController nodeController) {
-        resourceBundle = ResourceBundle.getBundle(RESOURCE);
         myController = nodeController;
         setLayoutX(LAYOUT_X);
         setLayoutY(LAYOUT_Y);
         setSpacing(SPACING);
         createSliders();
-
     }
 
     private void createSliders() {

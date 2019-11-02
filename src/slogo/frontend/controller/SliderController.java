@@ -8,10 +8,11 @@ import java.util.Map;
 /**
  * purpose: Controller used in SliderCreater
  * assumptions: This is only assigned to SliderCreater
- *
- * This will only be used within the SliderCreater class. No other places should this be used.
- *
+ * This will only be used within the SliderCreater class. As it won't be useful if used in other classes
  * @author Eric Han, Michael Castro
+ *
+ * Why I chose this class: I chose this class as it demonstrates how the controller class needed for
+ * SliderCreator.java is implemented, and how an instance of NodeController is implemented.
  */
 public class SliderController implements NodeController {
 
@@ -36,8 +37,6 @@ public class SliderController implements NodeController {
 
     @Override
     public void setLanguage(String language) {
-        return;
+        return; //for SliderControl, no action is required when this method is called
     }
 }
-
-

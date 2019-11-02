@@ -1,13 +1,11 @@
 package slogo.frontend.controller;
-
 import java.util.Map;
 
 /**
- * purpose: Controller used in ChangeableNode
- * assumptions: This is only assigned to its corresponding ChangeableNode
+ * purpose: Controller used in the ChangeableNode
  *
  * @author Eric Han
- *
+ * Why I chose this class : This class shows the behaviours that the Controllers used for the ChangeableNodes commonly implement
  */
 public interface NodeController {
     /**
