@@ -12,6 +12,13 @@ import slogo.util.PenStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores a collection of TurtleViews, iterates through the list of turtlemovements
+ * given by the displayScreen, assigns them to the individual turtleview, make the turtleviews
+ * move and draw lines according to the penStatus, drawStatus value of the turtleView
+ *
+ * @author Eric Han
+ */
 public class SLogoViewManager {
 
     private static final double INITIAL_RATIO = 0.5;
@@ -48,7 +55,11 @@ public class SLogoViewManager {
         addTurtleView(1);
     }
 
-
+    /**
+     * purpose : make this class store the collection of all the turtleMovement, and start allocating
+     * the turtleMovement to individual TurtleViews
+     * @param turtleHistory : TurtleHistory object that holds all the turtleMovement
+     */
     protected void setHistory(TurtleHistory turtleHistory) {
         turtleMovements.clear();
         index = 0;
@@ -57,6 +68,11 @@ public class SLogoViewManager {
         allocateTurtleMovements();
     }
 
+    /**
+     * purpose : make the turtleViews move, and according to the movements, will draw
+     * the lines on the screen. Will allocate turtleMovements to the individual turtleviews
+     * if no turtleView is moving
+     */
     protected void update() {
         int movingNum = 0;
         if(step) {
@@ -79,6 +95,10 @@ public class SLogoViewManager {
         }
     }
 
+    /**
+     * Sets the image according to the image number (when graphically decided)
+     * @param imageNum: image number
+     */
     protected void setImage(int imageNum) {
         if(imageManager.getImage(imageNum)!=null) {
             image = imageManager.getImage(imageNum);
@@ -89,10 +109,16 @@ public class SLogoViewManager {
         drawStatus.setImageNum(imageNum);
     }
 
+    /**
+     * Sets line color of the lines that will be drawn (when graphically decided)
+     */
     protected void setLineColor(Color color) {
         myColorAndPenStatus.setDefaultLineColor(color);
     }
 
+    /**
+     * Sets size of the lines that will be drawn (when graphically decided)
+     */
     public void setPenSize(double penSize) {
         penStatus.setPenSize(penSize);
         for(TurtleView turtleView : turtleViewList) {
@@ -100,6 +126,10 @@ public class SLogoViewManager {
         }
     }
 
+    /**
+     * Sets the speed of the turtleViews' movement
+     * @param ratio : relative speed of the turtle
+     */
     protected void setSpeed(double ratio) {
         double inputSpeed = 0;
         if(!maxSpeed) {
@@ -115,6 +145,9 @@ public class SLogoViewManager {
         }
     }
 
+    /**
+     * Make the turtleViews jump to the ending point of their current path
+     */
     public void step() {
         step = true;
         System.out.println(speed);
@@ -124,6 +157,9 @@ public class SLogoViewManager {
         return index >= turtleMovements.size()-1;
     }
 
+    /**
+     * Returns the number that the Visualization will use to dynamically change the texts on the Variable scrollPane
+     */
     public int getCurrentInstructionIndex() {
         return index;
     }

@@ -5,6 +5,11 @@ import slogo.backend.utils.TurtleHistory;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements difference command
+ */
+
 public class DifferenceBasicCommand implements BasicCommandInterface {
 
     @Override

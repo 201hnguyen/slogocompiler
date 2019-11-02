@@ -119,11 +119,7 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * returns the updated variables
      */
     public Map<String, Double> getUpdatedVariables() {
         Map<String, Double> map = new HashMap<>();
@@ -132,19 +128,8 @@ public class Visualization {
     }
 
     /**
-     * The method used to display errors.
-     */
-    public void showError(String message) {
-        NewScreen errorShow = new ErrorShow(message);
-        errorShow.show();
-    }
-
-    /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * Makes the UI show an error screen with the message
+     * @param message = message that will be in the error screen.
      */
     public void showError(Throwable ex, String message) {
         ErrorShow errorShow = new ErrorShow(ex, message);
@@ -166,11 +151,7 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * sets the functions defined by user, which will show up on the screen.
      */
     public void setUserFunctions(List<String> userFunctions) {
         tabPane.setFunctions(userFunctions);

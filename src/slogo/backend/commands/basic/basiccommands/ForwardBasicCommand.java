@@ -8,6 +8,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements forward command
+ */
+
 public class ForwardBasicCommand implements BasicCommandInterface {
 
     @Override

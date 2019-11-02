@@ -8,6 +8,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements SetHeading command
+ */
 public class SetHeadingBasicCommand implements BasicCommandInterface {
     private static final double HALF_CYCLE = 180d;
     private static final double FULL_CYCLE = 360d;

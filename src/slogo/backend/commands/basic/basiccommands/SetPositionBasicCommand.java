@@ -8,6 +8,10 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements SetPosition command
+ */
 public class SetPositionBasicCommand implements BasicCommandInterface {
 
     @Override

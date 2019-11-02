@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
  * This is the ButtonCreator class that extends an HBox. Essentially, this class helps create
  * any needed button by reading through the resource bundle. After the buttons are created,
  * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michael Castro
  */
 
 

@@ -13,7 +13,13 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.Collections;
 
-
+/**
+ * This is the Tabmaker class that extends an VBox. Essentially, this class helps create
+ * any needed ScrollPanes by reading through the resource bundle. After the scrollPanes are created,
+ * they then are added to an HBox which is then displayed in the GUI.
+ *
+ * @author Eric Han, Michael Castro
+ */
 public class TabMaker extends VBox implements ChangeableNode {
     private static final double LAYOUT_X = 600;
     private static final double LAYOUT_Y = 70;
@@ -34,6 +40,9 @@ public class TabMaker extends VBox implements ChangeableNode {
         createTabPane();
     }
 
+    /**
+     * adds the executed command to the history scrollpane
+     */
     public void addHistory(String command) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (scrollMaker.getKey().equals("History")) {
@@ -42,6 +51,9 @@ public class TabMaker extends VBox implements ChangeableNode {
         }
     }
 
+    /**
+     * sets the text on the variable scrollpane
+     */
     public void setVariables(Map<String, Double> variables) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (!scrollMaker.getKey().equals("Variables")) {
@@ -56,6 +68,9 @@ public class TabMaker extends VBox implements ChangeableNode {
         }
     }
 
+    /**
+     * sets the text on the function scrollpane
+     */
     public void setFunctions(List<String> myFunctions) {
         for (ScrollMaker scrollMaker : myScrolls) {
             if (!scrollMaker.getKey().equals("Functions")) {

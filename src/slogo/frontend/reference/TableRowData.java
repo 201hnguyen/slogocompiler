@@ -2,6 +2,12 @@ package slogo.frontend.reference;
 
 import java.util.ResourceBundle;
 
+/**
+ * class used to read from the resource files and constructs an object that holds
+ * the data needed to make a row in the tableview
+ *
+ * @author Eric Han
+ */
 public class TableRowData {
     private static final String DESCRIPTION_FILE_NAME="CommandDescription";
     private static final String LANGUAGE_PATH = "language.";

@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Returns the right image according to the index, by using the resource file
+ *
+ * @author Eric Han
+ */
 public class ImageManager {
 
     private static final String RESOURCE_PATH = "resources.frontend.dropdown.Image";

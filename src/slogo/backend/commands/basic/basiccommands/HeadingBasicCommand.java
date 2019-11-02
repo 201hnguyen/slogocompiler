@@ -6,6 +6,11 @@ import slogo.backend.utils.TurtleModel;
 
 import java.util.List;
 
+/**
+ * @author Erie Seong Ho Han
+ * Implementation of BasicCommandInterface that implements Heading command
+ */
+
 public class HeadingBasicCommand implements BasicCommandInterface {
 
     @Override

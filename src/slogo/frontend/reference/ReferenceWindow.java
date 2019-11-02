@@ -8,6 +8,12 @@ import javafx.stage.Stage;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+/**
+ * This is the ReferenceWindow class that extends is going to be called when
+ * the help button is clicked. It is used to open a new window that shows the types of commands
+ *
+ * @author Eric Han
+ */
 public class ReferenceWindow {
     private static final String RESOURCE_PATH = "resources.frontend.commandreference.CommandTypes";
     private static final String TITLE = "Command References";
@@ -24,6 +30,9 @@ public class ReferenceWindow {
         this.language = language;
     }
 
+    /**
+     * Opens the new window
+     */
     public void createNewWindow() {
         Stage newStage = createNewStage();
         Scene scene = new Scene(createReference());
