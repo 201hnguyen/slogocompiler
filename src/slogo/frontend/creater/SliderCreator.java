@@ -32,7 +32,6 @@ public class SliderCreator extends HBox implements ChangeableNode {
     private static final String INITIAL_LANGUAGE = "English";
 
     private ResourceBundle resourceBundle;
-    private double sliderValue = SLIDER_START;
     private NodeController myController;
     private String language = INITIAL_LANGUAGE;
 
@@ -57,7 +56,7 @@ public class SliderCreator extends HBox implements ChangeableNode {
         Slider slider = new Slider();
         slider.setMin(SLIDER_MIN);
         slider.setMax(SLIDER_MAX);
-        slider.setValue(sliderValue);
+        slider.setValue(SLIDER_START);
         slider.setShowTickLabels(true);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> callAction(key, (Double) newValue));
         getChildren().addAll(sliderLabel, slider);
