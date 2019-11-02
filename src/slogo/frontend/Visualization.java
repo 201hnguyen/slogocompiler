@@ -25,12 +25,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * purpose (why would anyone use it)
- * assumptions (what situations or values might cause it to fail)
- * dependencies (what other classes or packages it depends on)
- * an example of how to use it
- * any other details users should know
- */
+ * Class that calls everything needed to create the GUI, like the DisPlayScreen and the CommandLine.
+ * This is where we call everything. In order for this class to meet its purpose, it depends on the
+ * other classes.
+ * @author Michael Castro and Eric Han
+ *  */
 
 public class Visualization {
     private static final double SCENE_WIDTH = 830;
@@ -52,31 +51,25 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * The purpose of this method is to grab & know what language we are working with.
+     * Example - > a user choosing "English" in the GUI is important to know to "tell" the
+     * CommandLine.
+     * @return a String which allows us to know what lanuage has been chosen.
      */
     public String getLanguage() {return myUIManager.getLanguage();}
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * The purpose of this method is to tell us is we need to pop up a new GUI.
+     * Example - > If the user clicks the new button, it means we need to create a new window.
+     * This true value lets us know the user wants this.
+     * @return a boolean. True tells us if we need to create a new window.
      */
     public boolean needNewWindow() {
         return myUIManager.isNewButtonClicked();
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * The purpose of this method is to update the specific tabs and scenes when needed.
      */
     public void update() {
         myUIManager.update();
@@ -94,11 +87,8 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * The purpose of this method is to assist with with adding commands to
+     * the history tab.
      */
     public void setHistory(TurtleHistory turtleHistory) {
         displayScreen.setHistory(turtleHistory);
@@ -114,11 +104,11 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * A method that returns the command. This is important because it allows
+     * us to grab the input in the GUI and use it to tell the backend what to do.
+     * Example - > Needing to know how to move the turtle. Getting the user input "fd" 50
+     * and telling the turtle to move that up that value.
+     * @return a String. A string that represents the user input.
      */
     public String getInput() {
         String command = myUIManager.getInput();
@@ -142,11 +132,7 @@ public class Visualization {
     }
 
     /**
-     * purpose (why would anyone use it)
-     * assumptions (what situations or values might cause it to fail)
-     * parameters (purpose beyond their name if necessary)
-     * return value
-     * @return
+     * The method used to display errors.
      */
     public void showError(String message) {
         NewScreen errorShow = new ErrorShow(message);
