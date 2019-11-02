@@ -12,20 +12,17 @@ import slogo.frontend.Visualization;
 
 import java.util.HashMap;
 import java.util.Map;
-/**
- * purpose (why would anyone use it)
- * assumptions (what situations or values might cause it to fail)
- * dependencies (what other classes or packages it depends on)
- * an example of how to use it
- * any other details users should know
- */
-
 
 /**
- * Connects the backend and the frontend
- * Gets user input from Visualizaton.java and creates a new BackendManager object
+ * Connects the backend and the frontend;
+ * Gets user input from Visualizaton.java; and,
+ * Creates a new BackendManager object with the user input.
+ * Throws either a BackendException or ParserException if either of these exceptions are thrown from BackendManager.
+ * Used in Main.java
+ * Ex:  Connector c = new Connector(stage);
+ *      c.begin();
  *
- * @author Eric Han
+ * @author Eric Han and Amber Johnson
  */
 public class Connector {
 
@@ -42,7 +39,9 @@ public class Connector {
     }
 
     /**
-     *
+     * Starts a new Timeline for user display;
+     * Calls the step() method; and,
+     * Initializes the animation.
      */
     public void begin() {
         var frame = new KeyFrame(Duration.millis(DURATION_MILLIS), e -> step());
@@ -52,7 +51,6 @@ public class Connector {
         myAnimation.play();
     }
 
-    //
     private void step()  {
         for(Stage stage : visualizationMap.keySet()) {
             try {
@@ -70,8 +68,6 @@ public class Connector {
         }
     }
 
-    //
-    // Throws a BackendException or a ParserException if
     private void update(Visualization myVisualization, BackendManager myBackEndManager) throws BackendException, ParserException {
         String input = myVisualization.getInput();
         if (!input.equals("")) {
@@ -87,13 +83,11 @@ public class Connector {
         }
     }
 
-    //
     private void createWorkSpace() {
         Stage stage = new Stage();
         createNewWorkSpace(stage);
     }
 
-    //
     private void createNewWorkSpace(Stage stage) {
         Visualization myVisualization = new Visualization(stage);
         BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(), myVisualization.getLanguage(), new TurtleHistory());

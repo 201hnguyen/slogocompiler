@@ -10,6 +10,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * purpose (why would anyone use it)
+ * assumptions (what situations or values might cause it to fail)
+ * dependencies (what other classes or packages it depends on)
+ * Instantiates backend classes needed to translate and execute the turtle commands,
+ * including Parser.java and CommandBlockManagaer.java.
+ * Used in Connector.java
+ *
+ * Ex:  BackendManager myBackEndManager = new BackendManager(myVisualization.getInput(),
+ *      myVisualization.getLanguage(), new TurtleHistory());
+ *
+ * @author Eric Han, Ha Nguyen, and Amber Johnson
+ */
+
 public class BackendManager {
 
     private CommandBlockManager commandBlockManager;
@@ -23,11 +37,22 @@ public class BackendManager {
         this.turtleHistory = turtleHistory;
     }
 
-
+    /**
+     * Creates a new Parser.java object.
+     * Accepts the String input which comes from the user input; and,
+     * Accepts the language String from the dropdown option on the GUI.
+     */
     public void setCommands(String input, String language) {
         myCommandParser = new Parser(input, language);
     }
 
+    /**
+     * Translates the user input from any of the languages available to standardized commands in English;
+     * Instantiates a new CommandBlockManager object to begin control;
+     * Re-initializes variables userDefinedFunctionsAsString and userDefinedFunctions; and
+     * Executes the translated commands by calling the executeInstructionBlock() method.
+     * Throws a BackendException
+     */
     public void executeCommands() throws BackendException {
         String translatedCommand = myCommandParser.translateCommands();
         turtleHistory.clearHistory();
@@ -39,12 +64,23 @@ public class BackendManager {
         userDefinedFunctionsAsString.addAll(commandBlockManager.getUserDefinedFunctionsAsStrings());
     }
 
+    /**
+     * Adds user-defined functions to a list; and,
+     * Gets the new list.
+     *
+     * @return a list of Strings that represent user-defined functions
+     */
     public List<String> getUserFunctions() {
         List<String> list = new ArrayList<>();
         list.addAll(userDefinedFunctionsAsString);
         return list;
     }
 
+    /**
+     * Gets a TurtleHistory object.
+     *
+     * @return a TurtleHistory object
+     */
     public TurtleHistory getHistory() {
         return turtleHistory;
     }
