@@ -2,21 +2,13 @@ package slogo.frontend;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import slogo.backend.utils.TurtleHistory;
-import slogo.frontend.controller.ButtonController;
-import slogo.frontend.controller.DropDownController;
-import slogo.frontend.controller.SliderController;
-import slogo.frontend.controller.CheckBoxController;
-import slogo.frontend.controller.ColorPaletteController;
-import slogo.frontend.controller.TabController;
-import slogo.frontend.creater.ButtonCreator;
-import slogo.frontend.creater.CheckBoxCreator;
-import slogo.frontend.creater.DropDownCreator;
-import slogo.frontend.creater.SliderCreator;
+import slogo.frontend.controller.*;
+import slogo.frontend.creater.*;
 import slogo.frontend.statusscreen.TabMaker;
-import slogo.frontend.creater.ColorPalette;
 import slogo.frontend.turtlescreen.DisplayScreen;
 
 import java.util.ArrayList;
@@ -25,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class that calls everything needed to create the GUI, like the DisPlayScreen and the CommandLine.
+ * Class that calls everything needed to create the GUI, like the DisplayScreen and the CommandLine.
  * This is where we call everything. In order for this class to meet its purpose, it depends on the
  * other classes.
  * @author Michael Castro and Eric Han
@@ -33,7 +25,7 @@ import java.util.Map;
 
 public class Visualization {
     private static final double SCENE_WIDTH = 830;
-    private static final double SCENE_HEIGHT = 630;
+    private static final double SCENE_HEIGHT = 830;
     private static final String TITLE = "SLOGO IDLE";
 
     private Scene scene;
@@ -44,6 +36,7 @@ public class Visualization {
     private int index = 0;
     private TabMaker tabPane = new TabMaker(new TabController(displayScreen));
     private List<Map<String, Double>> myVariables = new ArrayList<>();
+    private HBox ImageVBoxCreator;
 
     public Visualization(Stage stage) {
         this.stage = stage;
@@ -143,12 +136,17 @@ public class Visualization {
         SliderCreator sliderCreator = new SliderCreator(new SliderController(displayScreen));
         ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));
         CheckBoxCreator checkBoxCreator = new CheckBoxCreator(new CheckBoxController(displayScreen));
+        ImageVBoxCreator imageVBoxCreator = new ImageVBoxCreator(new ImageVBoxController(displayScreen));
 
+        ((AnchorPane) root).setBottomAnchor(imageVBoxCreator, 10.0);
+        //((AnchorPane) root).setLeftAnchor(imageVBoxCreator, 10.0);
+        root.getChildren().add(imageVBoxCreator);
         root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
         myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane, checkBoxCreator, sliderCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
     }
+
 
     /**
      * sets the functions defined by user, which will show up on the screen.
