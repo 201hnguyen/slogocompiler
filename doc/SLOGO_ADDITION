@@ -22,7 +22,7 @@ CompSci 308: SLogo Frontend Addition
 
  * How long did it take you to complete this new feature?
  
- I was unable to complete the feature, although I added all the available turtles to the scene.  To finish completing the feature, I would make each image a button before adding them to the HBox.  The button would be a FileChooserButton which would allow the user to select an image from their local machine.  Then the image would update with the new image.  This would be an easy addition because the existing design is so flexible and well encapsulated.
+ After spending an hour on the addition, I was unable to complete the feature, although I added all the available turtles to the display.  I believe it would take me another hour to finish completing the SLOGO maintenance feature, however, I unfortunately have run out of time.  To finish the feature, I would make each image a button before adding them to the HBox.  The button would be a FileChooserButton which would allow the user to select an image from their local machine.  Then the image would update with the new image.  This would be an easy addition because the existing design is so flexible and well encapsulated.
 
  * How many files did you need to add or update? Why?
  
