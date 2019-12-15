@@ -22,6 +22,7 @@ import java.util.TreeMap;
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 2, false);
+    private static final String CLEAR = "Clear";
 
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
@@ -29,6 +30,14 @@ public class TurtleHistory {
     private List<Map<String, Double>> listOfActiveVariables = new ArrayList<>();
     private int curTurtleID = 1;
     private int index = 0;
+    private boolean stampsCleared = false;
+    /**
+     * if string value is "Clear", means clearStamp.
+     * else, string value will be the in the form "ID,xPos,yPos,orientation". Frontend is assumed to know
+     * how to decipher this, as the frontend can know the image from the ID, and the location of the image and
+     * the orientation from the other parts of the string.
+     */
+    private List<List<String>> myStamps = new ArrayList<>();
 
     public TurtleHistory() {
         myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
@@ -94,6 +103,7 @@ public class TurtleHistory {
         map.putAll(myGlobalVariables);
         listOfActiveVariables.add(map);
         myTurtleHistory.add(new ArrayList<>());
+        myStamps.add(new ArrayList<>());
         index++;
     }
 
@@ -113,6 +123,7 @@ public class TurtleHistory {
         myTurtleHistory.clear();
         myTurtleHistory.add(new ArrayList<>());
         listOfActiveVariables = new ArrayList<>();
+        myStamps = new ArrayList<>();
         index = 0;
     }
 
@@ -133,6 +144,21 @@ public class TurtleHistory {
         this.activeTurtles.addAll(activeTurtles);
     }
 
+    public boolean addOrClearStamps(boolean clearStamp, int turtleID) {
+        List<String> list = myStamps.get(myStamps.size()-1);
+        TurtleModel turtleModel = myTurtles.get(turtleID);
+        list.add(clearStamp? CLEAR :
+                turtleID + "," + turtleModel.getXPos() + "," + turtleModel.getYPos() + "," + turtleModel.getOrientation());
+        boolean alreadyCleared = stampsCleared;
+        stampsCleared = clearStamp;
+        return !alreadyCleared;
+    }
+
+    public List<List<String>> getStamps() {
+        List<List<String>> list = new ArrayList<>();
+        list.addAll(myStamps);
+        return list;
+    }
 
     private boolean hasTurtle(int turtleID) {
         for(TurtleModel turtle : myTurtles) {
