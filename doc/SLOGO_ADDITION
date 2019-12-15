@@ -1,0 +1,47 @@
+CompSci 308: SLogo Frontend Addition
+===
+
+# Before
+
+### Estimation
+
+ * How long do you think it will take you to complete this new feature?
+ 
+ I think it will take an hour, most of which will be spent reviewing the design of the existing code.
+
+ * How many files will you need to add or update? Why?
+ 
+ I think I will need to add two classes, one in the controller package and one in the creator package.  I also think I will need to update the Visualization class to instantiate
+ the new node and add it to the view.
+
+
+
+# After
+
+### Review
+
+ * How long did it take you to complete this new feature?
+ 
+ I was unable to complete the feature, although I added all the available turtles to the scene.  To finish completing the feature, I would make each image a button before adding them to the HBox.  The button would be a FileChooserButton which would allow the user to select an image from their local machine.  Then the image would update with the new image.  This would be an easy addition because the existing design is so flexible and well encapsulated.
+
+ * How many files did you need to add or update? Why?
+ 
+ I updated one file and created two new files.  The Visualization class only needed to be updated to add the new HBox node containing all the available turtle images.
+
+ * Did you get it completely right on the first try? If not, why not?
+
+I did not get it completely right on the first try.  I would need to resize the images to make them all more similar in size and add the FileChooserButton functionality to each image.
+
+### Analysis
+
+ * What do you feel this exercise reveals about your project's design and documentation --- was it as good (or bad) as you remembered?
+ 
+ This exercise reveals that the design was very created.  It was very straightforward to read through the design and recall its layout.  This made it very easy to add the new feature and would be equally as straightfoward to add FileChooserButtons to the image.
+
+ * What about the design or documentation could be improved?
+ 
+ It would be helpful if the comments for each class included information on which other classes are instantiated within that class. Additionally, it would be helpful for a description of the purpose of each properties file to be included somewhere in the project.  Ideally, this would be in the read me as well as in the class that accesses the the properties file.
+
+ * What would it have been like if you were not familiar with the code at all?
+ 
+ If I was not familiar with the code at all it would have been very similar to working on it today because I had forgotten almost everything about how the project was designed.  Overall, the comments would be sufficiently helpful for someone who had never looked at the code before to figure out how to add a new feature.  I believe the classes are intuitively named and the packaging decisions make sense given their respective purposes.
