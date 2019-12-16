@@ -4,6 +4,9 @@ import slogo.util.DrawStatus;
 import slogo.util.Movement;
 import slogo.util.PenStatus;
 
+import java.awt.geom.Point2D;
+import java.util.List;
+
 /**
  * Manages the current status of the Turtle, so that query commands can return the right value
  *
@@ -23,6 +26,7 @@ public class TurtleModel {
     private int myID;
     private DrawStatus drawStatus;
     private PenStatus penStatus;
+    private List<Point2D.Double> myStampLocations;
 
 
     public TurtleModel(int myID, PenStatus penStatus, DrawStatus drawStatus) {
@@ -96,5 +100,15 @@ public class TurtleModel {
      */
     public PenStatus getPenStatus() {
         return penStatus;
+    }
+
+
+    public void addStamp() {
+        myStampLocations.add(new Point2D.Double(xPos, yPos));
+    }
+
+    public int clearStamps() {
+        myStampLocations.clear();
+        return 1;
     }
 }

@@ -22,13 +22,13 @@ import java.util.TreeMap;
 public class TurtleHistory {
     private static final PenStatus INITIAL_PEN_STATUS = new PenStatus(true, 1, 1);
     private static final DrawStatus INITIAL_DRAW_STATUS = new DrawStatus(true, 1, 2, false);
-
     private List<TurtleModel> myTurtles = new ArrayList<>();
     private List<List<TurtleMovement>> myTurtleHistory = new ArrayList<>();
     private List<Integer> activeTurtles = new ArrayList<>();
     private List<Map<String, Double>> listOfActiveVariables = new ArrayList<>();
     private int curTurtleID = 1;
     private int index = 0;
+    private List<Integer> turtleStamps = new ArrayList<>();
 
     public TurtleHistory() {
         myTurtles.add(new TurtleModel(1, INITIAL_PEN_STATUS, INITIAL_DRAW_STATUS));
@@ -64,6 +64,16 @@ public class TurtleHistory {
         TurtleModel turtle = getTurtleModel(turtleID);
         turtle.update(movement, drawStatus, penStatus);
         myTurtleHistory.get(index).add(new TurtleMovement(turtleID, movement, turtle.getDrawStatus(), turtle.getPenStatus()));
+    }
+
+    public void addTurtleStamp(int turtleId) {
+        TurtleModel turtle = getTurtleModel(turtleId);
+        turtle.addStamp();
+    }
+
+    public int clearTurtleStamps(int turtleId) {
+        TurtleModel turtle = getTurtleModel(turtleId);
+        return turtle.clearStamps();
     }
 
     private void addTurtleModel(int turtleID) {
