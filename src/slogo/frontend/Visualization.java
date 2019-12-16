@@ -18,6 +18,7 @@ import slogo.frontend.creater.SliderCreator;
 import slogo.frontend.statusscreen.TabMaker;
 import slogo.frontend.creater.ColorPalette;
 import slogo.frontend.turtlescreen.DisplayScreen;
+import slogo.frontend.turtlescreen.ImageCollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,7 +136,6 @@ public class Visualization {
         ErrorShow errorShow = new ErrorShow(ex, message);
         errorShow.show();
     }
-
     private void initialize() {
         Pane root = new AnchorPane();
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(displayScreen));
@@ -143,8 +143,9 @@ public class Visualization {
         SliderCreator sliderCreator = new SliderCreator(new SliderController(displayScreen));
         ColorPalette colorPalette = new ColorPalette(new ColorPaletteController(displayScreen));
         CheckBoxCreator checkBoxCreator = new CheckBoxCreator(new CheckBoxController(displayScreen));
+        ImageCollection imageCollection = new ImageCollection();
 
-        root.getChildren().addAll(displayScreen, commandLine, colorPalette, tabPane, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
+        root.getChildren().addAll(displayScreen, commandLine, colorPalette, imageCollection, tabPane, buttonCreator, dropDownCreator, sliderCreator, checkBoxCreator);
         myUIManager = new UIManager(commandLine, List.of(colorPalette, buttonCreator, dropDownCreator, tabPane, checkBoxCreator, sliderCreator));
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         startStage();
