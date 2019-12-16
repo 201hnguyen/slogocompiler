@@ -18,10 +18,13 @@ CompSci 308: SLogo Addition
 ### Review
 
  * How long did it take you to complete this new feature?
+     * It took about an hour and half.
 
  * How many files did you need to add or update? Why?
+     * I updated one, the Visualization class, and I added a new file. I created the ImageCollection class which is used to display all the possible images.
 
  * Did you get it completely right on the first try? If not, why not?
+     * I struggled at first. I think it was really hard to come back to an old code base after so long, especially after working on this last, final project.
 
 
 ### Analysis
